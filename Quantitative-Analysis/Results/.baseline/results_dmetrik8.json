@@ -1,0 +1,1833 @@
+{
+  "metadata": {
+    "generated_timestamp": "2026-05-22T16:15:27.916644",
+    "metric_name": "D-Metrik-8",
+    "metric_version": "8.0.0",
+    "dataset_source": "/home/vas/projects/diss-metrik/Developing-DISS-Metric/Dataset/combined-data.json",
+    "total_comparisons": 39,
+    "successful_comparisons": 39,
+    "failed_comparisons": 0
+  },
+  "comparisons": {
+    "LabTracker_0shot": {
+      "comparison_id": "LabTracker_0shot",
+      "model_key": "LabTracker",
+      "model_full_name": "Lab Requisition Management System",
+      "setting": "0shot",
+      "reference_plantuml": "@startuml\n\nenum Interval {\n    weekly\n    monthly\n    everyHalfYear\n    yearly\n}\n\nenum AccessType {\n    reservable\n    walkIn\n    dropOff\n}\n\nenum DayOfWeek {\n    Monday\n    Tuesday\n    Wednesday\n    Thursday\n    Friday\n    Saturday\n    Sunday\n}\n\nabstract class PersonRole {\n    idNumber\n}\n\nclass Person {\n    lastName\n    firstName\n    address\n    phoneNumber\n}\n\nclass Patient {\n    dateOfBirth\n}\n\nclass Doctor {\n    signature\n}\n\nclass Requisition {\n    effectiveDate\n    repetitionCount\n    repetitionInterval : Interval\n}\n\nclass TestResult {\n    negative\n    report\n}\n\nclass SpecificTest {\n    date\n}\n\nclass Appointment {\n    confirmationNumber\n    date\n    startTime\n    endTime\n}\n\nclass Test {\n    name\n    duration\n}\n\nclass TestType {\n    name\n    durationAdditive\n    access : AccessType\n}\n\nclass Lab {\n    registrationNumber\n    name\n    address\n    changeCancelFee\n}\n\nclass BusinessHour {\n    dayOfWeek : DayOfWeek\n    startTime\n    endTime\n}\n\n\n\nPerson \"1\" -- \"0..2\" PersonRole\nPersonRole <|-- Patient\nPersonRole <|-- Doctor\nRequisition \"*\" -- \"1\" Doctor\nPatient \"1\" -- \"*\" Requisition\nRequisition \"1\" -- \"*\" SpecificTest\nRequisition \"*\" -- \"1\" Lab\nSpecificTest \"1\" -- \"0..1\" TestResult\nSpecificTest \"*\" -- \"1\" Test\nTest \"*\" -- \"1\" TestType\nLab \"1\" -- \"7\" BusinessHour\n\n(Requisition, Lab) .. Appointment\n\n@enduml\n",
+      "generated_plantuml": "@startuml\n\n' Enumerations\nenum RepetitionInterval {\n    WEEKLY\n    MONTHLY\n    HALF_YEARLY\n    YEARLY\n}\n\nenum TestResult {\n    NEGATIVE\n    POSITIVE\n}\n\n' Classes\nclass Doctor {\n    practitionerNumber : Integer\n    fullName : String\n    address : String\n    phoneNumber : String\n    digitalSignature : Image\n}\n\nclass Patient {\n    healthNumber : String\n    firstName : String\n    lastName : String\n    dateOfBirth : Date\n    address : String\n    phoneNumber : String\n}\n\nclass Requisition {\n    validFromDate : Date\n}\n\nclass Test {\n    group : String\n    duration : Integer\n}\n\nclass Appointment {\n    confirmationNumber : String\n    date : Date\n    startTime : Time\n    endTime : Time\n    changeOrCancellationFee : Integer\n}\n\nclass Lab {\n    address : String\n    businessHours : String\n    registrationNumber : String\n}\n\nclass Repetition {\n    repetitionCount : Integer\n    interval : RepetitionInterval\n}\n\nclass TestOutcome {\n    result : TestResult\n    report : String\n}\n\n' Relationships\nDoctor \"1\" --> \"0..*\" Requisition : associates\nPatient \"1\" --> \"0..*\" Requisition : associates\nRequisition \"1\" *-- \"1..*\" Test : contains\nTest \"1\" --> \"0..1\" Appointment : associated\nLab \"1\" --> \"0..*\" Appointment : associated\n\n' Compositions\nRequisition \"1\" *-- \"1\" Repetition : repetition\nTest \"1\" *-- \"1\" TestOutcome : outcome\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.52,
+        "attribute_score": 0.5013586956521738,
+        "association_score": 0.2222222222222222
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.9375,
+          "recall": 0.46875,
+          "f1": 0.625
+        },
+        "Attribute": {
+          "precision": 0.90741,
+          "recall": 0.45349,
+          "f1": 0.60475
+        },
+        "Association": {
+          "precision": 0.5,
+          "recall": 0.15909,
+          "f1": 0.24138
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.10499999999999998,
+        "attribute_vs_f1": -0.10339130434782617,
+        "association_vs_f1": -0.0191577777777778,
+        "class_vs_precision": -0.4175,
+        "class_vs_recall": 0.05125000000000002,
+        "attribute_vs_precision": -0.4060513043478262,
+        "attribute_vs_recall": 0.04786869565217383,
+        "association_vs_precision": -0.2777777777777778,
+        "association_vs_recall": 0.0631322222222222
+      },
+      "aggregated": {
+        "metric_average": 0.4145269726247987,
+        "human_f1_average": 0.4903766666666667,
+        "overall_delta": -0.07584969404186798
+      }
+    },
+    "LabTracker_1shot_BTMS": {
+      "comparison_id": "LabTracker_1shot_BTMS",
+      "model_key": "LabTracker",
+      "model_full_name": "Lab Requisition Management System",
+      "setting": "1shot_BTMS",
+      "reference_plantuml": "@startuml\n\nenum Interval {\n    weekly\n    monthly\n    everyHalfYear\n    yearly\n}\n\nenum AccessType {\n    reservable\n    walkIn\n    dropOff\n}\n\nenum DayOfWeek {\n    Monday\n    Tuesday\n    Wednesday\n    Thursday\n    Friday\n    Saturday\n    Sunday\n}\n\nabstract class PersonRole {\n    idNumber\n}\n\nclass Person {\n    lastName\n    firstName\n    address\n    phoneNumber\n}\n\nclass Patient {\n    dateOfBirth\n}\n\nclass Doctor {\n    signature\n}\n\nclass Requisition {\n    effectiveDate\n    repetitionCount\n    repetitionInterval : Interval\n}\n\nclass TestResult {\n    negative\n    report\n}\n\nclass SpecificTest {\n    date\n}\n\nclass Appointment {\n    confirmationNumber\n    date\n    startTime\n    endTime\n}\n\nclass Test {\n    name\n    duration\n}\n\nclass TestType {\n    name\n    durationAdditive\n    access : AccessType\n}\n\nclass Lab {\n    registrationNumber\n    name\n    address\n    changeCancelFee\n}\n\nclass BusinessHour {\n    dayOfWeek : DayOfWeek\n    startTime\n    endTime\n}\n\n\n\nPerson \"1\" -- \"0..2\" PersonRole\nPersonRole <|-- Patient\nPersonRole <|-- Doctor\nRequisition \"*\" -- \"1\" Doctor\nPatient \"1\" -- \"*\" Requisition\nRequisition \"1\" -- \"*\" SpecificTest\nRequisition \"*\" -- \"1\" Lab\nSpecificTest \"1\" -- \"0..1\" TestResult\nSpecificTest \"*\" -- \"1\" Test\nTest \"*\" -- \"1\" TestType\nLab \"1\" -- \"7\" BusinessHour\n\n(Requisition, Lab) .. Appointment\n\n@enduml\n",
+      "generated_plantuml": "@startuml\n\nenum RepetitionInterval {\n    weekly\n    monthly\n    half_yearly\n    yearly\n}\n\nenum TestResult {\n    negative\n    positive\n}\n\nenum TestGroup {\n    blood_tests\n    ultrasound_examinations\n    xray_examinations\n    sample_tests\n}\n\nclass LabTracker {\n}\n\nclass Doctor {\n    fullName : String\n    address : String\n    phoneNumber : String\n    practitionerNumber : String\n    signature : Image\n}\n\nclass Patient {\n    healthNumber : String\n    firstName : String\n    lastName : String\n    dob : Date\n    address : String\n    phoneNumber : String\n}\n\nclass Test {\n    testName : String\n    group : TestGroup\n    duration : Integer\n}\n\nclass Requisition {\n    validFromDate : Date\n    repeatCount : Integer\n    repeatInterval : RepetitionInterval\n}\n\nclass Appointment {\n    date : Date\n    startTime : Time\n    endTime : Time\n    confirmationNumber : String\n}\n\nclass Lab {\n    name : String\n    registrationNumber : String\n    address : String\n    openTime : Time\n    closeTime : Time\n    changeCancelFee : Float\n}\n\n' Relationships\nLabTracker \"1\" *-- \"*\" Doctor\nLabTracker \"1\" *-- \"*\" Patient\nLabTracker \"1\" *-- \"*\" Test\nLabTracker \"1\" *-- \"*\" Requisition\nLabTracker \"1\" *-- \"*\" Appointment\nLabTracker \"1\" *-- \"*\" Lab\n\nRequisition \"1\" --> \"1\" Doctor\nRequisition \"1\" --> \"1\" Patient\nRequisition \"1\" *-- \"*\" Test\n\nAppointment \"1\" --> \"1\" Requisition\nAppointment \"1\" --> \"1\" Lab\nAppointment \"1\" --> \"1\" Patient\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5022222222222222,
+        "attribute_score": 0.5265957446808509,
+        "association_score": 0.21739130434782608
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.9,
+          "recall": 0.5625,
+          "f1": 0.69231
+        },
+        "Attribute": {
+          "precision": 0.86486,
+          "recall": 0.5,
+          "f1": 0.63366
+        },
+        "Association": {
+          "precision": 0.70833,
+          "recall": 0.31818,
+          "f1": 0.43911
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.19008777777777774,
+        "attribute_vs_f1": -0.1070642553191491,
+        "association_vs_f1": -0.22171869565217392,
+        "class_vs_precision": -0.3977777777777778,
+        "class_vs_recall": -0.06027777777777776,
+        "attribute_vs_precision": -0.33826425531914905,
+        "attribute_vs_recall": 0.026595744680850908,
+        "association_vs_precision": -0.49093869565217396,
+        "association_vs_recall": -0.10078869565217394
+      },
+      "aggregated": {
+        "metric_average": 0.4154030904169665,
+        "human_f1_average": 0.5883599999999999,
+        "overall_delta": -0.1729569095830334
+      }
+    },
+    "LabTracker_1shot_H2S": {
+      "comparison_id": "LabTracker_1shot_H2S",
+      "model_key": "LabTracker",
+      "model_full_name": "Lab Requisition Management System",
+      "setting": "1shot_H2S",
+      "reference_plantuml": "@startuml\n\nenum Interval {\n    weekly\n    monthly\n    everyHalfYear\n    yearly\n}\n\nenum AccessType {\n    reservable\n    walkIn\n    dropOff\n}\n\nenum DayOfWeek {\n    Monday\n    Tuesday\n    Wednesday\n    Thursday\n    Friday\n    Saturday\n    Sunday\n}\n\nabstract class PersonRole {\n    idNumber\n}\n\nclass Person {\n    lastName\n    firstName\n    address\n    phoneNumber\n}\n\nclass Patient {\n    dateOfBirth\n}\n\nclass Doctor {\n    signature\n}\n\nclass Requisition {\n    effectiveDate\n    repetitionCount\n    repetitionInterval : Interval\n}\n\nclass TestResult {\n    negative\n    report\n}\n\nclass SpecificTest {\n    date\n}\n\nclass Appointment {\n    confirmationNumber\n    date\n    startTime\n    endTime\n}\n\nclass Test {\n    name\n    duration\n}\n\nclass TestType {\n    name\n    durationAdditive\n    access : AccessType\n}\n\nclass Lab {\n    registrationNumber\n    name\n    address\n    changeCancelFee\n}\n\nclass BusinessHour {\n    dayOfWeek : DayOfWeek\n    startTime\n    endTime\n}\n\n\n\nPerson \"1\" -- \"0..2\" PersonRole\nPersonRole <|-- Patient\nPersonRole <|-- Doctor\nRequisition \"*\" -- \"1\" Doctor\nPatient \"1\" -- \"*\" Requisition\nRequisition \"1\" -- \"*\" SpecificTest\nRequisition \"*\" -- \"1\" Lab\nSpecificTest \"1\" -- \"0..1\" TestResult\nSpecificTest \"*\" -- \"1\" Test\nTest \"*\" -- \"1\" TestType\nLab \"1\" -- \"7\" BusinessHour\n\n(Requisition, Lab) .. Appointment\n\n@enduml\n",
+      "generated_plantuml": "@startuml\n\n' Enumerations\nenum TestGroup {\n    BloodTests\n    UltrasoundExaminations\n    ...\n}\n\nenum RepetitionInterval {\n    Weekly\n    Monthly\n    HalfYearly\n    Yearly\n}\n\n' Classes\nclass LabTracker {\n}\n\nclass Person {\n    firstName : String\n    lastName : String\n    address : String\n    phoneNumber : String\n}\n\nclass Doctor {\n    practitionerNumber : Integer\n    fullName : String\n    signature : String\n    address : String\n    phoneNumber : String\n}\n\nclass Patient {\n    healthNumber : String\n    firstName : String\n    lastName : String\n    birthDate : Date\n    address : String\n    phoneNumber : String\n}\n\nclass Lab {\n    registrationNumber : Integer\n    name : String\n    address : String\n    startTime : Time\n    endTime : Time\n    changeCancelFee : Double\n}\n\nclass Requisition {\n    validFrom : Date\n    repetitionInterval : RepetitionInterval\n    numberOfRepeats : Integer\n}\n\nclass Test {\n    name : String\n    group : TestGroup\n    duration : Time\n    isAppointmentRequired : Boolean\n    isWalkIn : Boolean\n    isDropOff : Boolean\n}\n\nclass Appointment {\n    confirmationNumber : Integer\n    date : Date\n    startTime : Time\n    endTime : Time\n}\n\n' Relationships\nLabTracker \"1\" *-- \"*\" Doctor\nLabTracker \"1\" *-- \"*\" Patient\nLabTracker \"1\" *-- \"*\" Lab\nLabTracker \"1\" *-- \"*\" Requisition\nLabTracker \"1\" *-- \"*\" Test\nLabTracker \"1\" *-- \"*\" Appointment\n\nDoctor \"1\" --> \"*\" Requisition : prescribes\nPatient \"1\" --> \"*\" Requisition : requests\nRequisition \"1\" *-- \"*\" Test : includes\n\nPatient \"1\" --> \"*\" Appointment\nLab \"1\" --> \"*\" Appointment\nRequisition \"1\" --> \"*\" Appointment\n\nnote right of Doctor\nDoctor and Person are separate because \na doctor can prescribe tests to another \ndoctor, requiring a distinction.\nend note\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5022222222222222,
+        "attribute_score": 0.555015197568389,
+        "association_score": 0.21739130434782608
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.95,
+          "recall": 0.59375,
+          "f1": 0.73077
+        },
+        "Attribute": {
+          "precision": 0.90244,
+          "recall": 0.62791,
+          "f1": 0.74055
+        },
+        "Association": {
+          "precision": 0.83333,
+          "recall": 0.40909,
+          "f1": 0.54878
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.2285477777777778,
+        "attribute_vs_f1": -0.18553480243161102,
+        "association_vs_f1": -0.331388695652174,
+        "class_vs_precision": -0.4477777777777777,
+        "class_vs_recall": -0.09152777777777776,
+        "attribute_vs_precision": -0.347424802431611,
+        "attribute_vs_recall": -0.07289480243161095,
+        "association_vs_precision": -0.615938695652174,
+        "association_vs_recall": -0.19169869565217393
+      },
+      "aggregated": {
+        "metric_average": 0.42487624137947916,
+        "human_f1_average": 0.6733666666666668,
+        "overall_delta": -0.24849042528718762
+      }
+    },
+    "LabTracker_2shots": {
+      "comparison_id": "LabTracker_2shots",
+      "model_key": "LabTracker",
+      "model_full_name": "Lab Requisition Management System",
+      "setting": "2shots",
+      "reference_plantuml": "@startuml\n\nenum Interval {\n    weekly\n    monthly\n    everyHalfYear\n    yearly\n}\n\nenum AccessType {\n    reservable\n    walkIn\n    dropOff\n}\n\nenum DayOfWeek {\n    Monday\n    Tuesday\n    Wednesday\n    Thursday\n    Friday\n    Saturday\n    Sunday\n}\n\nabstract class PersonRole {\n    idNumber\n}\n\nclass Person {\n    lastName\n    firstName\n    address\n    phoneNumber\n}\n\nclass Patient {\n    dateOfBirth\n}\n\nclass Doctor {\n    signature\n}\n\nclass Requisition {\n    effectiveDate\n    repetitionCount\n    repetitionInterval : Interval\n}\n\nclass TestResult {\n    negative\n    report\n}\n\nclass SpecificTest {\n    date\n}\n\nclass Appointment {\n    confirmationNumber\n    date\n    startTime\n    endTime\n}\n\nclass Test {\n    name\n    duration\n}\n\nclass TestType {\n    name\n    durationAdditive\n    access : AccessType\n}\n\nclass Lab {\n    registrationNumber\n    name\n    address\n    changeCancelFee\n}\n\nclass BusinessHour {\n    dayOfWeek : DayOfWeek\n    startTime\n    endTime\n}\n\n\n\nPerson \"1\" -- \"0..2\" PersonRole\nPersonRole <|-- Patient\nPersonRole <|-- Doctor\nRequisition \"*\" -- \"1\" Doctor\nPatient \"1\" -- \"*\" Requisition\nRequisition \"1\" -- \"*\" SpecificTest\nRequisition \"*\" -- \"1\" Lab\nSpecificTest \"1\" -- \"0..1\" TestResult\nSpecificTest \"*\" -- \"1\" Test\nTest \"*\" -- \"1\" TestType\nLab \"1\" -- \"7\" BusinessHour\n\n(Requisition, Lab) .. Appointment\n\n@enduml\n",
+      "generated_plantuml": "@startuml\n\nenum TestGroup {\n    blood_tests\n    ultrasound_examinations\n    ...\n}\n\nenum AppointmentType {\n    appointment_required\n    walk_in\n    drop_off_sample\n}\n\nenum TimeInterval {\n    weekly\n    monthly\n    half_yearly\n    yearly\n}\n\nclass LabTracker {\n\n}\n\nclass Doctor {\n    practitionerNumber : String\n    fullName : String\n    address : String\n    phoneNumber : String\n    digitalSignature : String\n}\n\nclass Patient {\n    healthNumber : String\n    firstName : String\n    lastName : String\n    dateOfBirth : Date\n    address : String\n    phoneNumber : String\n}\n\nclass Test {\n    testName : String\n    testGroup : TestGroup\n    duration : Integer\n    appointmentType : AppointmentType\n}\n\nclass Requisition {\n    validFromDate : Date\n    repeatCount : Integer\n    repeatInterval : TimeInterval\n}\n\nclass Appointment {\n    confirmationNumber : String\n    startTime : DateTime\n    endTime : DateTime\n}\n\nclass Lab {\n    labName : String\n    registrationNumber : String\n    openingTime : Time\n    closingTime : Time\n    changeCancellationFee : Double\n}\n\n' Relationships\nLabTracker \"1\" *-- \"*\" Doctor : contain\nLabTracker \"1\" *-- \"*\" Patient : contain\nLabTracker \"1\" *-- \"*\" Test : contain\nLabTracker \"1\" *-- \"*\" Requisition : contain\nLabTracker \"1\" *-- \"*\" Appointment : contain\nLabTracker \"1\" *-- \"*\" Lab : contain\n\nDoctor \"1\" --> \"*\" Requisition : prescribe\nPatient \"1\" --> \"*\" Requisition : request\nRequisition \"1\" *-- \"*\" Test : contain\nRequisition \"1\" --> \"1\" Appointment : associate\nAppointment \"1\" --> \"1\" Lab : associate\nLab \"1\" *-- \"*\" Test : offer\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.44,
+        "attribute_score": 0.45276595744680836,
+        "association_score": 0.17391304347826086
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.95,
+          "recall": 0.59375,
+          "f1": 0.73077
+        },
+        "Attribute": {
+          "precision": 0.9,
+          "recall": 0.66279,
+          "f1": 0.76339
+        },
+        "Association": {
+          "precision": 0.83333,
+          "recall": 0.40909,
+          "f1": 0.54878
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.29077000000000003,
+        "attribute_vs_f1": -0.31062404255319165,
+        "association_vs_f1": -0.3748669565217392,
+        "class_vs_precision": -0.51,
+        "class_vs_recall": -0.15375,
+        "attribute_vs_precision": -0.44723404255319166,
+        "attribute_vs_recall": -0.21002404255319163,
+        "association_vs_precision": -0.6594169565217392,
+        "association_vs_recall": -0.23517695652173914
+      },
+      "aggregated": {
+        "metric_average": 0.355559666975023,
+        "human_f1_average": 0.6809799999999999,
+        "overall_delta": -0.3254203330249769
+      }
+    },
+    "LabTracker_CoT": {
+      "comparison_id": "LabTracker_CoT",
+      "model_key": "LabTracker",
+      "model_full_name": "Lab Requisition Management System",
+      "setting": "CoT",
+      "reference_plantuml": "@startuml\n\nenum Interval {\n    weekly\n    monthly\n    everyHalfYear\n    yearly\n}\n\nenum AccessType {\n    reservable\n    walkIn\n    dropOff\n}\n\nenum DayOfWeek {\n    Monday\n    Tuesday\n    Wednesday\n    Thursday\n    Friday\n    Saturday\n    Sunday\n}\n\nabstract class PersonRole {\n    idNumber\n}\n\nclass Person {\n    lastName\n    firstName\n    address\n    phoneNumber\n}\n\nclass Patient {\n    dateOfBirth\n}\n\nclass Doctor {\n    signature\n}\n\nclass Requisition {\n    effectiveDate\n    repetitionCount\n    repetitionInterval : Interval\n}\n\nclass TestResult {\n    negative\n    report\n}\n\nclass SpecificTest {\n    date\n}\n\nclass Appointment {\n    confirmationNumber\n    date\n    startTime\n    endTime\n}\n\nclass Test {\n    name\n    duration\n}\n\nclass TestType {\n    name\n    durationAdditive\n    access : AccessType\n}\n\nclass Lab {\n    registrationNumber\n    name\n    address\n    changeCancelFee\n}\n\nclass BusinessHour {\n    dayOfWeek : DayOfWeek\n    startTime\n    endTime\n}\n\n\n\nPerson \"1\" -- \"0..2\" PersonRole\nPersonRole <|-- Patient\nPersonRole <|-- Doctor\nRequisition \"*\" -- \"1\" Doctor\nPatient \"1\" -- \"*\" Requisition\nRequisition \"1\" -- \"*\" SpecificTest\nRequisition \"*\" -- \"1\" Lab\nSpecificTest \"1\" -- \"0..1\" TestResult\nSpecificTest \"*\" -- \"1\" Test\nTest \"*\" -- \"1\" TestType\nLab \"1\" -- \"7\" BusinessHour\n\n(Requisition, Lab) .. Appointment\n\n@enduml\n",
+      "generated_plantuml": "@startuml\n\nenum AppointmentType {\n    Scheduled\n    WalkIn\n    DropOffSample\n}\n\nclass Doctor {\n    practitionerNumber : String\n    fullName : String\n    address : String\n    phoneNumber : String\n    signature : Image\n    requisitionDate : Date\n}\n\nclass Patient {\n    healthNumber : String\n    firstName : String\n    lastName : String\n    dateOfBirth : Date\n    address : String\n    phoneNumber : String\n}\n\nclass Requisition {\n    doctor : Doctor\n    patient : Patient\n    testGroup : TestGroup\n    repeatCount : Integer\n    interval : Interval\n}\n\nclass TestGroup {\n    groupName : String\n}\n\nclass Test {\n    testName : String\n    testGroup : TestGroup\n    duration : Integer\n    appointmentType : AppointmentType\n}\n\nclass TestResult {\n    test : Test\n    result : String\n    report : String\n}\n\nclass TimeInterval {\n    interval : Interval\n}\n\nclass Appointment {\n    patient : Patient\n    lab : Lab\n    requisition : Requisition\n    appointmentDate : Date\n    startTime : Time\n    endTime : Time\n    confirmationNumber : String\n}\n\nclass Lab {\n    name : String\n    registrationNumber : String\n    address : String\n    businessHours : TimeInterval\n    changeCancelFee : Double\n}\n\n/' Associations '/\n\nDoctor \"1\" --> \"*\" Requisition : prescribe\nPatient \"1\" --> \"*\" Requisition : receive\nRequisition \"1\" --> \"*\" Test : contain\nTest \"1\" --> \"1\" TestGroup : belong\nTest \"1\" --> \"1\" TestResult : has\nTimeInterval \"1\" <-- \"1..*\" Lab : has\nLab \"1\" --> \"*\" Test : offer\nAppointment \"1\" --> \"1\" Lab : at\nAppointment \"1\" --> \"1\" Requisition : for\nTest \"1\" --> \"1\" AppointmentType : has\n\nnote right of AppointmentType\nAppointmentType is an enumeration\nthat defines types of appointments\nfor tests: Scheduled, WalkIn, DropOffSample\nend note\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.703076923076923,
+        "attribute_score": 0.46993006993006986,
+        "association_score": 0.4285714285714286
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.95,
+          "recall": 0.59375,
+          "f1": 0.73077
+        },
+        "Attribute": {
+          "precision": 0.7125,
+          "recall": 0.62791,
+          "f1": 0.66753
+        },
+        "Association": {
+          "precision": 0.45,
+          "recall": 0.20455,
+          "f1": 0.28125
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.027693076923076987,
+        "attribute_vs_f1": -0.1975999300699301,
+        "association_vs_f1": 0.1473214285714286,
+        "class_vs_precision": -0.2469230769230769,
+        "class_vs_recall": 0.10932692307692304,
+        "attribute_vs_precision": -0.24256993006993016,
+        "attribute_vs_recall": -0.1579799300699301,
+        "association_vs_precision": -0.021428571428571408,
+        "association_vs_recall": 0.2240214285714286
+      },
+      "aggregated": {
+        "metric_average": 0.5338594738594739,
+        "human_f1_average": 0.55985,
+        "overall_delta": -0.025990526140526105
+      }
+    },
+    "CelO_0shot": {
+      "comparison_id": "CelO_0shot",
+      "model_key": "CelO",
+      "model_full_name": "Celebrations Organization System (CelO)",
+      "setting": "0shot",
+      "reference_plantuml": "@startuml\n\nenum AttendeeStatus {\n    Yes\n    Maybe\n    No\n    NoResponse\n}\n\nenum CompletionStatus {\n    ToBeDone\n    Done\n    NotApplicable\n    Attendee\n}\n\nabstract class PersonRole {\n    idNumber\n}\n\nclass Person {\n    lastName\n    firstName\n    emailAddress\n    password\n}\n\nclass Organizer {\n    address\n    phoneNumber\n}\n\nclass Attendee {\n}\n\nclass Registration {\n    status : AttendeeStatus\n}\n\nclass TaskStatus {\n    status : CompletionStatus\n}\n\nclass CheckListTask {\n    description\n}\n\nclass Event {\n    occasion\n    startDateTime\n    endDateTime\n}\n\nclass EventType {\n    name\n}\n\nclass Location {\n    name\n    address\n}\n\n\nPerson \"1\" -- \"0..2\" PersonRole\nPersonRole <|-- Organizer\nPersonRole <|-- Attendee\nOrganizer \"1..*\" -- \"*\" Event\nAttendee \"*\" -- \"*\" Event\nAttendee \"0..1\" -- \"*\" TaskStatus\nEvent \"*\" -- \"1\" EventType\nEvent \"*\" -- \"1\" Location\nEvent \"*\" -- \"*\" CheckListTask\n\n(Attendee, Event) .. Registration\n(CheckListTask, Event) .. TaskStatus\n\n@enduml\n",
+      "generated_plantuml": "@startuml\n\n' ==== Enumerations ====\n\nenum EventType {\n    BIRTHDAY_PARTY\n    GRADUATION_PARTY\n}\n\nenum InvitationStatus {\n    ATTENDING\n    MAYBE_ATTENDING\n    NOT_ATTENDING\n}\n\nenum TaskStatus {\n    NEEDS_TO_BE_DONE\n    DONE\n    NOT_APPLICABLE\n}\n\n' ==== Classes ====\n\nclass Organizer {\n    firstName : String\n    lastName : String\n    email : String\n    postalAddress : String\n    phoneNumber : String\n    password : String\n}\n\nclass Event {\n    eventType : EventType\n    startDate : DateTime\n    endDate : DateTime\n    occasion : String\n    location : String\n}\n\nclass Location {\n    name : String\n    address : String\n}\n\nclass Attendee {\n    firstName : String\n    lastName : String\n    email : String\n    password : String\n    status : InvitationStatus\n}\n\nclass Task {\n    name : String\n    status : TaskStatus\n    assignedAttendee : Attendee\n}\n\n' ==== Relationships ====\n\nOrganizer \"1\" --> \"0..*\" Event : organizes\nOrganizer \"0..1\" --> \"0..*\" Attendee : manages\nEvent \"1\" --> \"0..*\" Attendee : invites\nEvent \"1\" *-- \"1\" Location : contains\nEvent \"1\" *-- \"0..*\" Task : has\nTask \"1\" --> \"0..1\" Attendee : assignedTo\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.55,
+        "attribute_score": 0.47536945812807874,
+        "association_score": 0.26666666666666666
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.9375,
+          "recall": 0.57692,
+          "f1": 0.71429
+        },
+        "Attribute": {
+          "precision": 0.80357,
+          "recall": 0.80435,
+          "f1": 0.80396
+        },
+        "Association": {
+          "precision": 0.33333,
+          "recall": 0.15,
+          "f1": 0.2069
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.16428999999999994,
+        "attribute_vs_f1": -0.32859054187192127,
+        "association_vs_f1": 0.05976666666666666,
+        "class_vs_precision": -0.38749999999999996,
+        "class_vs_recall": -0.026919999999999944,
+        "attribute_vs_precision": -0.32820054187192127,
+        "attribute_vs_recall": -0.3289805418719213,
+        "association_vs_precision": -0.06666333333333335,
+        "association_vs_recall": 0.11666666666666667
+      },
+      "aggregated": {
+        "metric_average": 0.4306787082649151,
+        "human_f1_average": 0.5750500000000001,
+        "overall_delta": -0.14437129173508495
+      }
+    },
+    "CelO_1shot_BTMS": {
+      "comparison_id": "CelO_1shot_BTMS",
+      "model_key": "CelO",
+      "model_full_name": "Celebrations Organization System (CelO)",
+      "setting": "1shot_BTMS",
+      "reference_plantuml": "@startuml\n\nenum AttendeeStatus {\n    Yes\n    Maybe\n    No\n    NoResponse\n}\n\nenum CompletionStatus {\n    ToBeDone\n    Done\n    NotApplicable\n    Attendee\n}\n\nabstract class PersonRole {\n    idNumber\n}\n\nclass Person {\n    lastName\n    firstName\n    emailAddress\n    password\n}\n\nclass Organizer {\n    address\n    phoneNumber\n}\n\nclass Attendee {\n}\n\nclass Registration {\n    status : AttendeeStatus\n}\n\nclass TaskStatus {\n    status : CompletionStatus\n}\n\nclass CheckListTask {\n    description\n}\n\nclass Event {\n    occasion\n    startDateTime\n    endDateTime\n}\n\nclass EventType {\n    name\n}\n\nclass Location {\n    name\n    address\n}\n\n\nPerson \"1\" -- \"0..2\" PersonRole\nPersonRole <|-- Organizer\nPersonRole <|-- Attendee\nOrganizer \"1..*\" -- \"*\" Event\nAttendee \"*\" -- \"*\" Event\nAttendee \"0..1\" -- \"*\" TaskStatus\nEvent \"*\" -- \"1\" EventType\nEvent \"*\" -- \"1\" Location\nEvent \"*\" -- \"*\" CheckListTask\n\n(Attendee, Event) .. Registration\n(CheckListTask, Event) .. TaskStatus\n\n@enduml\n",
+      "generated_plantuml": "@startuml\n\n'=============================\n' Enumerations\n'=============================\nenum EventType {\n    birthdayParty\n    graduationParty\n    ...\n}\n\nenum AttendanceStatus {\n    attending\n    maybeAttending\n    notAttending\n}\n\nenum TaskStatus {\n    needsToBeDone\n    done\n    notApplicable\n}\n\n'=============================\n' Classes\n'=============================\nclass CelO {\n\n}\n\nclass Organizer {\n    firstName : String\n    lastName : String\n    email : String\n    postalAddress : String\n    phoneNumber : String\n    password : String\n}\n\nclass Attendee {\n    firstName : String\n    lastName : String\n    email : String\n    password : String\n    attendanceStatus : AttendanceStatus\n}\n\nclass Event {\n    eventType : EventType\n    startDate : DateTime\n    endDate : DateTime\n    occasion : String\n    location : Location\n}\n\nclass Location {\n    name : String\n    address : String\n}\n\nclass Task {\n    description : String\n    taskStatus : TaskStatus\n    assignedToAttendee : Boolean\n}\n\n'=============================\n' Relationships (Containment)\n'=============================\nCelO \"1\" *-- \"*\" Organizer\nCelO \"1\" *-- \"*\" Attendee\nCelO \"1\" *-- \"*\" Event\nCelO \"1\" *-- \"*\" Location\nCelO \"1\" *-- \"*\" Task\n\n'=============================\n' Associations\n'=============================\nEvent \"1\" --> \"1..*\" Organizer : organizes\nEvent \"*\" --> \"*\" Attendee : attends\nOrganizer \"*\" --> \"*\" Attendee : invites\nEvent \"1\" --> \"1\" Location\nEvent \"1\" --> \"*\" Task : contains\nTask \"0..1\" --> \"1\" Attendee : assignedTo\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5887445887445888,
+        "attribute_score": 0.46178861788617886,
+        "association_score": 0.3
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.94444,
+          "recall": 0.65385,
+          "f1": 0.77273
+        },
+        "Attribute": {
+          "precision": 0.84483,
+          "recall": 0.84783,
+          "f1": 0.84632
+        },
+        "Association": {
+          "precision": 0.59091,
+          "recall": 0.35,
+          "f1": 0.43961
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.18398541125541124,
+        "attribute_vs_f1": -0.3845313821138211,
+        "association_vs_f1": -0.13961,
+        "class_vs_precision": -0.35569541125541115,
+        "class_vs_recall": -0.06510541125541125,
+        "attribute_vs_precision": -0.3830413821138211,
+        "attribute_vs_recall": -0.3860413821138211,
+        "association_vs_precision": -0.29091000000000006,
+        "association_vs_recall": -0.04999999999999999
+      },
+      "aggregated": {
+        "metric_average": 0.45017773554358925,
+        "human_f1_average": 0.68622,
+        "overall_delta": -0.2360422644564108
+      }
+    },
+    "CelO_1shot_H2S": {
+      "comparison_id": "CelO_1shot_H2S",
+      "model_key": "CelO",
+      "model_full_name": "Celebrations Organization System (CelO)",
+      "setting": "1shot_H2S",
+      "reference_plantuml": "@startuml\n\nenum AttendeeStatus {\n    Yes\n    Maybe\n    No\n    NoResponse\n}\n\nenum CompletionStatus {\n    ToBeDone\n    Done\n    NotApplicable\n    Attendee\n}\n\nabstract class PersonRole {\n    idNumber\n}\n\nclass Person {\n    lastName\n    firstName\n    emailAddress\n    password\n}\n\nclass Organizer {\n    address\n    phoneNumber\n}\n\nclass Attendee {\n}\n\nclass Registration {\n    status : AttendeeStatus\n}\n\nclass TaskStatus {\n    status : CompletionStatus\n}\n\nclass CheckListTask {\n    description\n}\n\nclass Event {\n    occasion\n    startDateTime\n    endDateTime\n}\n\nclass EventType {\n    name\n}\n\nclass Location {\n    name\n    address\n}\n\n\nPerson \"1\" -- \"0..2\" PersonRole\nPersonRole <|-- Organizer\nPersonRole <|-- Attendee\nOrganizer \"1..*\" -- \"*\" Event\nAttendee \"*\" -- \"*\" Event\nAttendee \"0..1\" -- \"*\" TaskStatus\nEvent \"*\" -- \"1\" EventType\nEvent \"*\" -- \"1\" Location\nEvent \"*\" -- \"*\" CheckListTask\n\n(Attendee, Event) .. Registration\n(CheckListTask, Event) .. TaskStatus\n\n@enduml\n",
+      "generated_plantuml": "@startuml\n\n' === Enumerations ===\nenum EventType {\n    Birthday_Party\n    Graduation_Party\n}\n\nenum LocationList {\n    Location1\n    Location2\n}\n\nenum TaskStatus {\n    Needs_to_be_done\n    Done\n    Not_applicable\n}\n\nenum AttendanceStatus {\n    Attending\n    Not_Attending\n    Maybe\n}\n\n' === Classes ===\nclass CelO {\n\n}\n\nclass Organizer {\n    firstName : String\n    lastName : String\n    email : String\n    address : String\n    phoneNumber : String\n    password : String\n}\n\nclass Attendee {\n    firstName : String\n    lastName : String\n    email : String\n    password : String\n    status : AttendanceStatus\n}\n\nclass Event {\n    occasion : String\n    eventType : EventType\n    startDate : DateTime\n    endDate : DateTime\n    location : Location\n}\n\nclass Location {\n    name : String\n    address : String\n}\n\nclass Task {\n    description : String\n    status : TaskStatus\n}\n\n' === Relationships ===\nCelO \"1\" *-- \"*\" Organizer\nCelO \"1\" *-- \"*\" Attendee\nCelO \"1\" *-- \"*\" Event\nCelO \"1\" *-- \"*\" Location\nCelO \"1\" *-- \"*\" Task\n\nOrganizer \"1\" --> \"*\" Event\nOrganizer \"1\" --> \"*\" Task\nAttendee \"1\" --> \"*\" Event\nAttendee \"1\" --> \"*\" Task\n\nEvent \"1\" --> \"*\" Attendee\nEvent \"1\" --> \"*\" Location\nEvent \"1\" --> \"*\" Task\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5727272727272728,
+        "attribute_score": 0.540650406504065,
+        "association_score": 0.3333333333333333
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.83333,
+          "recall": 0.57692,
+          "f1": 0.68182
+        },
+        "Attribute": {
+          "precision": 0.77778,
+          "recall": 0.69565,
+          "f1": 0.73443
+        },
+        "Association": {
+          "precision": 0.58333,
+          "recall": 0.3,
+          "f1": 0.39623
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.10909272727272723,
+        "attribute_vs_f1": -0.193779593495935,
+        "association_vs_f1": -0.06289666666666671,
+        "class_vs_precision": -0.26060272727272726,
+        "class_vs_recall": -0.004192727272727237,
+        "attribute_vs_precision": -0.237129593495935,
+        "attribute_vs_recall": -0.15499959349593495,
+        "association_vs_precision": -0.2499966666666667,
+        "association_vs_recall": 0.033333333333333326
+      },
+      "aggregated": {
+        "metric_average": 0.48223700418822363,
+        "human_f1_average": 0.60416,
+        "overall_delta": -0.1219229958117764
+      }
+    },
+    "CelO_2shots": {
+      "comparison_id": "CelO_2shots",
+      "model_key": "CelO",
+      "model_full_name": "Celebrations Organization System (CelO)",
+      "setting": "2shots",
+      "reference_plantuml": "@startuml\n\nenum AttendeeStatus {\n    Yes\n    Maybe\n    No\n    NoResponse\n}\n\nenum CompletionStatus {\n    ToBeDone\n    Done\n    NotApplicable\n    Attendee\n}\n\nabstract class PersonRole {\n    idNumber\n}\n\nclass Person {\n    lastName\n    firstName\n    emailAddress\n    password\n}\n\nclass Organizer {\n    address\n    phoneNumber\n}\n\nclass Attendee {\n}\n\nclass Registration {\n    status : AttendeeStatus\n}\n\nclass TaskStatus {\n    status : CompletionStatus\n}\n\nclass CheckListTask {\n    description\n}\n\nclass Event {\n    occasion\n    startDateTime\n    endDateTime\n}\n\nclass EventType {\n    name\n}\n\nclass Location {\n    name\n    address\n}\n\n\nPerson \"1\" -- \"0..2\" PersonRole\nPersonRole <|-- Organizer\nPersonRole <|-- Attendee\nOrganizer \"1..*\" -- \"*\" Event\nAttendee \"*\" -- \"*\" Event\nAttendee \"0..1\" -- \"*\" TaskStatus\nEvent \"*\" -- \"1\" EventType\nEvent \"*\" -- \"1\" Location\nEvent \"*\" -- \"*\" CheckListTask\n\n(Attendee, Event) .. Registration\n(CheckListTask, Event) .. TaskStatus\n\n@enduml\n",
+      "generated_plantuml": "@startuml\n\n' =======================\n' Enumerations\n' =======================\n\nenum EventType {\n    birthdayParty\n    graduationParty\n    other\n}\n\nenum EventStatus {\n    attending\n    maybeAttending\n    notAttending\n}\n\nenum TaskStatus {\n    needsToBeDone\n    done\n    notApplicable\n}\n\n' =======================\n' Classes\n' =======================\n\nclass CelO {\n}\n\nclass Organizer {\n    firstName : String\n    lastName : String\n    email : String\n    address : String\n    phoneNumber : String\n    password : String\n}\n\nclass Attendee {\n    firstName : String\n    lastName : String\n    email : String\n    password : String\n}\n\nclass Event {\n    type : EventType\n    startDate : DateTime\n    endDate : DateTime\n    occasion : String\n    locationName : String\n    locationAddress : String\n}\n\nclass Invitation {\n    status : EventStatus\n}\n\nclass Task {\n    description : String\n    status : TaskStatus\n}\n\n\n' =======================\n' Relationships\n' =======================\n\nCelO \"1\" *-- \"*\" Organizer\nCelO \"1\" *-- \"*\" Attendee\nCelO \"1\" *-- \"*\" Event\nCelO \"1\" *-- \"*\" Invitation\nCelO \"1\" *-- \"*\" Task\n\nOrganizer \"1\" --> \"*\" Event : creates\nOrganizer \"1\" --> \"*\" Attendee : invites\nOrganizer \"1\" --> \"*\" Task : manages\n\nAttendee \"1\" --> \"*\" Invitation : receives\nAttendee \"1\" --> \"*\" Event : attends\nAttendee \"1\" --> \"*\" Task : accomplishes\n\nEvent \"1\" *-- \"*\" Invitation : has\nEvent \"1\" *-- \"*\" Task : has\n\nInvitation \"1\" --> \"1\" Attendee : associatedAttendee\nInvitation \"1\" --> \"1\" Event : associatedEvent\n\nTask \"1\" --> \"1\" Event : associatedEvent\nTask \"1\" --> \"0..1\" Attendee : assignedTo\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5572441742654509,
+        "attribute_score": 0.516884531590414,
+        "association_score": 0.2692307692307692
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.94444,
+          "recall": 0.69231,
+          "f1": 0.79896
+        },
+        "Attribute": {
+          "precision": 0.85185,
+          "recall": 0.78261,
+          "f1": 0.81576
+        },
+        "Association": {
+          "precision": 0.44118,
+          "recall": 0.3,
+          "f1": 0.35714
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.24171582573454908,
+        "attribute_vs_f1": -0.298875468409586,
+        "association_vs_f1": -0.0879092307692308,
+        "class_vs_precision": -0.387195825734549,
+        "class_vs_recall": -0.13506582573454906,
+        "attribute_vs_precision": -0.33496546840958596,
+        "attribute_vs_recall": -0.265725468409586,
+        "association_vs_precision": -0.1719492307692308,
+        "association_vs_recall": -0.03076923076923077
+      },
+      "aggregated": {
+        "metric_average": 0.4477864916955447,
+        "human_f1_average": 0.6572866666666667,
+        "overall_delta": -0.209500174971122
+      }
+    },
+    "CelO_CoT": {
+      "comparison_id": "CelO_CoT",
+      "model_key": "CelO",
+      "model_full_name": "Celebrations Organization System (CelO)",
+      "setting": "CoT",
+      "reference_plantuml": "@startuml\n\nenum AttendeeStatus {\n    Yes\n    Maybe\n    No\n    NoResponse\n}\n\nenum CompletionStatus {\n    ToBeDone\n    Done\n    NotApplicable\n    Attendee\n}\n\nabstract class PersonRole {\n    idNumber\n}\n\nclass Person {\n    lastName\n    firstName\n    emailAddress\n    password\n}\n\nclass Organizer {\n    address\n    phoneNumber\n}\n\nclass Attendee {\n}\n\nclass Registration {\n    status : AttendeeStatus\n}\n\nclass TaskStatus {\n    status : CompletionStatus\n}\n\nclass CheckListTask {\n    description\n}\n\nclass Event {\n    occasion\n    startDateTime\n    endDateTime\n}\n\nclass EventType {\n    name\n}\n\nclass Location {\n    name\n    address\n}\n\n\nPerson \"1\" -- \"0..2\" PersonRole\nPersonRole <|-- Organizer\nPersonRole <|-- Attendee\nOrganizer \"1..*\" -- \"*\" Event\nAttendee \"*\" -- \"*\" Event\nAttendee \"0..1\" -- \"*\" TaskStatus\nEvent \"*\" -- \"1\" EventType\nEvent \"*\" -- \"1\" Location\nEvent \"*\" -- \"*\" CheckListTask\n\n(Attendee, Event) .. Registration\n(CheckListTask, Event) .. TaskStatus\n\n@enduml\n",
+      "generated_plantuml": "@startuml\n\nclass Organizer {\n    firstName : String\n    lastName : String\n    emailAddress : String\n    postalAddress : String\n    phoneNumber : String\n    password : String\n}\n\nclass EventType {\n    name : String\n}\n\nclass Location {\n    name : String\n    address : String\n}\n\nclass Event {\n    eventType : EventType\n    startDate : DateTime\n    endDate : DateTime\n    occasion : String\n    location : Location\n}\n\nclass Attendee {\n    firstName : String\n    lastName : String\n    emailAddress : String\n    password : String\n}\n\nclass InvitationStatus {\n    attendee : Attendee\n    event : Event\n    status : String\n}\n\nclass ChecklistItem {\n    task : String\n    status : String\n    event : Event\n    isForAttendees : Boolean\n}\n\nclass AttendeeTask {\n    attendee : Attendee\n    task : ChecklistItem\n}\n\n' Corrected Associations\nOrganizer \"1..*\" *-- \"1..*\" Event : organizes\nEvent \"1..*\" *-- \"1..*\" Organizer : isOrganizedBy\nEvent \"1\" *-- \"1\" EventType : hasType\nEvent \"1\" *-- \"1\" Location : hasLocation\nEvent \"1\" *-- \"*\" InvitationStatus : invitations\nAttendee \"1\" *-- \"*\" InvitationStatus : invitationStatuses\nEvent \"1\" *-- \"*\" ChecklistItem : checklist\nAttendee \"1\" *-- \"*\" AttendeeTask : tasks\nChecklistItem \"1\" *-- \"*\" AttendeeTask : assignedTasks\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.25,
+        "attribute_score": 0.7903225806451613,
+        "association_score": 0.0
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.75,
+          "recall": 0.53846,
+          "f1": 0.62687
+        },
+        "Attribute": {
+          "precision": 0.64815,
+          "recall": 0.82609,
+          "f1": 0.72638
+        },
+        "Association": {
+          "precision": 0.22222,
+          "recall": 0.075,
+          "f1": 0.11215
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.37687000000000004,
+        "attribute_vs_f1": 0.06394258064516123,
+        "association_vs_f1": -0.11215,
+        "class_vs_precision": -0.5,
+        "class_vs_recall": -0.28846000000000005,
+        "attribute_vs_precision": 0.14217258064516125,
+        "attribute_vs_recall": -0.035767419354838736,
+        "association_vs_precision": -0.22222,
+        "association_vs_recall": -0.075
+      },
+      "aggregated": {
+        "metric_average": 0.34677419354838707,
+        "human_f1_average": 0.48846666666666666,
+        "overall_delta": -0.1416924731182796
+      }
+    },
+    "TSS_0shot": {
+      "comparison_id": "TSS_0shot",
+      "model_key": "TSS",
+      "model_full_name": "Team Sports Scouting (TSS)",
+      "setting": "0shot",
+      "reference_plantuml": "@startuml\n\nenum Position {\n    GK\n    LB\n}\n\nenum Recommendation {\n    KEY_PLAYER\n    FIRST_TEAM_PLAYER\n    RESERVE_TEAM_PLAYER\n    PROSPECTIVE_PLAYER\n    NOT_RECOMMENDED\n}\n\nenum ScoutingStatus {\n  LONG_LISTED\n  SHORT_LISTED\n  RECOMMENDED_FOR_SIGNING\n  OFFER_MADE\n}\n\nenum ScoutKind {\n  REGULAR_SCOUT\n  HEAD_SCOUT\n}\n\nclass Person {\n  firstName : EString\n  lastName : EString\n}\n\nclass Director {\n}\n\nclass Club {\n}\n\nclass Scout {\n}\n\nclass Offer {\n    value : EInt\n}\n\nclass HeadCoach {\n}\n\nclass Player {\n}\n\nclass PlayerAttribute {\n    name : EString\n    value : EInt\n}\n\nclass PlayerProfile {\n    position : Position = GK\n}\n\nclass ScoutingAssignment {\n}\n\nclass ScoutReport {\n    pro : String\n    con : String\n    recommendation : Recommendation = KEY_PLAYER\n}\n\nPerson <|-- Player\nPerson <|-- HeadCoach\nPerson <|-- Director\nPerson <|-- Scout\n\n\nClub \"1\" o-- \"0..1\" Director : director\nDirector \"1\" o-- \"0..1\" Offer : offers\nClub \"1\" o-- \"0..*\" Scout : scouts\nClub \"1\" o-- \"0..1\" HeadCoach : headcoach\nOffer \"0..*\" -- \"0..1\" Player : player\nHeadCoach \"1\" o-- \"0..*\" PlayerProfile : targetPlayerProfile\nPlayer \"1..*\" --o \"1\" Club : scoutedPlayers\nPlayer \"1..*\" -- \"0..*\" ScoutingAssignment : scoutings\nScoutingAssignment \"1\" o-- \"0..1\" ScoutReport : report\nPlayer \"0..1\" -- \"0..1\" PlayerProfile : matchingPlayers\nPlayerProfile \"1\" o-- \"0..*\" PlayerAttribute : attributes\nScout \"1\" o-- \"0..*\" ScoutingAssignment : assignments\nScoutReport \"0..1\" --> \"0..1\" ScoutReport : nextReport\nScoutReport \"0..1\" <-- \"0..1\" ScoutReport : prevReport\n\n@enduml\n",
+      "generated_plantuml": "@startuml\n\n' ================= ENUMERATIONS ===================\n\nenum Position {\n  GK\n  LB\n}\n\nenum Recommendation {\n  key player\n  first team player\n  reserve team player\n  prospective player\n  not a good signing\n}\n\n' ================= CLASSES ===================\n\nclass Employee {\n  name : String\n}\n\nclass HeadCoach {\n}\n\nclass Director {\n}\n\nclass Scout {\n}\n\nclass PlayerProfile {\n  targetPosition : Position\n  attributeName : String\n  attributeValue : int\n}\n\nclass LongList {\n}\n\nclass ShortList {\n}\n\nclass ScoutingAssignment {\n}\n\nclass ScoutingReport {\n  pros : String\n  cons : String\n  recommendation : Recommendation\n}\n\n' ================= INHERITANCE ===================\n\nEmployee <|-- HeadCoach\nEmployee <|-- Director\nEmployee <|-- Scout\n\n' ================= ASSOCIATIONS ===================\n\nEmployee \"1\" -- \"0..1\" HeadCoach\nEmployee \"1\" -- \"0..1\" Director\nEmployee \"1\" -- \"0..*\" Scout\n\nHeadCoach \"1\" -- \"1..*\" PlayerProfile\nScout \"1\" -- \"0..*\" LongList\nScout \"1\" -- \"0..*\" ScoutingAssignment\nScoutingAssignment \"1\" -- \"1\" ScoutingReport\nHeadCoach \"1\" -- \"0..*\" ShortList\n\n' ================= COMPOSITIONS ===================\n\nLongList \"1\" *-- \"1..*\" PlayerProfile\nShortList \"1\" *-- \"1..*\" PlayerProfile\nScoutingAssignment \"1\" *-- \"1\" PlayerProfile\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5207277752187931,
+        "attribute_score": 0.3833333333333332,
+        "association_score": 0.1935483870967742
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.85,
+          "recall": 0.46875,
+          "f1": 0.60427
+        },
+        "Attribute": {
+          "precision": 0.92857,
+          "recall": 0.66667,
+          "f1": 0.77612
+        },
+        "Association": {
+          "precision": 0.42857,
+          "recall": 0.225,
+          "f1": 0.29508
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.08354222478120688,
+        "attribute_vs_f1": -0.39278666666666684,
+        "association_vs_f1": -0.10153161290322582,
+        "class_vs_precision": -0.3292722247812069,
+        "class_vs_recall": 0.0519777752187931,
+        "attribute_vs_precision": -0.5452366666666668,
+        "attribute_vs_recall": -0.2833366666666668,
+        "association_vs_precision": -0.23502161290322582,
+        "association_vs_recall": -0.03145161290322582
+      },
+      "aggregated": {
+        "metric_average": 0.3658698318829668,
+        "human_f1_average": 0.55849,
+        "overall_delta": -0.19262016811703325
+      }
+    },
+    "TSS_1shot_BTMS": {
+      "comparison_id": "TSS_1shot_BTMS",
+      "model_key": "TSS",
+      "model_full_name": "Team Sports Scouting (TSS)",
+      "setting": "1shot_BTMS",
+      "reference_plantuml": "@startuml\n\nenum Position {\n    GK\n    LB\n}\n\nenum Recommendation {\n    KEY_PLAYER\n    FIRST_TEAM_PLAYER\n    RESERVE_TEAM_PLAYER\n    PROSPECTIVE_PLAYER\n    NOT_RECOMMENDED\n}\n\nenum ScoutingStatus {\n  LONG_LISTED\n  SHORT_LISTED\n  RECOMMENDED_FOR_SIGNING\n  OFFER_MADE\n}\n\nenum ScoutKind {\n  REGULAR_SCOUT\n  HEAD_SCOUT\n}\n\nclass Person {\n  firstName : EString\n  lastName : EString\n}\n\nclass Director {\n}\n\nclass Club {\n}\n\nclass Scout {\n}\n\nclass Offer {\n    value : EInt\n}\n\nclass HeadCoach {\n}\n\nclass Player {\n}\n\nclass PlayerAttribute {\n    name : EString\n    value : EInt\n}\n\nclass PlayerProfile {\n    position : Position = GK\n}\n\nclass ScoutingAssignment {\n}\n\nclass ScoutReport {\n    pro : String\n    con : String\n    recommendation : Recommendation = KEY_PLAYER\n}\n\nPerson <|-- Player\nPerson <|-- HeadCoach\nPerson <|-- Director\nPerson <|-- Scout\n\n\nClub \"1\" o-- \"0..1\" Director : director\nDirector \"1\" o-- \"0..1\" Offer : offers\nClub \"1\" o-- \"0..*\" Scout : scouts\nClub \"1\" o-- \"0..1\" HeadCoach : headcoach\nOffer \"0..*\" -- \"0..1\" Player : player\nHeadCoach \"1\" o-- \"0..*\" PlayerProfile : targetPlayerProfile\nPlayer \"1..*\" --o \"1\" Club : scoutedPlayers\nPlayer \"1..*\" -- \"0..*\" ScoutingAssignment : scoutings\nScoutingAssignment \"1\" o-- \"0..1\" ScoutReport : report\nPlayer \"0..1\" -- \"0..1\" PlayerProfile : matchingPlayers\nPlayerProfile \"1\" o-- \"0..*\" PlayerAttribute : attributes\nScout \"1\" o-- \"0..*\" ScoutingAssignment : assignments\nScoutReport \"0..1\" --> \"0..1\" ScoutReport : nextReport\nScoutReport \"0..1\" <-- \"0..1\" ScoutReport : prevReport\n\n@enduml\n",
+      "generated_plantuml": "@startuml\n\n' ===== Enumerations =====\nenum Position {\n  GK\n  LB\n  RB\n  CB\n  CM\n  LM\n  RM\n  CAM\n  LW\n  RW\n  ST\n}\n\nenum Recommendation {\n  keyPlayer\n  firstTeamPlayer\n  reserveTeamPlayer\n  prospectivePlayer\n  notGoodSigning\n}\n\n' ===== Classes =====\nclass TeamSportsScoutingSystem {\n\n}\n\nclass HeadCoach {\n  name : String\n}\n\nclass Director {\n  name : String\n}\n\nclass Scout {\n  name : String\n}\n\nclass PlayerProfile {\n  position : Position\n  attributes : List<Attribute>\n}\n\nclass Attribute {\n  name : String\n  value : Integer\n}\n\nclass LongListEntry {\n  playerName : String\n}\n\nclass ScoutingAssignment {\n  startDate : Date\n  endDate : Date\n}\n\nclass ScoutingReport {\n  pros : String\n  cons : String\n  recommendation : Recommendation\n}\n\nclass ShortListEntry {\n  playerName : String\n}\n\n' ===== Relationships =====\nTeamSportsScoutingSystem \"1\" *-- \"1\" HeadCoach\nTeamSportsScoutingSystem \"1\" *-- \"1\" Director\nTeamSportsScoutingSystem \"1\" *-- \"*\" Scout\nTeamSportsScoutingSystem \"1\" *-- \"*\" PlayerProfile\nTeamSportsScoutingSystem \"1\" *-- \"*\" LongListEntry\nTeamSportsScoutingSystem \"1\" *-- \"*\" ScoutingAssignment\nTeamSportsScoutingSystem \"1\" *-- \"*\" ScoutingReport\nTeamSportsScoutingSystem \"1\" *-- \"*\" ShortListEntry\n\nScoutingAssignment \"1\" --> \"1\" Scout\nScoutingAssignment \"1\" --> \"1\" LongListEntry\nScoutingReport \"1\" --> \"1\" Scout\nScoutingReport \"1\" --> \"1\" ScoutingAssignment\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.40740740740740744,
+        "attribute_score": 0.3650793650793651,
+        "association_score": 0.10344827586206896
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.91667,
+          "recall": 0.625,
+          "f1": 0.74324
+        },
+        "Attribute": {
+          "precision": 0.48148,
+          "recall": 0.6875,
+          "f1": 0.56634
+        },
+        "Association": {
+          "precision": 0.375,
+          "recall": 0.15,
+          "f1": 0.21429
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.33583259259259257,
+        "attribute_vs_f1": -0.20126063492063484,
+        "association_vs_f1": -0.11084172413793104,
+        "class_vs_precision": -0.5092625925925925,
+        "class_vs_recall": -0.21759259259259256,
+        "attribute_vs_precision": -0.1164006349206349,
+        "attribute_vs_recall": -0.3224206349206349,
+        "association_vs_precision": -0.27155172413793105,
+        "association_vs_recall": -0.04655172413793103
+      },
+      "aggregated": {
+        "metric_average": 0.2919783494496138,
+        "human_f1_average": 0.5079566666666667,
+        "overall_delta": -0.2159783172170529
+      }
+    },
+    "TSS_1shot_H2S": {
+      "comparison_id": "TSS_1shot_H2S",
+      "model_key": "TSS",
+      "model_full_name": "Team Sports Scouting (TSS)",
+      "setting": "1shot_H2S",
+      "reference_plantuml": "@startuml\n\nenum Position {\n    GK\n    LB\n}\n\nenum Recommendation {\n    KEY_PLAYER\n    FIRST_TEAM_PLAYER\n    RESERVE_TEAM_PLAYER\n    PROSPECTIVE_PLAYER\n    NOT_RECOMMENDED\n}\n\nenum ScoutingStatus {\n  LONG_LISTED\n  SHORT_LISTED\n  RECOMMENDED_FOR_SIGNING\n  OFFER_MADE\n}\n\nenum ScoutKind {\n  REGULAR_SCOUT\n  HEAD_SCOUT\n}\n\nclass Person {\n  firstName : EString\n  lastName : EString\n}\n\nclass Director {\n}\n\nclass Club {\n}\n\nclass Scout {\n}\n\nclass Offer {\n    value : EInt\n}\n\nclass HeadCoach {\n}\n\nclass Player {\n}\n\nclass PlayerAttribute {\n    name : EString\n    value : EInt\n}\n\nclass PlayerProfile {\n    position : Position = GK\n}\n\nclass ScoutingAssignment {\n}\n\nclass ScoutReport {\n    pro : String\n    con : String\n    recommendation : Recommendation = KEY_PLAYER\n}\n\nPerson <|-- Player\nPerson <|-- HeadCoach\nPerson <|-- Director\nPerson <|-- Scout\n\n\nClub \"1\" o-- \"0..1\" Director : director\nDirector \"1\" o-- \"0..1\" Offer : offers\nClub \"1\" o-- \"0..*\" Scout : scouts\nClub \"1\" o-- \"0..1\" HeadCoach : headcoach\nOffer \"0..*\" -- \"0..1\" Player : player\nHeadCoach \"1\" o-- \"0..*\" PlayerProfile : targetPlayerProfile\nPlayer \"1..*\" --o \"1\" Club : scoutedPlayers\nPlayer \"1..*\" -- \"0..*\" ScoutingAssignment : scoutings\nScoutingAssignment \"1\" o-- \"0..1\" ScoutReport : report\nPlayer \"0..1\" -- \"0..1\" PlayerProfile : matchingPlayers\nPlayerProfile \"1\" o-- \"0..*\" PlayerAttribute : attributes\nScout \"1\" o-- \"0..*\" ScoutingAssignment : assignments\nScoutReport \"0..1\" --> \"0..1\" ScoutReport : nextReport\nScoutReport \"0..1\" <-- \"0..1\" ScoutReport : prevReport\n\n@enduml\n",
+      "generated_plantuml": "@startuml\n\n' Enumerations\nenum DesignatedTargetPosition {\n    GK\n    LB\n    ...\n}\n\nenum ScoutingRecommendation {\n    KeyPlayer\n    FirstTeamPlayer\n    ReserveTeamPlayer\n    ProspectivePlayer\n    NotGoodSigning\n}\n\n' Classes\nclass PlayerAttribute {\n    attributeName : String\n    attributeValue : Integer\n}\n\nclass TeamSportsScoutingSystem {\n\n}\n\nclass Employee {\n    name : String\n}\n\nclass HeadCoach {\n\n}\n\nclass Director {\n\n}\n\nclass Scout {\n\n}\n\nclass HeadScout {\n\n}\n\nclass Player {\n    name : String\n}\n\nclass DesignatedPlayerProfile {\n    position : String\n    attributes : List<PlayerAttribute>\n}\n\nclass ScoutingAssignment {\n    status : String\n}\n\nclass ScoutingReport {\n    pros : String\n    cons : String\n    recommendation : ScoutingRecommendation\n}\n\n' Relationships\nTeamSportsScoutingSystem \"1\" *-- \"*\" Employee\nTeamSportsScoutingSystem \"1\" *-- \"*\" Player\nTeamSportsScoutingSystem \"1\" *-- \"*\" DesignatedPlayerProfile\nTeamSportsScoutingSystem \"1\" *-- \"*\" ScoutingAssignment\nTeamSportsScoutingSystem \"1\" *-- \"*\" ScoutingReport\n\nEmployee <|-- HeadCoach\nEmployee <|-- Director\nEmployee <|-- Scout\nScout <|-- HeadScout\n\nHeadCoach \"1\" --> \"*\" DesignatedPlayerProfile\nDesignatedPlayerProfile \"1\" --> \"*\" Player : LongList\nHeadScout \"1\" --> \"*\" ScoutingAssignment\nScoutingAssignment \"1\" --> \"1\" Player\nScoutingAssignment \"1\" --> \"1\" ScoutingReport\nScoutingReport \"1\" --> \"1\" Player : ShortList\n\nHeadCoach \"1\" --> \"1\" HeadScout\nHeadScout \"1\" --> \"1\" Director\nDirector \"1\" --> \"*\" Player : SignedPlayers\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5,
+        "attribute_score": 0.276470588235294,
+        "association_score": 0.19999999999999998
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.88462,
+          "recall": 0.6875,
+          "f1": 0.7737
+        },
+        "Attribute": {
+          "precision": 0.85294,
+          "recall": 0.72917,
+          "f1": 0.78621
+        },
+        "Association": {
+          "precision": 0.47222,
+          "recall": 0.375,
+          "f1": 0.41803
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.27370000000000005,
+        "attribute_vs_f1": -0.5097394117647059,
+        "association_vs_f1": -0.21803000000000003,
+        "class_vs_precision": -0.38461999999999996,
+        "class_vs_recall": -0.1875,
+        "attribute_vs_precision": -0.576469411764706,
+        "attribute_vs_recall": -0.45269941176470596,
+        "association_vs_precision": -0.27222,
+        "association_vs_recall": -0.17500000000000002
+      },
+      "aggregated": {
+        "metric_average": 0.3254901960784313,
+        "human_f1_average": 0.6593133333333333,
+        "overall_delta": -0.333823137254902
+      }
+    },
+    "TSS_2shots": {
+      "comparison_id": "TSS_2shots",
+      "model_key": "TSS",
+      "model_full_name": "Team Sports Scouting (TSS)",
+      "setting": "2shots",
+      "reference_plantuml": "@startuml\n\nenum Position {\n    GK\n    LB\n}\n\nenum Recommendation {\n    KEY_PLAYER\n    FIRST_TEAM_PLAYER\n    RESERVE_TEAM_PLAYER\n    PROSPECTIVE_PLAYER\n    NOT_RECOMMENDED\n}\n\nenum ScoutingStatus {\n  LONG_LISTED\n  SHORT_LISTED\n  RECOMMENDED_FOR_SIGNING\n  OFFER_MADE\n}\n\nenum ScoutKind {\n  REGULAR_SCOUT\n  HEAD_SCOUT\n}\n\nclass Person {\n  firstName : EString\n  lastName : EString\n}\n\nclass Director {\n}\n\nclass Club {\n}\n\nclass Scout {\n}\n\nclass Offer {\n    value : EInt\n}\n\nclass HeadCoach {\n}\n\nclass Player {\n}\n\nclass PlayerAttribute {\n    name : EString\n    value : EInt\n}\n\nclass PlayerProfile {\n    position : Position = GK\n}\n\nclass ScoutingAssignment {\n}\n\nclass ScoutReport {\n    pro : String\n    con : String\n    recommendation : Recommendation = KEY_PLAYER\n}\n\nPerson <|-- Player\nPerson <|-- HeadCoach\nPerson <|-- Director\nPerson <|-- Scout\n\n\nClub \"1\" o-- \"0..1\" Director : director\nDirector \"1\" o-- \"0..1\" Offer : offers\nClub \"1\" o-- \"0..*\" Scout : scouts\nClub \"1\" o-- \"0..1\" HeadCoach : headcoach\nOffer \"0..*\" -- \"0..1\" Player : player\nHeadCoach \"1\" o-- \"0..*\" PlayerProfile : targetPlayerProfile\nPlayer \"1..*\" --o \"1\" Club : scoutedPlayers\nPlayer \"1..*\" -- \"0..*\" ScoutingAssignment : scoutings\nScoutingAssignment \"1\" o-- \"0..1\" ScoutReport : report\nPlayer \"0..1\" -- \"0..1\" PlayerProfile : matchingPlayers\nPlayerProfile \"1\" o-- \"0..*\" PlayerAttribute : attributes\nScout \"1\" o-- \"0..*\" ScoutingAssignment : assignments\nScoutReport \"0..1\" --> \"0..1\" ScoutReport : nextReport\nScoutReport \"0..1\" <-- \"0..1\" ScoutReport : prevReport\n\n@enduml\n",
+      "generated_plantuml": "@startuml\n\n' Enumerations\nenum PlayerPosition {\n  GK\n  LB\n  ...\n}\n\nenum PlayerRecommendation {\n  keyPlayer\n  firstTeamPlayer\n  reserveTeamPlayer\n  prospectivePlayer\n  notGoodSigning\n}\n\n' Classes\nclass TeamSportsScoutingSystem {\n}\n\nclass Employee {\n  name : String\n}\n\nclass HeadCoach {\n}\n\nclass Director {\n}\n\nclass Scout {\n}\n\nclass PlayerProfile {\n  position : PlayerPosition\n  attributeName : String\n  attributeValue : String\n}\n\nclass LongListPlayer {\n  playerName : String\n}\n\nclass ScoutingAssignment {\n  date : Date\n}\n\nclass ScoutingReport {\n  pros : String\n  cons : String\n  recommendation : PlayerRecommendation\n}\n\nclass ShortListPlayer {\n  playerName : String\n}\n\n' Relationships\n\nTeamSportsScoutingSystem \"1\" *-- \"*\" Employee\nTeamSportsScoutingSystem \"1\" *-- \"*\" PlayerProfile\nTeamSportsScoutingSystem \"1\" *-- \"*\" LongListPlayer\nTeamSportsScoutingSystem \"1\" *-- \"*\" ScoutingAssignment\nTeamSportsScoutingSystem \"1\" *-- \"*\" ScoutingReport\nTeamSportsScoutingSystem \"1\" *-- \"*\" ShortListPlayer\n\nEmployee <|-- HeadCoach\nEmployee <|-- Director\nEmployee <|-- Scout\n\nHeadCoach \"1\" --> \"*\" PlayerProfile\n\nLongListPlayer \"*\" --> \"1\" PlayerProfile\nScoutingAssignment \"*\" --> \"1\" LongListPlayer\nScoutingAssignment \"*\" --> \"1\" Scout\nScoutingReport \"1\" --> \"1\" ScoutingAssignment\nShortListPlayer \"*\" --> \"1\" PlayerProfile\nShortListPlayer \"*\" --> \"1\" ScoutingReport\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.46379215035931454,
+        "attribute_score": 0.25339366515837103,
+        "association_score": 0.1818181818181818
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.91667,
+          "recall": 0.5625,
+          "f1": 0.69718
+        },
+        "Attribute": {
+          "precision": 0.41176,
+          "recall": 0.66667,
+          "f1": 0.50909
+        },
+        "Association": {
+          "precision": 0.59375,
+          "recall": 0.375,
+          "f1": 0.45968
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.23338784964068549,
+        "attribute_vs_f1": -0.255696334841629,
+        "association_vs_f1": -0.2778618181818182,
+        "class_vs_precision": -0.45287784964068545,
+        "class_vs_recall": -0.09870784964068546,
+        "attribute_vs_precision": -0.158366334841629,
+        "attribute_vs_recall": -0.41327633484162896,
+        "association_vs_precision": -0.41193181818181823,
+        "association_vs_recall": -0.1931818181818182
+      },
+      "aggregated": {
+        "metric_average": 0.2996679991119558,
+        "human_f1_average": 0.5553166666666667,
+        "overall_delta": -0.2556486675547109
+      }
+    },
+    "TSS_CoT": {
+      "comparison_id": "TSS_CoT",
+      "model_key": "TSS",
+      "model_full_name": "Team Sports Scouting (TSS)",
+      "setting": "CoT",
+      "reference_plantuml": "@startuml\n\nenum Position {\n    GK\n    LB\n}\n\nenum Recommendation {\n    KEY_PLAYER\n    FIRST_TEAM_PLAYER\n    RESERVE_TEAM_PLAYER\n    PROSPECTIVE_PLAYER\n    NOT_RECOMMENDED\n}\n\nenum ScoutingStatus {\n  LONG_LISTED\n  SHORT_LISTED\n  RECOMMENDED_FOR_SIGNING\n  OFFER_MADE\n}\n\nenum ScoutKind {\n  REGULAR_SCOUT\n  HEAD_SCOUT\n}\n\nclass Person {\n  firstName : EString\n  lastName : EString\n}\n\nclass Director {\n}\n\nclass Club {\n}\n\nclass Scout {\n}\n\nclass Offer {\n    value : EInt\n}\n\nclass HeadCoach {\n}\n\nclass Player {\n}\n\nclass PlayerAttribute {\n    name : EString\n    value : EInt\n}\n\nclass PlayerProfile {\n    position : Position = GK\n}\n\nclass ScoutingAssignment {\n}\n\nclass ScoutReport {\n    pro : String\n    con : String\n    recommendation : Recommendation = KEY_PLAYER\n}\n\nPerson <|-- Player\nPerson <|-- HeadCoach\nPerson <|-- Director\nPerson <|-- Scout\n\n\nClub \"1\" o-- \"0..1\" Director : director\nDirector \"1\" o-- \"0..1\" Offer : offers\nClub \"1\" o-- \"0..*\" Scout : scouts\nClub \"1\" o-- \"0..1\" HeadCoach : headcoach\nOffer \"0..*\" -- \"0..1\" Player : player\nHeadCoach \"1\" o-- \"0..*\" PlayerProfile : targetPlayerProfile\nPlayer \"1..*\" --o \"1\" Club : scoutedPlayers\nPlayer \"1..*\" -- \"0..*\" ScoutingAssignment : scoutings\nScoutingAssignment \"1\" o-- \"0..1\" ScoutReport : report\nPlayer \"0..1\" -- \"0..1\" PlayerProfile : matchingPlayers\nPlayerProfile \"1\" o-- \"0..*\" PlayerAttribute : attributes\nScout \"1\" o-- \"0..*\" ScoutingAssignment : assignments\nScoutReport \"0..1\" --> \"0..1\" ScoutReport : nextReport\nScoutReport \"0..1\" <-- \"0..1\" ScoutReport : prevReport\n\n@enduml\n",
+      "generated_plantuml": "@startuml\n\nclass Club {\n\n}\n\nclass Employee {\n\n}\n\nclass HeadCoach {\n\n}\n\nclass Director {\n\n}\n\nclass Scout {\n\n}\n\nclass PlayerProfile {\n    position : String\n    attributes : KeyValuePair<String, Int>[]\n}\n\nclass LongList {\n\n}\n\nclass ScoutingAssignment {\n\n}\n\nclass ScoutingReport {\n    pros : String[]\n    cons : String[]\n    recommendation : String\n}\n\nclass ShortList {\n\n}\n\nclass Player {\n\n}\n\nclass Offer {\n\n}\n\n'=====================\n' Associations\n'=====================\n\nClub \"1\" *-- \"*\" Employee\nClub \"1\" *-- \"*\" PlayerProfile\nClub \"1\" *-- \"*\" LongList\nClub \"1\" *-- \"*\" ShortList\nClub \"1\" *-- \"1\" HeadCoach\nClub \"1\" *-- \"1\" Director\nClub \"1\" *-- \"*\" Scout\n\nHeadCoach \"1\" --> \"*\" PlayerProfile : create\n\n' Corrected relationship: Scout adds multiple Players to LongList\nScout \"1\" --> \"*\" LongList : add Player\nLongList \"1\" *-- \"*\" Player : contain\n\nHeadCoach \"1\" --> \"*\" ScoutingAssignment : associate\nHeadCoach \"1\" --> \"*\" Scout : assign ScoutingAssignment\nScout \"*\" --> \"*\" ScoutingAssignment : assigned\n\nScout \"1\" --> \"*\" ScoutingReport : submit\nScoutingReport \"1\" --> \"1\" ScoutingAssignment : associate\nScoutingAssignment \"1\" *-- \"1\" Player : contain\n\nShortList \"1\" *-- \"*\" Player : contain\nHeadCoach \"1\" --> \"*\" ShortList : add Player\nHeadCoach \"1\" --> \"*\" ScoutingAssignment : associate for ShortList\n\nDirector \"1\" --> \"*\" Offer : make\nOffer \"1\" --> \"1\" Player : associate\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.4444444444444444,
+        "attribute_score": 0.15384615384615385,
+        "association_score": 0.08108108108108107
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.90909,
+          "recall": 0.625,
+          "f1": 0.74074
+        },
+        "Attribute": {
+          "precision": 0.7,
+          "recall": 0.35417,
+          "f1": 0.47036
+        },
+        "Association": {
+          "precision": 0.25,
+          "recall": 0.225,
+          "f1": 0.23684
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.29629555555555553,
+        "attribute_vs_f1": -0.31651384615384615,
+        "association_vs_f1": -0.1557589189189189,
+        "class_vs_precision": -0.46464555555555553,
+        "class_vs_recall": -0.18055555555555558,
+        "attribute_vs_precision": -0.5461538461538461,
+        "attribute_vs_recall": -0.20032384615384613,
+        "association_vs_precision": -0.16891891891891891,
+        "association_vs_recall": -0.14391891891891895
+      },
+      "aggregated": {
+        "metric_average": 0.22645722645722643,
+        "human_f1_average": 0.48264666666666667,
+        "overall_delta": -0.25618944020944023
+      }
+    },
+    "SHAS_1shot_BTMS": {
+      "comparison_id": "SHAS_1shot_BTMS",
+      "model_key": "SHAS",
+      "model_full_name": "SHAS",
+      "setting": "1shot_BTMS",
+      "reference_plantuml": "@startuml\n\n'=============================\n' Class and Enum Definitions\n'=============================\n\nclass SHAS {\n}\n\nclass SmartHome {\n}\n\nclass Address {\n    String address\n}\n\nclass User {\n    String name\n}\n\nclass Room {\n}\n\nabstract class Device {\n    enum DeviceStatus { Activated, Deactivated }\n    DeviceStatus deviceStatus\n    Integer deviceID\n}\n\nclass ActivityLog {\n}\n\nclass Sensor {\n}\n\nclass Actuator {\n}\n\nclass CommandSequence {\n}\n\nabstract class RuntimeElement {\n    Time timestamp\n}\n\nclass SensorReading {\n    Double value\n}\n\nclass ControlCommand {\n    enum CommandType { lockDoor, turnOnHeating }\n    CommandType commandType\n    enum CommandStatus { Requested, Completed, Failed }\n    CommandStatus commandStatus\n}\n\nclass AlertRule {\n    enum RuleStatus { created, edited, activated, deactivated }\n    RuleStatus ruleStatus\n}\n\nabstract class BooleanExpression {\n}\n\nclass RelationalTerm {\n}\n\nclass NotExpression {\n}\n\nclass BinaryExpression {\n    enum BinaryOp { AND, OR }\n}\n\n'=============================\n' Relationships\n'=============================\n\nSHAS \"1\" *-- \"*\" SmartHome : smartHome\nSHAS \"1\" *-- \"*\" User : users\n\nSmartHome \"1\" *-- \"0..1\" Address : address\nSmartHome \"1\" *-- \"*\" Room : rooms\nSmartHome \"1\" *-- \"0..1\" ActivityLog : log\nSmartHome \"*\" -- \"*\" User : owners\n\nRoom \"1\" *-- \"*\" Sensor : sensors\nRoom \"1\" *-- \"*\" Actuator : actuators\n\nSensor -|> Device\nActuator -|> Device\n\nActivityLog \"1\" *-- \"*\" SensorReading : recordedReadings\nActivityLog \"1\" *-- \"*\" ControlCommand : recordedCommands\n\nCommandSequence \"*\" --> \"0..1\" CommandSequence : nextCommand\nCommandSequence \"1\" *-- \"0..1\" ControlCommand : command\n\nSensorReading -|> RuntimeElement\nSensorReading \"*\" -- \"1\" Sensor : sensor\n\nControlCommand -|> RuntimeElement\nControlCommand \"*\" -- \"1\" Actuator : actuator\n\nAlertRule \"1\" *-- \"0..1\" BooleanExpression : precondition\nAlertRule \"1\" *-- \"*\" CommandSequence : actions\n\nRelationalTerm -|> BooleanExpression\nRelationalTerm \"*\" -- \"0..1\" Room\nRelationalTerm \"*\" -- \"0..1\" Device\nRelationalTerm \"*\" -- \"0..1\" RuntimeElement\n\nNotExpression -|> BooleanExpression\nNotExpression \"0..1\" -- \"1\" BooleanExpression : expression\n\nBinaryExpression -|> BooleanExpression\nBinaryExpression \"0..1\" -- \"1\" BooleanExpression : leftExpr\nBinaryExpression \"0..1\" -- \"1\" BooleanExpression : rightExpr\n\n@enduml",
+      "generated_plantuml": "@startuml\n\nenum Status {\n    requested\n    completed\n    failed\n}\n\nenum BooleanOperator {\n    AND\n    OR\n    NOT\n}\n\nclass SHAS {\n\n}\n\nclass SmartHome {\n    physicalAddress : String\n}\n\nclass Room {\n    name : String\n}\n\nclass SensorDevice {\n    deviceIdentifier : String\n    type : String\n}\n\nclass ActuatorDevice {\n    deviceIdentifier : String\n    type : String\n}\n\nclass SensorReading {\n    value : Float\n    timestamp : DateTime\n}\n\nclass ControlCommand {\n    command : String\n    timestamp : DateTime\n    status : Status\n}\n\nclass ActivityLog {\n\n}\n\nclass AutomationRule {\n    precondition : String\n    action : String\n    isActive : Boolean\n}\n\nclass RuleHierarchy {\n\n}\n\nclass RuleTrigger {\n    timestamp : DateTime\n}\n\n' Relationships\nSHAS \"1\" *-- \"*\" SmartHome\nSHAS \"1\" *-- \"*\" ActivityLog\nSHAS \"1\" *-- \"*\" RuleHierarchy\n\nSmartHome \"1\" *-- \"*\" Room\nSmartHome \"1\" *-- \"*\" SensorReading\nSmartHome \"1\" *-- \"*\" ControlCommand\nSmartHome \"1\" *-- \"*\" AutomationRule\nSmartHome \"1\" *-- \"*\" RuleTrigger\n\nRoom \"1\" *-- \"*\" SensorDevice\nRoom \"1\" *-- \"*\" ActuatorDevice\n\nAutomationRule \"0..*\" --> \"0..*\" AutomationRule : depend/conflict\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.48940505297473513,
+        "attribute_score": 0.19761904761904756,
+        "association_score": 0.3333333333333333
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.84615,
+          "recall": 0.56522,
+          "f1": 0.67773
+        },
+        "Attribute": {
+          "precision": 0.61905,
+          "recall": 0.46154,
+          "f1": 0.52881
+        },
+        "Association": {
+          "precision": 0.59091,
+          "recall": 0.2037,
+          "f1": 0.30297
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.18832494702526492,
+        "attribute_vs_f1": -0.3311909523809524,
+        "association_vs_f1": 0.030363333333333298,
+        "class_vs_precision": -0.3567449470252648,
+        "class_vs_recall": -0.07581494702526481,
+        "attribute_vs_precision": -0.4214309523809524,
+        "attribute_vs_recall": -0.2639209523809525,
+        "association_vs_precision": -0.25757666666666673,
+        "association_vs_recall": 0.12963333333333332
+      },
+      "aggregated": {
+        "metric_average": 0.340119144642372,
+        "human_f1_average": 0.50317,
+        "overall_delta": -0.16305085535762803
+      }
+    },
+    "SHAS_1shot_H2S": {
+      "comparison_id": "SHAS_1shot_H2S",
+      "model_key": "SHAS",
+      "model_full_name": "SHAS",
+      "setting": "1shot_H2S",
+      "reference_plantuml": "@startuml\n\n'=============================\n' Class and Enum Definitions\n'=============================\n\nclass SHAS {\n}\n\nclass SmartHome {\n}\n\nclass Address {\n    String address\n}\n\nclass User {\n    String name\n}\n\nclass Room {\n}\n\nabstract class Device {\n    enum DeviceStatus { Activated, Deactivated }\n    DeviceStatus deviceStatus\n    Integer deviceID\n}\n\nclass ActivityLog {\n}\n\nclass Sensor {\n}\n\nclass Actuator {\n}\n\nclass CommandSequence {\n}\n\nabstract class RuntimeElement {\n    Time timestamp\n}\n\nclass SensorReading {\n    Double value\n}\n\nclass ControlCommand {\n    enum CommandType { lockDoor, turnOnHeating }\n    CommandType commandType\n    enum CommandStatus { Requested, Completed, Failed }\n    CommandStatus commandStatus\n}\n\nclass AlertRule {\n    enum RuleStatus { created, edited, activated, deactivated }\n    RuleStatus ruleStatus\n}\n\nabstract class BooleanExpression {\n}\n\nclass RelationalTerm {\n}\n\nclass NotExpression {\n}\n\nclass BinaryExpression {\n    enum BinaryOp { AND, OR }\n}\n\n'=============================\n' Relationships\n'=============================\n\nSHAS \"1\" *-- \"*\" SmartHome : smartHome\nSHAS \"1\" *-- \"*\" User : users\n\nSmartHome \"1\" *-- \"0..1\" Address : address\nSmartHome \"1\" *-- \"*\" Room : rooms\nSmartHome \"1\" *-- \"0..1\" ActivityLog : log\nSmartHome \"*\" -- \"*\" User : owners\n\nRoom \"1\" *-- \"*\" Sensor : sensors\nRoom \"1\" *-- \"*\" Actuator : actuators\n\nSensor -|> Device\nActuator -|> Device\n\nActivityLog \"1\" *-- \"*\" SensorReading : recordedReadings\nActivityLog \"1\" *-- \"*\" ControlCommand : recordedCommands\n\nCommandSequence \"*\" --> \"0..1\" CommandSequence : nextCommand\nCommandSequence \"1\" *-- \"0..1\" ControlCommand : command\n\nSensorReading -|> RuntimeElement\nSensorReading \"*\" -- \"1\" Sensor : sensor\n\nControlCommand -|> RuntimeElement\nControlCommand \"*\" -- \"1\" Actuator : actuator\n\nAlertRule \"1\" *-- \"0..1\" BooleanExpression : precondition\nAlertRule \"1\" *-- \"*\" CommandSequence : actions\n\nRelationalTerm -|> BooleanExpression\nRelationalTerm \"*\" -- \"0..1\" Room\nRelationalTerm \"*\" -- \"0..1\" Device\nRelationalTerm \"*\" -- \"0..1\" RuntimeElement\n\nNotExpression -|> BooleanExpression\nNotExpression \"0..1\" -- \"1\" BooleanExpression : expression\n\nBinaryExpression -|> BooleanExpression\nBinaryExpression \"0..1\" -- \"1\" BooleanExpression : leftExpr\nBinaryExpression \"0..1\" -- \"1\" BooleanExpression : rightExpr\n\n@enduml",
+      "generated_plantuml": "@startuml\n\n' Enumerations\nenum DeviceType {\n    TemperatureSensor\n    MovementSensor\n    LightController\n    LockController\n    ...\n}\n\nenum ControlCommand {\n    lockDoor\n    turnOnHeating\n    ...\n}\n\nenum BooleanOperator {\n    AND\n    OR\n    NOT\n}\n\n' Classes\nclass SHAS {\n}\n\nclass SmartHome {\n    physicalAddress : String\n}\n\nclass Room {\n    roomName : String\n}\n\nclass Sensor {\n    deviceIdentifier : String\n    deviceType : DeviceType\n    roomName : String\n}\n\nclass Actuator {\n    deviceIdentifier : String\n    deviceType : DeviceType\n    roomName : String\n}\n\nclass SensorReading {\n    measuredValue : Float\n    timestamp : DateTime\n}\n\nclass ControlCommandLog {\n    controlCommand : ControlCommand\n    timestamp : DateTime\n    status : String\n}\n\nclass AutomationRule {\n    ruleID : String\n    precondition : String\n    action : String\n    active : Boolean\n}\n\nclass RuleHierarchy {\n    parentRuleID : String\n    childRuleID : String\n}\n\nclass RuleTriggerLog {\n    ruleID : String\n    timestamp : DateTime\n}\n\n' Relationships\nSHAS \"1\" *-- \"*\" SmartHome : contains\nSHAS \"1\" *-- \"*\" AutomationRule : contains\nSHAS \"1\" *-- \"*\" RuleHierarchy : contains\nSHAS \"1\" *-- \"*\" RuleTriggerLog : contains\n\nSmartHome \"1\" *-- \"*\" Room : contains\nSmartHome \"1\" *-- \"*\" SensorReading : contains\nSmartHome \"1\" *-- \"*\" ControlCommandLog : contains\n\nRoom \"1\" *-- \"*\" Sensor : contains\nRoom \"1\" *-- \"*\" Actuator : contains\n\nSensor \"1\" --> \"*\" SensorReading : generates\nActuator \"1\" --> \"*\" ControlCommandLog : executes\n\nAutomationRule \"1\" --> \"*\" RuleHierarchy : structuredAs\nAutomationRule \"1\" --> \"*\" RuleTriggerLog : triggers\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5202589807852965,
+        "attribute_score": 0.12968515742128933,
+        "association_score": 0.41463414634146345
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.69231,
+          "recall": 0.52174,
+          "f1": 0.59504
+        },
+        "Attribute": {
+          "precision": 0.33333,
+          "recall": 0.36538,
+          "f1": 0.34862
+        },
+        "Association": {
+          "precision": 0.7,
+          "recall": 0.25926,
+          "f1": 0.37838
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.07478101921470348,
+        "attribute_vs_f1": -0.21893484257871065,
+        "association_vs_f1": 0.036254146341463456,
+        "class_vs_precision": -0.17205101921470345,
+        "class_vs_recall": -0.0014810192147034495,
+        "attribute_vs_precision": -0.20364484257871068,
+        "attribute_vs_recall": -0.23569484257871065,
+        "association_vs_precision": -0.2853658536585365,
+        "association_vs_recall": 0.15537414634146346
+      },
+      "aggregated": {
+        "metric_average": 0.35485942818268307,
+        "human_f1_average": 0.44067999999999996,
+        "overall_delta": -0.08582057181731689
+      }
+    },
+    "SHAS_2shots": {
+      "comparison_id": "SHAS_2shots",
+      "model_key": "SHAS",
+      "model_full_name": "SHAS",
+      "setting": "2shots",
+      "reference_plantuml": "@startuml\n\n'=============================\n' Class and Enum Definitions\n'=============================\n\nclass SHAS {\n}\n\nclass SmartHome {\n}\n\nclass Address {\n    String address\n}\n\nclass User {\n    String name\n}\n\nclass Room {\n}\n\nabstract class Device {\n    enum DeviceStatus { Activated, Deactivated }\n    DeviceStatus deviceStatus\n    Integer deviceID\n}\n\nclass ActivityLog {\n}\n\nclass Sensor {\n}\n\nclass Actuator {\n}\n\nclass CommandSequence {\n}\n\nabstract class RuntimeElement {\n    Time timestamp\n}\n\nclass SensorReading {\n    Double value\n}\n\nclass ControlCommand {\n    enum CommandType { lockDoor, turnOnHeating }\n    CommandType commandType\n    enum CommandStatus { Requested, Completed, Failed }\n    CommandStatus commandStatus\n}\n\nclass AlertRule {\n    enum RuleStatus { created, edited, activated, deactivated }\n    RuleStatus ruleStatus\n}\n\nabstract class BooleanExpression {\n}\n\nclass RelationalTerm {\n}\n\nclass NotExpression {\n}\n\nclass BinaryExpression {\n    enum BinaryOp { AND, OR }\n}\n\n'=============================\n' Relationships\n'=============================\n\nSHAS \"1\" *-- \"*\" SmartHome : smartHome\nSHAS \"1\" *-- \"*\" User : users\n\nSmartHome \"1\" *-- \"0..1\" Address : address\nSmartHome \"1\" *-- \"*\" Room : rooms\nSmartHome \"1\" *-- \"0..1\" ActivityLog : log\nSmartHome \"*\" -- \"*\" User : owners\n\nRoom \"1\" *-- \"*\" Sensor : sensors\nRoom \"1\" *-- \"*\" Actuator : actuators\n\nSensor -|> Device\nActuator -|> Device\n\nActivityLog \"1\" *-- \"*\" SensorReading : recordedReadings\nActivityLog \"1\" *-- \"*\" ControlCommand : recordedCommands\n\nCommandSequence \"*\" --> \"0..1\" CommandSequence : nextCommand\nCommandSequence \"1\" *-- \"0..1\" ControlCommand : command\n\nSensorReading -|> RuntimeElement\nSensorReading \"*\" -- \"1\" Sensor : sensor\n\nControlCommand -|> RuntimeElement\nControlCommand \"*\" -- \"1\" Actuator : actuator\n\nAlertRule \"1\" *-- \"0..1\" BooleanExpression : precondition\nAlertRule \"1\" *-- \"*\" CommandSequence : actions\n\nRelationalTerm -|> BooleanExpression\nRelationalTerm \"*\" -- \"0..1\" Room\nRelationalTerm \"*\" -- \"0..1\" Device\nRelationalTerm \"*\" -- \"0..1\" RuntimeElement\n\nNotExpression -|> BooleanExpression\nNotExpression \"0..1\" -- \"1\" BooleanExpression : expression\n\nBinaryExpression -|> BooleanExpression\nBinaryExpression \"0..1\" -- \"1\" BooleanExpression : leftExpr\nBinaryExpression \"0..1\" -- \"1\" BooleanExpression : rightExpr\n\n@enduml",
+      "generated_plantuml": "@startuml\n\nenum ControlStatus {\n    requested\n    completed\n    failed\n}\n\nclass SHAS {\n\n}\n\nclass SmartHome {\n    address : String\n}\n\nclass Room {\n    name : String\n}\n\nclass SensorDevice {\n    deviceID : String\n}\n\nclass ActuatorDevice {\n    deviceID : String\n    status : ControlStatus\n}\n\nclass SensorReading {\n    value : Float\n    timestamp : DateTime\n}\n\nclass ControlCommand {\n    command : String\n    timestamp : DateTime\n    status : ControlStatus\n}\n\nclass AutomationRule {\n    ruleID : String\n    precondition : String\n    action : String\n    active : Boolean\n}\n\nclass RuleHierarchy {\n\n}\n\nclass ActivityLog {\n\n}\n\nclass RuleTrigger {\n    timestamp : DateTime\n}\n\n'---------------------------\n' Relationships\n'---------------------------\n\nSHAS \"1\" *-- \"*\" SmartHome\nSHAS \"1\" *-- \"*\" ActivityLog\nSHAS \"1\" *-- \"*\" AutomationRule\nSHAS \"1\" *-- \"*\" RuleHierarchy\n\nSmartHome \"1\" *-- \"*\" Room\nSmartHome \"1\" *-- \"*\" AutomationRule\nSmartHome \"1\" *-- \"1..*\" Owner : owners\n\nRoom \"1\" *-- \"*\" SensorDevice\nRoom \"1\" *-- \"*\" ActuatorDevice\n\nSensorDevice \"1\" --> \"*\" SensorReading : create\nActuatorDevice \"1\" --> \"*\" ControlCommand : execute\n\nAutomationRule \"1\" --> \"0..*\" AutomationRule : dependency\nRuleHierarchy \"1\" *-- \"*\" AutomationRule : hierarchy\n\nActivityLog \"1\" --> \"*\" SensorReading : record\nActivityLog \"1\" --> \"*\" ControlCommand : record\nActivityLog \"1\" --> \"*\" RuleTrigger : record\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5488322717622081,
+        "attribute_score": 0.3676470588235294,
+        "association_score": 0.4090909090909091
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 1.0,
+          "recall": 0.47826,
+          "f1": 0.64706
+        },
+        "Attribute": {
+          "precision": 0.67647,
+          "recall": 0.40385,
+          "f1": 0.50576
+        },
+        "Association": {
+          "precision": 0.5,
+          "recall": 0.2963,
+          "f1": 0.37209
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.09822772823779191,
+        "attribute_vs_f1": -0.1381129411764706,
+        "association_vs_f1": 0.03700090909090914,
+        "class_vs_precision": -0.45116772823779194,
+        "class_vs_recall": 0.07057227176220804,
+        "attribute_vs_precision": -0.30882294117647063,
+        "attribute_vs_recall": -0.036202941176470604,
+        "association_vs_precision": -0.09090909090909088,
+        "association_vs_recall": 0.11279090909090911
+      },
+      "aggregated": {
+        "metric_average": 0.44185674655888224,
+        "human_f1_average": 0.5083033333333333,
+        "overall_delta": -0.06644658677445109
+      }
+    },
+    "SHAS_CoT": {
+      "comparison_id": "SHAS_CoT",
+      "model_key": "SHAS",
+      "model_full_name": "SHAS",
+      "setting": "CoT",
+      "reference_plantuml": "@startuml\n\n'=============================\n' Class and Enum Definitions\n'=============================\n\nclass SHAS {\n}\n\nclass SmartHome {\n}\n\nclass Address {\n    String address\n}\n\nclass User {\n    String name\n}\n\nclass Room {\n}\n\nabstract class Device {\n    enum DeviceStatus { Activated, Deactivated }\n    DeviceStatus deviceStatus\n    Integer deviceID\n}\n\nclass ActivityLog {\n}\n\nclass Sensor {\n}\n\nclass Actuator {\n}\n\nclass CommandSequence {\n}\n\nabstract class RuntimeElement {\n    Time timestamp\n}\n\nclass SensorReading {\n    Double value\n}\n\nclass ControlCommand {\n    enum CommandType { lockDoor, turnOnHeating }\n    CommandType commandType\n    enum CommandStatus { Requested, Completed, Failed }\n    CommandStatus commandStatus\n}\n\nclass AlertRule {\n    enum RuleStatus { created, edited, activated, deactivated }\n    RuleStatus ruleStatus\n}\n\nabstract class BooleanExpression {\n}\n\nclass RelationalTerm {\n}\n\nclass NotExpression {\n}\n\nclass BinaryExpression {\n    enum BinaryOp { AND, OR }\n}\n\n'=============================\n' Relationships\n'=============================\n\nSHAS \"1\" *-- \"*\" SmartHome : smartHome\nSHAS \"1\" *-- \"*\" User : users\n\nSmartHome \"1\" *-- \"0..1\" Address : address\nSmartHome \"1\" *-- \"*\" Room : rooms\nSmartHome \"1\" *-- \"0..1\" ActivityLog : log\nSmartHome \"*\" -- \"*\" User : owners\n\nRoom \"1\" *-- \"*\" Sensor : sensors\nRoom \"1\" *-- \"*\" Actuator : actuators\n\nSensor -|> Device\nActuator -|> Device\n\nActivityLog \"1\" *-- \"*\" SensorReading : recordedReadings\nActivityLog \"1\" *-- \"*\" ControlCommand : recordedCommands\n\nCommandSequence \"*\" --> \"0..1\" CommandSequence : nextCommand\nCommandSequence \"1\" *-- \"0..1\" ControlCommand : command\n\nSensorReading -|> RuntimeElement\nSensorReading \"*\" -- \"1\" Sensor : sensor\n\nControlCommand -|> RuntimeElement\nControlCommand \"*\" -- \"1\" Actuator : actuator\n\nAlertRule \"1\" *-- \"0..1\" BooleanExpression : precondition\nAlertRule \"1\" *-- \"*\" CommandSequence : actions\n\nRelationalTerm -|> BooleanExpression\nRelationalTerm \"*\" -- \"0..1\" Room\nRelationalTerm \"*\" -- \"0..1\" Device\nRelationalTerm \"*\" -- \"0..1\" RuntimeElement\n\nNotExpression -|> BooleanExpression\nNotExpression \"0..1\" -- \"1\" BooleanExpression : expression\n\nBinaryExpression -|> BooleanExpression\nBinaryExpression \"0..1\" -- \"1\" BooleanExpression : leftExpr\nBinaryExpression \"0..1\" -- \"1\" BooleanExpression : rightExpr\n\n@enduml",
+      "generated_plantuml": "@startuml\n\nclass SmartHome {\n    physicalAddress : String\n}\n\nclass Room {\n    name : String\n}\n\nclass Sensor {\n    deviceId : String\n    type : String\n}\n\nclass Actuator {\n    deviceId : String\n    type : String\n}\n\nclass SensorReading {\n    deviceId : String\n    measuredValue : Float\n    timestamp : DateTime\n}\n\nclass ControlCommand {\n    deviceId : String\n    command : String\n    timestamp : DateTime\n    status : String\n}\n\nclass ActivityLog {\n    sensorReadings : SensorReading[]\n    controlCommands : ControlCommand[]\n}\n\nclass Owner {\n\n}\n\nclass AutomationRule {\n    precondition : String\n    action : String\n}\n\nclass RuleHierarchy {\n\n}\n\n// ---------------- Associations ----------------\n\nSmartHome \"1\" *-- \"*\" Room : contains\nRoom \"1\" *-- \"*\" Sensor : has\nRoom \"1\" *-- \"*\" Actuator : has\n\nSmartHome \"1\" -- \"1\" ActivityLog : logs\nSensorReading \"1\" --> \"1\" Sensor : from\nControlCommand \"1\" --> \"1\" Actuator : targets\n\nActivityLog \"1\" *-- \"*\" SensorReading : records\nActivityLog \"1\" *-- \"*\" ControlCommand : issues\n\nSmartHome \"1\" -- \"1\" Owner : owned_by\nOwner \"1\" *-- \"*\" AutomationRule : manages\n\nAutomationRule \"1\" --> \"1\" Room : applies_to\nAutomationRule \"1\" --> \"*\" Sensor : monitors\nAutomationRule \"1\" --> \"*\" Actuator : controls\n\nRuleHierarchy \"1\" *-- \"*\" AutomationRule : contains\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.6223776223776224,
+        "attribute_score": 0.25952380952380943,
+        "association_score": 0.4523809523809524
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.9,
+          "recall": 0.54348,
+          "f1": 0.67771
+        },
+        "Attribute": {
+          "precision": 0.44118,
+          "recall": 0.30769,
+          "f1": 0.36254
+        },
+        "Association": {
+          "precision": 0.53846,
+          "recall": 0.25926,
+          "f1": 0.35
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.05533237762237764,
+        "attribute_vs_f1": -0.10301619047619054,
+        "association_vs_f1": 0.1023809523809524,
+        "class_vs_precision": -0.2776223776223776,
+        "class_vs_recall": 0.07889762237762243,
+        "attribute_vs_precision": -0.18165619047619058,
+        "attribute_vs_recall": -0.048166190476190585,
+        "association_vs_precision": -0.08607904761904767,
+        "association_vs_recall": 0.1931209523809524
+      },
+      "aggregated": {
+        "metric_average": 0.4447607947607947,
+        "human_f1_average": 0.46341666666666664,
+        "overall_delta": -0.018655871905871924
+      }
+    },
+    "OTS_0shot": {
+      "comparison_id": "OTS_0shot",
+      "model_key": "OTS",
+      "model_full_name": "Online Tutoring System (OTS)",
+      "setting": "0shot",
+      "reference_plantuml": "@startuml\n\nenum LevelOfTutoring {\n  PrimarySchool\n  HighSchool\n  University\n}\n\nenum SessionStatus {\n  Proposed\n  Confirmed\n  Completed\n  Paid\n  Cancelled\n}\n\nenum PaymentKind {\n  CreditCard\n  WireTransfer\n}\n\nclass OTS {\n}\n\nclass Payment {\n  paymentForm : PaymentKind = CreditCard\n  paymentDate : DateTime\n}\n\nclass TutoringSession {\n  sessionDate : DateTime\n  totalPrice : Float = 0.0\n  sessionStatus : SessionStatus = Proposed\n}\n\nclass Subject {\n  name : EString\n}\n\nclass User {\n  name : EString\n  email : EString\n}\n\nclass Tutor {\n  bankAccount : String\n}\n\nclass TutoringRole {\n}\n\nclass TutoringRequest {\n}\n\nclass Student {\n}\n\nclass TutoringElement {\n}\n\nclass BestTutorAward {\n  year : Int\n  month : Int\n}\n\nclass TutoringOffer {\n  hourlyPrice : Float = 0.0\n}\n\nclass TutorAvailability {\n  startTime : DateTime\n  endTime : Time\n}\n\nOTS *-- \"0..*\" BestTutorAward : awards\nOTS *-- \"0..*\" Subject : subjects\nOTS *-- \"0..*\" User : users\nBestTutorAward \"0..*\" --> \"1\" Tutor : awards\nTutor *-- \"0..*\" TutoringOffer : offers\nTutor *-- \"0..*\" TutorAvailability : availabilities\nTutoringOffer \"0..*\" --> \"1..1\" Subject : subject\nUser *-- \"0..2\" TutoringRole : roles\nTutoringRole <|-- Tutor\nTutoringRole <|-- Student\nTutoringElement <|-- TutoringRequest\nTutoringElement <|-- TutoringOffer\nTutoringRequest \"0..*\" -- \"0..1\" TutoringOffer\nStudent \"1..1\" *-- \"0..*\" TutoringRequest : requests\nStudent \"1..1\" *-- \"0..*\" TutoringRequest : requests\nTutoringRequest \"0..*\" -- \"1..1\" Subject : subject\nTutoringRequest --> \"0..1\" TutoringSession : firstSession\nTutoringRequest *-- \"0..*\" TutoringSession : allSessions\nTutoringSession *--> \"0..1\" Payment : payment\nTutoringSession --> \"0..1\" TutoringSession : nextSession\n\n@enduml",
+      "generated_plantuml": "@startuml\n\n' Enumerations\nenum Subject {\n    mathematics\n    science\n    literature\n}\n\nenum ExpertiseLevel {\n    primary_school\n    high_school\n    university\n}\n\nenum PaymentMethod {\n    credit_card\n    wire_transfer\n}\n\n' Classes\nclass Person {\n    name : String\n    email : String\n}\n\nclass Tutor {\n    bankAccount : String\n}\n\nclass Student {\n}\n\nclass TutoringOffer {\n    expertiseLevel : ExpertiseLevel\n    hourlyPrice : Float\n    subject : Subject\n    weeklyAvailability : String\n}\n\nclass TutoringRequest {\n    level : ExpertiseLevel\n    targetDateTime : DateTime\n    subject : Subject\n}\n\nclass TutoringSession {\n    startTime : DateTime\n    endTime : DateTime\n    agreedPrice : Float\n    status : String\n}\n\n' Relationships\nPerson \"1\" --> \"0..*\" Tutor\nPerson \"1\" --> \"0..*\" Student\nTutor \"1\" --> \"0..*\" TutoringOffer\nStudent \"1\" --> \"0..*\" TutoringRequest\nTutoringOffer \"1\" --> \"0..*\" TutoringRequest\nTutoringRequest \"1\" --> \"0..1\" TutoringSession\nTutor \"1\" --> \"0..*\" TutoringSession\nStudent \"1\" --> \"0..*\" TutoringSession\n\n' Inheritance\nPerson <|-- Tutor\nPerson <|-- Student\n\n' Composition relationships\nTutor \"1\" *-- \"0..*\" TutoringOffer\nStudent \"1\" *-- \"0..*\" TutoringRequest\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5041509433962265,
+        "attribute_score": 0.3898601398601399,
+        "association_score": 0.3870967741935484
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.94444,
+          "recall": 0.5625,
+          "f1": 0.70507
+        },
+        "Attribute": {
+          "precision": 0.70455,
+          "recall": 0.48,
+          "f1": 0.57099
+        },
+        "Association": {
+          "precision": 0.375,
+          "recall": 0.18421,
+          "f1": 0.24706
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.20091905660377352,
+        "attribute_vs_f1": -0.1811298601398601,
+        "association_vs_f1": 0.14003677419354837,
+        "class_vs_precision": -0.4402890566037735,
+        "class_vs_recall": -0.05834905660377354,
+        "attribute_vs_precision": -0.3146898601398601,
+        "attribute_vs_recall": -0.09013986013986008,
+        "association_vs_precision": 0.012096774193548376,
+        "association_vs_recall": 0.20288677419354836
+      },
+      "aggregated": {
+        "metric_average": 0.4270359524833049,
+        "human_f1_average": 0.5077066666666666,
+        "overall_delta": -0.08067071418336175
+      }
+    },
+    "OTS_1shot_BTMS": {
+      "comparison_id": "OTS_1shot_BTMS",
+      "model_key": "OTS",
+      "model_full_name": "Online Tutoring System (OTS)",
+      "setting": "1shot_BTMS",
+      "reference_plantuml": "@startuml\n\nenum LevelOfTutoring {\n  PrimarySchool\n  HighSchool\n  University\n}\n\nenum SessionStatus {\n  Proposed\n  Confirmed\n  Completed\n  Paid\n  Cancelled\n}\n\nenum PaymentKind {\n  CreditCard\n  WireTransfer\n}\n\nclass OTS {\n}\n\nclass Payment {\n  paymentForm : PaymentKind = CreditCard\n  paymentDate : DateTime\n}\n\nclass TutoringSession {\n  sessionDate : DateTime\n  totalPrice : Float = 0.0\n  sessionStatus : SessionStatus = Proposed\n}\n\nclass Subject {\n  name : EString\n}\n\nclass User {\n  name : EString\n  email : EString\n}\n\nclass Tutor {\n  bankAccount : String\n}\n\nclass TutoringRole {\n}\n\nclass TutoringRequest {\n}\n\nclass Student {\n}\n\nclass TutoringElement {\n}\n\nclass BestTutorAward {\n  year : Int\n  month : Int\n}\n\nclass TutoringOffer {\n  hourlyPrice : Float = 0.0\n}\n\nclass TutorAvailability {\n  startTime : DateTime\n  endTime : Time\n}\n\nOTS *-- \"0..*\" BestTutorAward : awards\nOTS *-- \"0..*\" Subject : subjects\nOTS *-- \"0..*\" User : users\nBestTutorAward \"0..*\" --> \"1\" Tutor : awards\nTutor *-- \"0..*\" TutoringOffer : offers\nTutor *-- \"0..*\" TutorAvailability : availabilities\nTutoringOffer \"0..*\" --> \"1..1\" Subject : subject\nUser *-- \"0..2\" TutoringRole : roles\nTutoringRole <|-- Tutor\nTutoringRole <|-- Student\nTutoringElement <|-- TutoringRequest\nTutoringElement <|-- TutoringOffer\nTutoringRequest \"0..*\" -- \"0..1\" TutoringOffer\nStudent \"1..1\" *-- \"0..*\" TutoringRequest : requests\nStudent \"1..1\" *-- \"0..*\" TutoringRequest : requests\nTutoringRequest \"0..*\" -- \"1..1\" Subject : subject\nTutoringRequest --> \"0..1\" TutoringSession : firstSession\nTutoringRequest *-- \"0..*\" TutoringSession : allSessions\nTutoringSession *--> \"0..1\" Payment : payment\nTutoringSession --> \"0..1\" TutoringSession : nextSession\n\n@enduml",
+      "generated_plantuml": "@startuml\n\nenum ExpertiseLevel {\n    primary_school\n    high_school\n    university\n}\n\nclass OTS {\n\n}\n\nclass Tutor {\n    name : String\n    email : String\n    bankAccount : String\n}\n\nclass Student {\n    name : String\n    email : String\n}\n\nclass Subject {\n    name : String\n}\n\nclass TutoringOffer {\n    level : ExpertiseLevel\n    hourlyPrice : double\n}\n\nclass Availability {\n    weekday : String\n    startTime : Time\n    endTime : Time\n}\n\nclass TutoringRequest {\n    level : String\n    targetDate : Date\n    targetTime : Time\n}\n\nclass TutoringSession {\n    date : Date\n    time : Time\n    price : double\n}\n\nclass Payment {\n    method : String\n}\n\n/' Associations and containment relationships '/\n\nOTS \"1\" *-- \"*\" Tutor\nOTS \"1\" *-- \"*\" Student\nOTS \"1\" *-- \"*\" Subject\nOTS \"1\" *-- \"*\" TutoringOffer\nOTS \"1\" *-- \"*\" Availability\nOTS \"1\" *-- \"*\" TutoringRequest\nOTS \"1\" *-- \"*\" TutoringSession\nOTS \"1\" *-- \"*\" Payment\n\nTutor \"1\" --> \"*\" TutoringOffer\nTutor \"1\" --> \"*\" Availability\nTutor \"1\" --> \"*\" TutoringSession\n\nStudent \"1\" --> \"*\" TutoringRequest\nStudent \"1\" --> \"*\" TutoringSession\nStudent \"1\" --> \"*\" Payment\n\nSubject \"1\" --> \"*\" TutoringOffer\n\nTutoringRequest \"1\" --> \"1\" TutoringOffer\nTutoringRequest \"1\" --> \"1\" Tutor\n\nTutoringSession \"1\" --> \"1\" Tutor\nTutoringSession \"1\" --> \"1\" Student\nTutoringSession \"1\" --> \"1\" TutoringRequest\n\nPayment \"1\" --> \"1\" TutoringSession\nPayment \"1\" --> \"1\" Student\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.6974560872198667,
+        "attribute_score": 0.42534722222222215,
+        "association_score": 0.3414634146341464
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 1.0,
+          "recall": 0.625,
+          "f1": 0.76923
+        },
+        "Attribute": {
+          "precision": 0.7619,
+          "recall": 0.48,
+          "f1": 0.58896
+        },
+        "Association": {
+          "precision": 0.31818,
+          "recall": 0.31579,
+          "f1": 0.31698
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.07177391278013323,
+        "attribute_vs_f1": -0.16361277777777788,
+        "association_vs_f1": 0.02448341463414644,
+        "class_vs_precision": -0.30254391278013326,
+        "class_vs_recall": 0.07245608721986674,
+        "attribute_vs_precision": -0.33655277777777787,
+        "attribute_vs_recall": -0.05465277777777783,
+        "association_vs_precision": 0.023283414634146404,
+        "association_vs_recall": 0.025673414634146408
+      },
+      "aggregated": {
+        "metric_average": 0.48808890802541177,
+        "human_f1_average": 0.55839,
+        "overall_delta": -0.07030109197458828
+      }
+    },
+    "OTS_1shot_H2S": {
+      "comparison_id": "OTS_1shot_H2S",
+      "model_key": "OTS",
+      "model_full_name": "Online Tutoring System (OTS)",
+      "setting": "1shot_H2S",
+      "reference_plantuml": "@startuml\n\nenum LevelOfTutoring {\n  PrimarySchool\n  HighSchool\n  University\n}\n\nenum SessionStatus {\n  Proposed\n  Confirmed\n  Completed\n  Paid\n  Cancelled\n}\n\nenum PaymentKind {\n  CreditCard\n  WireTransfer\n}\n\nclass OTS {\n}\n\nclass Payment {\n  paymentForm : PaymentKind = CreditCard\n  paymentDate : DateTime\n}\n\nclass TutoringSession {\n  sessionDate : DateTime\n  totalPrice : Float = 0.0\n  sessionStatus : SessionStatus = Proposed\n}\n\nclass Subject {\n  name : EString\n}\n\nclass User {\n  name : EString\n  email : EString\n}\n\nclass Tutor {\n  bankAccount : String\n}\n\nclass TutoringRole {\n}\n\nclass TutoringRequest {\n}\n\nclass Student {\n}\n\nclass TutoringElement {\n}\n\nclass BestTutorAward {\n  year : Int\n  month : Int\n}\n\nclass TutoringOffer {\n  hourlyPrice : Float = 0.0\n}\n\nclass TutorAvailability {\n  startTime : DateTime\n  endTime : Time\n}\n\nOTS *-- \"0..*\" BestTutorAward : awards\nOTS *-- \"0..*\" Subject : subjects\nOTS *-- \"0..*\" User : users\nBestTutorAward \"0..*\" --> \"1\" Tutor : awards\nTutor *-- \"0..*\" TutoringOffer : offers\nTutor *-- \"0..*\" TutorAvailability : availabilities\nTutoringOffer \"0..*\" --> \"1..1\" Subject : subject\nUser *-- \"0..2\" TutoringRole : roles\nTutoringRole <|-- Tutor\nTutoringRole <|-- Student\nTutoringElement <|-- TutoringRequest\nTutoringElement <|-- TutoringOffer\nTutoringRequest \"0..*\" -- \"0..1\" TutoringOffer\nStudent \"1..1\" *-- \"0..*\" TutoringRequest : requests\nStudent \"1..1\" *-- \"0..*\" TutoringRequest : requests\nTutoringRequest \"0..*\" -- \"1..1\" Subject : subject\nTutoringRequest --> \"0..1\" TutoringSession : firstSession\nTutoringRequest *-- \"0..*\" TutoringSession : allSessions\nTutoringSession *--> \"0..1\" Payment : payment\nTutoringSession --> \"0..1\" TutoringSession : nextSession\n\n@enduml",
+      "generated_plantuml": "@startuml\n\n' ===== Enumerations =====\nenum Subject {\n    Mathematics\n    Science\n    Literature\n    ...\n}\n\nenum ExpertiseLevel {\n    PrimarySchool\n    HighSchool\n    University\n}\n\nenum TutoringStatus {\n    Requested\n    Confirmed\n    Scheduled\n    Cancelled\n}\n\n\n' ===== Classes =====\nclass OTS {\n\n}\n\nclass Person {\n    name : String\n    email : String\n}\n\nclass Tutor {\n    bankAccount : String\n}\n\nclass Student {\n\n}\n\nclass SubjectOffering {\n    subject : Subject\n    expertiseLevel : ExpertiseLevel\n    hourlyPrice : double\n}\n\nclass TutoringSession {\n    scheduledTime : DateTime\n    status : TutoringStatus\n    sessionPrice : double\n}\n\nclass WeeklyAvailability {\n    startTime : DateTime\n    endTime : DateTime\n}\n\n\n' ===== Inheritance =====\nPerson <|-- Tutor\nPerson <|-- Student\n\n\n' ===== Containment Relationships =====\nOTS \"1\" *-- \"*\" Person\nOTS \"1\" *-- \"*\" SubjectOffering\nOTS \"1\" *-- \"*\" TutoringSession\nOTS \"1\" *-- \"*\" WeeklyAvailability\n\n\n' ===== Associations =====\nTutor \"1\" --> \"*\" SubjectOffering\nTutor \"1\" --> \"*\" WeeklyAvailability\nTutor \"1\" --> \"*\" TutoringSession : asTutor\nStudent \"1\" --> \"*\" TutoringSession : asStudent\nSubjectOffering \"1\" --> \"*\" TutoringSession\n\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5224963715529753,
+        "attribute_score": 0.42999999999999994,
+        "association_score": 0.3666666666666667
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.95,
+          "recall": 0.59375,
+          "f1": 0.73077
+        },
+        "Attribute": {
+          "precision": 0.81818,
+          "recall": 0.64,
+          "f1": 0.7182
+        },
+        "Association": {
+          "precision": 0.27273,
+          "recall": 0.10526,
+          "f1": 0.1519
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.20827362844702468,
+        "attribute_vs_f1": -0.2882,
+        "association_vs_f1": 0.2147666666666667,
+        "class_vs_precision": -0.4275036284470246,
+        "class_vs_recall": -0.07125362844702465,
+        "attribute_vs_precision": -0.3881800000000001,
+        "attribute_vs_recall": -0.21000000000000008,
+        "association_vs_precision": 0.09393666666666672,
+        "association_vs_recall": 0.2614066666666667
+      },
+      "aggregated": {
+        "metric_average": 0.4397210127398807,
+        "human_f1_average": 0.5336233333333333,
+        "overall_delta": -0.09390232059345266
+      }
+    },
+    "OTS_2shots": {
+      "comparison_id": "OTS_2shots",
+      "model_key": "OTS",
+      "model_full_name": "Online Tutoring System (OTS)",
+      "setting": "2shots",
+      "reference_plantuml": "@startuml\n\nenum LevelOfTutoring {\n  PrimarySchool\n  HighSchool\n  University\n}\n\nenum SessionStatus {\n  Proposed\n  Confirmed\n  Completed\n  Paid\n  Cancelled\n}\n\nenum PaymentKind {\n  CreditCard\n  WireTransfer\n}\n\nclass OTS {\n}\n\nclass Payment {\n  paymentForm : PaymentKind = CreditCard\n  paymentDate : DateTime\n}\n\nclass TutoringSession {\n  sessionDate : DateTime\n  totalPrice : Float = 0.0\n  sessionStatus : SessionStatus = Proposed\n}\n\nclass Subject {\n  name : EString\n}\n\nclass User {\n  name : EString\n  email : EString\n}\n\nclass Tutor {\n  bankAccount : String\n}\n\nclass TutoringRole {\n}\n\nclass TutoringRequest {\n}\n\nclass Student {\n}\n\nclass TutoringElement {\n}\n\nclass BestTutorAward {\n  year : Int\n  month : Int\n}\n\nclass TutoringOffer {\n  hourlyPrice : Float = 0.0\n}\n\nclass TutorAvailability {\n  startTime : DateTime\n  endTime : Time\n}\n\nOTS *-- \"0..*\" BestTutorAward : awards\nOTS *-- \"0..*\" Subject : subjects\nOTS *-- \"0..*\" User : users\nBestTutorAward \"0..*\" --> \"1\" Tutor : awards\nTutor *-- \"0..*\" TutoringOffer : offers\nTutor *-- \"0..*\" TutorAvailability : availabilities\nTutoringOffer \"0..*\" --> \"1..1\" Subject : subject\nUser *-- \"0..2\" TutoringRole : roles\nTutoringRole <|-- Tutor\nTutoringRole <|-- Student\nTutoringElement <|-- TutoringRequest\nTutoringElement <|-- TutoringOffer\nTutoringRequest \"0..*\" -- \"0..1\" TutoringOffer\nStudent \"1..1\" *-- \"0..*\" TutoringRequest : requests\nStudent \"1..1\" *-- \"0..*\" TutoringRequest : requests\nTutoringRequest \"0..*\" -- \"1..1\" Subject : subject\nTutoringRequest --> \"0..1\" TutoringSession : firstSession\nTutoringRequest *-- \"0..*\" TutoringSession : allSessions\nTutoringSession *--> \"0..1\" Payment : payment\nTutoringSession --> \"0..1\" TutoringSession : nextSession\n\n@enduml",
+      "generated_plantuml": "@startuml\n\n' ===========================\n' Enumerations\n' ===========================\nenum Subject {\n    Mathematics\n    Science\n    Literature\n    ...\n}\n\nenum ExpertiseLevel {\n    Primary\n    HighSchool\n    University\n}\n\nenum TutoringStatus {\n    Requested\n    Confirmed\n    Scheduled\n    Completed\n    Cancelled\n}\n\n' ===========================\n' Classes\n' ===========================\nclass OTS {\n}\n\nclass Person {\n    name : String\n    email : String\n}\n\nclass Student {\n}\n\nclass Tutor {\n    bankAccount : String\n}\n\nclass TutoringOffer {\n    subject : Subject\n    expertise : ExpertiseLevel\n    hourlyPrice : Float\n}\n\nclass Availability {\n    weeklyAvailability : WeeklyAvailability\n}\n\nclass TutoringSession {\n    startTime : DateTime\n    endTime : DateTime\n    status : TutoringStatus\n}\n\nclass Payment {\n    amount : Float\n    method : PaymentMethod\n}\n\n' ===========================\n' Relationships\n' ===========================\nOTS \"1\" *-- \"*\" Person\nOTS \"1\" *-- \"*\" TutoringOffer\nOTS \"1\" *-- \"*\" Availability\nOTS \"1\" *-- \"*\" TutoringSession\nOTS \"1\" *-- \"*\" Payment\n\nPerson <|-- Student\nPerson <|-- Tutor\n\nTutor \"1\" --> \"*\" TutoringOffer\nTutor \"1\" --> \"*\" Availability\nTutor \"1\" --> \"*\" TutoringSession\nStudent \"1\" --> \"*\" TutoringSession\nTutoringSession \"1\" --> \"1\" Payment\nTutoringOffer \"1\" --> \"1\" Subject\nTutoringOffer \"1\" --> \"1\" ExpertiseLevel\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.6135899679206764,
+        "attribute_score": 0.4275,
+        "association_score": 0.3939393939393939
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.95455,
+          "recall": 0.65625,
+          "f1": 0.77778
+        },
+        "Attribute": {
+          "precision": 0.71739,
+          "recall": 0.58,
+          "f1": 0.64142
+        },
+        "Association": {
+          "precision": 0.25,
+          "recall": 0.13158,
+          "f1": 0.17241
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.1641900320793236,
+        "attribute_vs_f1": -0.21392,
+        "association_vs_f1": 0.22152939393939391,
+        "class_vs_precision": -0.34096003207932357,
+        "class_vs_recall": -0.04266003207932356,
+        "attribute_vs_precision": -0.28989,
+        "attribute_vs_recall": -0.15249999999999997,
+        "association_vs_precision": 0.14393939393939392,
+        "association_vs_recall": 0.2623593939393939
+      },
+      "aggregated": {
+        "metric_average": 0.4783431206200235,
+        "human_f1_average": 0.5305366666666667,
+        "overall_delta": -0.05219354604664317
+      }
+    },
+    "OTS_CoT": {
+      "comparison_id": "OTS_CoT",
+      "model_key": "OTS",
+      "model_full_name": "Online Tutoring System (OTS)",
+      "setting": "CoT",
+      "reference_plantuml": "@startuml\n\nenum LevelOfTutoring {\n  PrimarySchool\n  HighSchool\n  University\n}\n\nenum SessionStatus {\n  Proposed\n  Confirmed\n  Completed\n  Paid\n  Cancelled\n}\n\nenum PaymentKind {\n  CreditCard\n  WireTransfer\n}\n\nclass OTS {\n}\n\nclass Payment {\n  paymentForm : PaymentKind = CreditCard\n  paymentDate : DateTime\n}\n\nclass TutoringSession {\n  sessionDate : DateTime\n  totalPrice : Float = 0.0\n  sessionStatus : SessionStatus = Proposed\n}\n\nclass Subject {\n  name : EString\n}\n\nclass User {\n  name : EString\n  email : EString\n}\n\nclass Tutor {\n  bankAccount : String\n}\n\nclass TutoringRole {\n}\n\nclass TutoringRequest {\n}\n\nclass Student {\n}\n\nclass TutoringElement {\n}\n\nclass BestTutorAward {\n  year : Int\n  month : Int\n}\n\nclass TutoringOffer {\n  hourlyPrice : Float = 0.0\n}\n\nclass TutorAvailability {\n  startTime : DateTime\n  endTime : Time\n}\n\nOTS *-- \"0..*\" BestTutorAward : awards\nOTS *-- \"0..*\" Subject : subjects\nOTS *-- \"0..*\" User : users\nBestTutorAward \"0..*\" --> \"1\" Tutor : awards\nTutor *-- \"0..*\" TutoringOffer : offers\nTutor *-- \"0..*\" TutorAvailability : availabilities\nTutoringOffer \"0..*\" --> \"1..1\" Subject : subject\nUser *-- \"0..2\" TutoringRole : roles\nTutoringRole <|-- Tutor\nTutoringRole <|-- Student\nTutoringElement <|-- TutoringRequest\nTutoringElement <|-- TutoringOffer\nTutoringRequest \"0..*\" -- \"0..1\" TutoringOffer\nStudent \"1..1\" *-- \"0..*\" TutoringRequest : requests\nStudent \"1..1\" *-- \"0..*\" TutoringRequest : requests\nTutoringRequest \"0..*\" -- \"1..1\" Subject : subject\nTutoringRequest --> \"0..1\" TutoringSession : firstSession\nTutoringRequest *-- \"0..*\" TutoringSession : allSessions\nTutoringSession *--> \"0..1\" Payment : payment\nTutoringSession --> \"0..1\" TutoringSession : nextSession\n\n@enduml",
+      "generated_plantuml": "@startuml\n\nclass User {\n    name : String\n    email : String\n}\n\nclass Tutor {\n    bankAccount : String\n}\n\nclass Student {\n\n}\n\nclass Subject {\n    name : String\n}\n\nclass TutoringOffer {\n    expertiseLevel : String\n    hourlyRate : double\n}\n\nclass Availability {\n    startTime : DateTime\n    endTime : DateTime\n}\n\nclass TutoringRequest {\n    tutoringLevel : String\n    requestedDate : DateTime\n    requestedTime : DateTime\n}\n\nclass TutoringSession {\n    scheduledDate : DateTime\n    scheduledTime : DateTime\n    paymentAmount : double\n    isCancelled : boolean\n}\n\nclass Payment {\n    paymentMethod : String\n}\n\n'-------------------------\n' Inheritance\n'-------------------------\nUser <|-- Tutor\nUser <|-- Student\n\n'-------------------------\n' Associations\n'-------------------------\nTutor \"1\" *-- \"*\" Subject : teaches\nTutor \"1\" -- \"*\" TutoringOffer : offers\nSubject \"1\" -- \"*\" TutoringOffer : relatedTo\nTutor \"1\" *-- \"*\" Availability : has\nStudent \"1\" *-- \"*\" TutoringRequest : requests\nTutor \"1\" -- \"*\" TutoringRequest : respondsTo\nTutoringOffer \"1\" -- \"*\" TutoringRequest : matches\nTutor \"1\" -- \"*\" TutoringSession : conducts\nStudent \"1\" -- \"*\" TutoringSession : attends\nTutoringRequest \"1\" -- \"*\" TutoringSession : schedules\nTutoringSession \"1\" -- \"*\" Payment : generates\nStudent \"1\" -- \"*\" Payment : makes\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.7046153846153846,
+        "attribute_score": 0.40584415584415584,
+        "association_score": 0.36363636363636365
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 1.0,
+          "recall": 0.5625,
+          "f1": 0.72
+        },
+        "Attribute": {
+          "precision": 0.775,
+          "recall": 0.4,
+          "f1": 0.52766
+        },
+        "Association": {
+          "precision": 0.41667,
+          "recall": 0.26316,
+          "f1": 0.32258
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.01538461538461533,
+        "attribute_vs_f1": -0.12181584415584418,
+        "association_vs_f1": 0.04105636363636367,
+        "class_vs_precision": -0.29538461538461536,
+        "class_vs_recall": 0.14211538461538464,
+        "attribute_vs_precision": -0.3691558441558442,
+        "attribute_vs_recall": 0.005844155844155818,
+        "association_vs_precision": -0.05303363636363634,
+        "association_vs_recall": 0.10047636363636364
+      },
+      "aggregated": {
+        "metric_average": 0.4913653013653014,
+        "human_f1_average": 0.5234133333333334,
+        "overall_delta": -0.03204803196803202
+      }
+    },
+    "Block_0shot": {
+      "comparison_id": "Block_0shot",
+      "model_key": "Block",
+      "model_full_name": "Block  ",
+      "setting": "0shot",
+      "reference_plantuml": "@startuml\n\nclass DestroyBlock {\n}\n\nclass User {\n}\n\nclass Admin {\n}\n\n\nclass Block223 {\n}\n\nclass HallOfFameEntry {\n  score : Integer\n}\n\nclass Player {\n}\n\nclass Game {\n  published : Boolean\n}\n\nclass Level {\n  isRandom : Boolean\n}\n\nclass PlayedGame {\n  id : Integer\n  score : Integer\n  lives : Integer\n  currentLevel : Integer\n}\n\nclass PlayedBall {\n  ballDirectionX : Double\n  ballDirectionY : Double\n  currentBallX : Double\n  currentBallY : Double\n}\n\nclass PlayedPaddle {\n  currentPaddleLength : Double\n  currentPaddleX : Double\n  currentPaddleY : Double\n}\n\nclass PlayedBlockAssignment {\n  x : Integer\n  y : Integer\n}\n\n\nclass Block {\n  id : Integer\n  red : Integer\n  green : Integer\n  blue : Integer\n  points : Integer\n}\n\n// Kompositionen\nDestroyBlock *-- \"*\" User : users\nDestroyBlock *-- \"*\" Admin : admins\nDestroyBlock *-- \"*\" Player : players\nDestroyBlock *-- \"*\" Game : games\nDestroyBlock *-- \"*\" PlayedGame : playedGames\nDestroyBlock *-- \"*\" HallOfFameEntry : entries\n\nBlock223 *-- \"*\" PlayedGame : playedGames\nBlock223 *-- \"*\" HallOfFameEntry : entries\n\n' PlayedGame-Kompositionen\nPlayedGame *-- \"1\" PlayedBall\nPlayedGame *-- \"1\" PlayedPaddle\nPlayedGame *-- \"*\" PlayedBlockAssignment : blocks\nBlock \"1\" -- \"*\" PlayedBlockAssignment\n\nPlayedGame \"*\" -- \"1\" Player : player\nPlayedGame \"*\" -- \"1\" Game : game1\n\nHallOfFameEntry \"*\" -- \"1\" Player : player\n\nGame \"1\" --> \"0..1\" HallOfFameEntry : mostRecentEntry\nGame \"1\" -- \"*\" HallOfFameEntry : game\n\nUser \"1\" -- \"1\" Player : player\nUser \"1\" -- \"0..1\" Admin : admin\nAdmin \"1\" -- \"*\" Game : admin\n\n@enduml",
+      "generated_plantuml": "@startuml\n\nenum Color {\n  // literals can be defined here, e.g., RED, BLUE, etc.\n}\n\nenum UserRole {\n  PLAYER\n  ADMIN\n}\n\nclass User {\n  username : String\n  password : String\n  role : UserRole\n}\n\nclass Game {\n  gameName : String\n  hallOfFame : HallOfFame\n  minSpeed : Float\n  speedIncreaseFactor : Float\n  maxLength : Float\n  minLength : Float\n  blocks : Set<Block>\n  levels : List<Level>\n  admin : User\n}\n\nclass Block {\n  color : Color\n  points : Int\n}\n\nclass Level {\n  levelNumber : Int\n  grid : Map<GridPosition, Block>\n  random : Boolean\n}\n\nclass GridPosition {\n  x : Int\n  y : Int\n}\n\nclass HallOfFame {\n  entries : List<HallOfFameEntry>\n}\n\nclass HallOfFameEntry {\n  player : User\n  score : Int\n}\n\n'------------------------\n' Relationships\n'------------------------\n\nUser \"1\" --> \"0..*\" Game : associates\nUser \"1\" --> \"0..*\" HallOfFameEntry : associates\n\nGame \"1\" *-- \"1\" HallOfFame : contains\nGame \"1\" *-- \"1..*\" Level : contains\nGame \"1\" *-- \"1..*\" Block : contains\n\nLevel \"1\" *-- \"0..*\" GridPosition : contains\nLevel \"1\" *-- \"0..*\" Block : contains\n\nGridPosition \"1\" --> \"1\" Block : associates\n\nHallOfFame \"1\" *-- \"0..*\" HallOfFameEntry : contains\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.6140130587644401,
+        "attribute_score": 0.24461979913916784,
+        "association_score": 0.32142857142857145
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.88889,
+          "recall": 0.53333,
+          "f1": 0.66667
+        },
+        "Attribute": {
+          "precision": 0.54,
+          "recall": 0.38333,
+          "f1": 0.44838
+        },
+        "Association": {
+          "precision": 0.61111,
+          "recall": 0.22917,
+          "f1": 0.33333
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.05265694123555986,
+        "attribute_vs_f1": -0.20376020086083216,
+        "association_vs_f1": -0.011901428571428563,
+        "class_vs_precision": -0.27487694123555984,
+        "class_vs_recall": 0.08068305876444015,
+        "attribute_vs_precision": -0.29538020086083216,
+        "attribute_vs_recall": -0.13871020086083216,
+        "association_vs_precision": -0.2896814285714286,
+        "association_vs_recall": 0.09225857142857144
+      },
+      "aggregated": {
+        "metric_average": 0.39335380977739315,
+        "human_f1_average": 0.4827933333333334,
+        "overall_delta": -0.08943952355594026
+      }
+    },
+    "Block_1shot_BTMS": {
+      "comparison_id": "Block_1shot_BTMS",
+      "model_key": "Block",
+      "model_full_name": "Block  ",
+      "setting": "1shot_BTMS",
+      "reference_plantuml": "@startuml\n\nclass DestroyBlock {\n}\n\nclass User {\n}\n\nclass Admin {\n}\n\n\nclass Block223 {\n}\n\nclass HallOfFameEntry {\n  score : Integer\n}\n\nclass Player {\n}\n\nclass Game {\n  published : Boolean\n}\n\nclass Level {\n  isRandom : Boolean\n}\n\nclass PlayedGame {\n  id : Integer\n  score : Integer\n  lives : Integer\n  currentLevel : Integer\n}\n\nclass PlayedBall {\n  ballDirectionX : Double\n  ballDirectionY : Double\n  currentBallX : Double\n  currentBallY : Double\n}\n\nclass PlayedPaddle {\n  currentPaddleLength : Double\n  currentPaddleX : Double\n  currentPaddleY : Double\n}\n\nclass PlayedBlockAssignment {\n  x : Integer\n  y : Integer\n}\n\n\nclass Block {\n  id : Integer\n  red : Integer\n  green : Integer\n  blue : Integer\n  points : Integer\n}\n\n// Kompositionen\nDestroyBlock *-- \"*\" User : users\nDestroyBlock *-- \"*\" Admin : admins\nDestroyBlock *-- \"*\" Player : players\nDestroyBlock *-- \"*\" Game : games\nDestroyBlock *-- \"*\" PlayedGame : playedGames\nDestroyBlock *-- \"*\" HallOfFameEntry : entries\n\nBlock223 *-- \"*\" PlayedGame : playedGames\nBlock223 *-- \"*\" HallOfFameEntry : entries\n\n' PlayedGame-Kompositionen\nPlayedGame *-- \"1\" PlayedBall\nPlayedGame *-- \"1\" PlayedPaddle\nPlayedGame *-- \"*\" PlayedBlockAssignment : blocks\nBlock \"1\" -- \"*\" PlayedBlockAssignment\n\nPlayedGame \"*\" -- \"1\" Player : player\nPlayedGame \"*\" -- \"1\" Game : game1\n\nHallOfFameEntry \"*\" -- \"1\" Player : player\n\nGame \"1\" --> \"0..1\" HallOfFameEntry : mostRecentEntry\nGame \"1\" -- \"*\" HallOfFameEntry : game\n\nUser \"1\" -- \"1\" Player : player\nUser \"1\" -- \"0..1\" Admin : admin\nAdmin \"1\" -- \"*\" Game : admin\n\n@enduml",
+      "generated_plantuml": "@startuml\n\nenum UserRole {\n    player\n    admin\n}\n\nclass DestroyBlockApp {\n}\n\nclass User {\n    username : String\n    password : String\n    role : UserRole\n}\n\nclass Game {\n    name : String\n    published : Boolean\n}\n\nclass Block {\n    color : String\n    points : Integer\n}\n\nclass Level {\n    number : Integer\n    random : Boolean\n}\n\nclass GridPosition {\n    x : Integer\n    y : Integer\n}\n\nclass HallOfFameEntry {\n    playerName : String\n    score : Integer\n}\n\nclass Paddle {\n    maxLength : Float\n    minLength : Float\n}\n\nclass Ball {\n    minSpeed : Float\n    speedIncreaseFactor : Float\n}\n\nclass GameState {\n    lives : Integer\n    currentLevel : Integer\n    currentScore : Integer\n}\n\n' --- Relationships ---\n\nDestroyBlockApp \"1\" *-- \"*\" User\nDestroyBlockApp \"1\" *-- \"*\" Game\n\nGame \"1\" *-- \"*\" Block\nGame \"1\" *-- \"*\" Level\nGame \"1\" *-- \"1\" HallOfFameEntry\n\nLevel \"1\" *-- \"*\" GridPosition\n\n' User as Player/Admin relationships\nUser \"1..*\" -- \"1..*\" Game : actsAsPlayer\nUser \"0..1\" -- \"1\" Game : actsAsAdmin\n\n' Player and GameState associations\nUser \"1\" -- \"*\" GameState : playerGameStates\nGameState \"1\" -- \"1\" Game\nGameState \"1\" -- \"1\" Ball\nGameState \"1\" -- \"1\" Paddle\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.625,
+        "attribute_score": 0.3502188868042526,
+        "association_score": 0.3666666666666667
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.88889
+        },
+        "Attribute": {
+          "precision": 0.79545,
+          "recall": 0.51667,
+          "f1": 0.62644
+        },
+        "Association": {
+          "precision": 0.625,
+          "recall": 0.3125,
+          "f1": 0.41667
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.26388999999999996,
+        "attribute_vs_f1": -0.2762211131957474,
+        "association_vs_f1": -0.05000333333333329,
+        "class_vs_precision": -0.375,
+        "class_vs_recall": -0.17500000000000004,
+        "attribute_vs_precision": -0.4452311131957474,
+        "attribute_vs_recall": -0.16645111319574735,
+        "association_vs_precision": -0.2583333333333333,
+        "association_vs_recall": 0.054166666666666696
+      },
+      "aggregated": {
+        "metric_average": 0.4472951844903064,
+        "human_f1_average": 0.644,
+        "overall_delta": -0.1967048155096936
+      }
+    },
+    "Block_1shot_H2S": {
+      "comparison_id": "Block_1shot_H2S",
+      "model_key": "Block",
+      "model_full_name": "Block  ",
+      "setting": "1shot_H2S",
+      "reference_plantuml": "@startuml\n\nclass DestroyBlock {\n}\n\nclass User {\n}\n\nclass Admin {\n}\n\n\nclass Block223 {\n}\n\nclass HallOfFameEntry {\n  score : Integer\n}\n\nclass Player {\n}\n\nclass Game {\n  published : Boolean\n}\n\nclass Level {\n  isRandom : Boolean\n}\n\nclass PlayedGame {\n  id : Integer\n  score : Integer\n  lives : Integer\n  currentLevel : Integer\n}\n\nclass PlayedBall {\n  ballDirectionX : Double\n  ballDirectionY : Double\n  currentBallX : Double\n  currentBallY : Double\n}\n\nclass PlayedPaddle {\n  currentPaddleLength : Double\n  currentPaddleX : Double\n  currentPaddleY : Double\n}\n\nclass PlayedBlockAssignment {\n  x : Integer\n  y : Integer\n}\n\n\nclass Block {\n  id : Integer\n  red : Integer\n  green : Integer\n  blue : Integer\n  points : Integer\n}\n\n// Kompositionen\nDestroyBlock *-- \"*\" User : users\nDestroyBlock *-- \"*\" Admin : admins\nDestroyBlock *-- \"*\" Player : players\nDestroyBlock *-- \"*\" Game : games\nDestroyBlock *-- \"*\" PlayedGame : playedGames\nDestroyBlock *-- \"*\" HallOfFameEntry : entries\n\nBlock223 *-- \"*\" PlayedGame : playedGames\nBlock223 *-- \"*\" HallOfFameEntry : entries\n\n' PlayedGame-Kompositionen\nPlayedGame *-- \"1\" PlayedBall\nPlayedGame *-- \"1\" PlayedPaddle\nPlayedGame *-- \"*\" PlayedBlockAssignment : blocks\nBlock \"1\" -- \"*\" PlayedBlockAssignment\n\nPlayedGame \"*\" -- \"1\" Player : player\nPlayedGame \"*\" -- \"1\" Game : game1\n\nHallOfFameEntry \"*\" -- \"1\" Player : player\n\nGame \"1\" --> \"0..1\" HallOfFameEntry : mostRecentEntry\nGame \"1\" -- \"*\" HallOfFameEntry : game\n\nUser \"1\" -- \"1\" Player : player\nUser \"1\" -- \"0..1\" Admin : admin\nAdmin \"1\" -- \"*\" Game : admin\n\n@enduml",
+      "generated_plantuml": "@startuml\n\n' Enumerations\nenum BlockColor {\n    Red\n    Blue\n    ...\n}\n\nenum PointsRange {\n    1\n    1000\n}\n\n' Classes\nclass User {\n    username : String\n    password : String\n}\n\nclass Player {\n\n}\n\nclass Admin {\n\n}\n\nclass DestroyBlockGame {\n    gameName : String\n    published : Boolean\n    maxLevels : Integer\n}\n\nclass Block {\n    color : BlockColor\n    points : Integer\n}\n\nclass Level {\n    levelNumber : Integer\n    isRandom : Boolean\n}\n\nclass LevelDesign {\n    blockArrangement : String\n}\n\nclass HallOfFame {\n\n}\n\nclass GameScore {\n    score : Integer\n    timestamp : DateTime\n}\n\nclass Paddle {\n    maxLength : Float\n    minLength : Float\n}\n\nclass Ball {\n    minimumSpeed : Float\n    speedIncreaseFactor : Float\n}\n\n' Relationships\n\nUser <|-- Player\nUser <|-- Admin\n\nAdmin \"1\" --> \"*\" DestroyBlockGame : creates\nDestroyBlockGame \"1\" *-- \"*\" Level : contains\nDestroyBlockGame \"1\" *-- \"*\" Block : contains\nDestroyBlockGame \"1\" -- \"1\" HallOfFame : associates\nLevel \"1\" *-- \"*\" LevelDesign : contains\nLevelDesign \"1\" *-- \"*\" Block : contains\nDestroyBlockGame \"1\" -- \"*\" Player : associates\nPlayer \"1\" -- \"*\" GameScore : associates\nGameScore \"1\" -- \"1\" HallOfFame : associates\nBall \"1\" -- \"*\" DestroyBlockGame : associates\nPaddle \"1\" -- \"*\" DestroyBlockGame : associates\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5952380952380952,
+        "attribute_score": 0.31165413533834585,
+        "association_score": 0.34375
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.84615,
+          "recall": 0.66667,
+          "f1": 0.74576
+        },
+        "Attribute": {
+          "precision": 0.575,
+          "recall": 0.38333,
+          "f1": 0.46
+        },
+        "Association": {
+          "precision": 0.65385,
+          "recall": 0.3125,
+          "f1": 0.42289
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.15052190476190475,
+        "attribute_vs_f1": -0.14834586466165417,
+        "association_vs_f1": -0.07913999999999999,
+        "class_vs_precision": -0.2509119047619047,
+        "class_vs_recall": -0.07143190476190475,
+        "attribute_vs_precision": -0.2633458646616541,
+        "attribute_vs_recall": -0.07167586466165415,
+        "association_vs_precision": -0.31010000000000004,
+        "association_vs_recall": 0.03125
+      },
+      "aggregated": {
+        "metric_average": 0.4168807435254804,
+        "human_f1_average": 0.5428833333333333,
+        "overall_delta": -0.1260025898078529
+      }
+    },
+    "Block_2shots": {
+      "comparison_id": "Block_2shots",
+      "model_key": "Block",
+      "model_full_name": "Block  ",
+      "setting": "2shots",
+      "reference_plantuml": "@startuml\n\nclass DestroyBlock {\n}\n\nclass User {\n}\n\nclass Admin {\n}\n\n\nclass Block223 {\n}\n\nclass HallOfFameEntry {\n  score : Integer\n}\n\nclass Player {\n}\n\nclass Game {\n  published : Boolean\n}\n\nclass Level {\n  isRandom : Boolean\n}\n\nclass PlayedGame {\n  id : Integer\n  score : Integer\n  lives : Integer\n  currentLevel : Integer\n}\n\nclass PlayedBall {\n  ballDirectionX : Double\n  ballDirectionY : Double\n  currentBallX : Double\n  currentBallY : Double\n}\n\nclass PlayedPaddle {\n  currentPaddleLength : Double\n  currentPaddleX : Double\n  currentPaddleY : Double\n}\n\nclass PlayedBlockAssignment {\n  x : Integer\n  y : Integer\n}\n\n\nclass Block {\n  id : Integer\n  red : Integer\n  green : Integer\n  blue : Integer\n  points : Integer\n}\n\n// Kompositionen\nDestroyBlock *-- \"*\" User : users\nDestroyBlock *-- \"*\" Admin : admins\nDestroyBlock *-- \"*\" Player : players\nDestroyBlock *-- \"*\" Game : games\nDestroyBlock *-- \"*\" PlayedGame : playedGames\nDestroyBlock *-- \"*\" HallOfFameEntry : entries\n\nBlock223 *-- \"*\" PlayedGame : playedGames\nBlock223 *-- \"*\" HallOfFameEntry : entries\n\n' PlayedGame-Kompositionen\nPlayedGame *-- \"1\" PlayedBall\nPlayedGame *-- \"1\" PlayedPaddle\nPlayedGame *-- \"*\" PlayedBlockAssignment : blocks\nBlock \"1\" -- \"*\" PlayedBlockAssignment\n\nPlayedGame \"*\" -- \"1\" Player : player\nPlayedGame \"*\" -- \"1\" Game : game1\n\nHallOfFameEntry \"*\" -- \"1\" Player : player\n\nGame \"1\" --> \"0..1\" HallOfFameEntry : mostRecentEntry\nGame \"1\" -- \"*\" HallOfFameEntry : game\n\nUser \"1\" -- \"1\" Player : player\nUser \"1\" -- \"0..1\" Admin : admin\nAdmin \"1\" -- \"*\" Game : admin\n\n@enduml",
+      "generated_plantuml": "@startuml\n\n' Enumerations\nenum BlockColor {\n    RED\n    BLUE\n    GREEN\n    YELLOW\n    ORANGE\n    PURPLE\n}\n\nenum AdminMode {\n    DESIGN\n    PLAY\n}\n\n' Classes\nclass DestroyBlockApp {\n\n}\n\nclass User {\n    username : String\n    password : String\n}\n\nclass Player {\n\n}\n\nclass Admin {\n    mode : AdminMode\n}\n\nclass Game {\n    uniqueName : String\n}\n\nclass HallOfFame {\n\n}\n\nclass Block {\n    color : BlockColor\n    points : Integer\n}\n\nclass Level {\n    number : Integer\n    isRandom : Boolean\n}\n\nclass LevelConfiguration {\n    startingBlocks : Integer\n    minimumSpeed : Float\n    speedIncreaseFactor : Float\n    maximumPaddleLength : Float\n    minimumPaddleLength : Float\n}\n\nclass PlayArea {\n\n}\n\nclass Ball {\n    speed : Float\n    direction : Float\n}\n\nclass Paddle {\n    position : Float\n    length : Float\n}\n\nclass GameState {\n    lives : Integer\n    score : Integer\n}\n\n' Relationships\n\nDestroyBlockApp \"1\" *-- \"*\" User : contains\nDestroyBlockApp \"1\" *-- \"*\" Game : contains\nDestroyBlockApp \"1\" *-- \"*\" HallOfFame : contains\n\nGame \"1\" *-- \"*\" Level : contains\nGame \"1\" *-- \"*\" Block : contains\nGame \"1\" *-- \"*\" LevelConfiguration : contains\nGame \"1\" *-- \"*\" PlayArea : contains\nGame \"1\" *-- \"*\" GameState : contains\nGame \"1\" *-- \"*\" HallOfFame : contains\n\nUser \"1\" -- \"*\" Player : associates\nUser \"1\" -- \"*\" Admin : associates\nPlayer \"1\" -- \"*\" Game : associates\nAdmin \"1\" -- \"*\" Game : associates\n\nLevel \"1\" -- \"*\" Block : associates\nPlayArea \"1\" *-- \"*\" Ball : contains\nPlayArea \"1\" *-- \"*\" Paddle : contains\nPlayArea \"1\" *-- \"*\" Block : contains\n\nGameState \"1\" -- \"*\" Game : associates\nGameState \"1\" -- \"*\" User : associates\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.6612771182971756,
+        "attribute_score": 0.24656750572082375,
+        "association_score": 0.5506072874493927
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.8,
+          "recall": 0.8,
+          "f1": 0.8
+        },
+        "Attribute": {
+          "precision": 0.47619,
+          "recall": 0.35,
+          "f1": 0.40346
+        },
+        "Association": {
+          "precision": 0.47222,
+          "recall": 0.35417,
+          "f1": 0.40476
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.13872288170282443,
+        "attribute_vs_f1": -0.15689249427917623,
+        "association_vs_f1": 0.14584728744939268,
+        "class_vs_precision": -0.13872288170282443,
+        "class_vs_recall": -0.13872288170282443,
+        "attribute_vs_precision": -0.22962249427917625,
+        "attribute_vs_recall": -0.10343249427917622,
+        "association_vs_precision": 0.07838728744939272,
+        "association_vs_recall": 0.1964372874493927
+      },
+      "aggregated": {
+        "metric_average": 0.4861506371557973,
+        "human_f1_average": 0.5360733333333333,
+        "overall_delta": -0.049922696177535975
+      }
+    },
+    "Block_CoT": {
+      "comparison_id": "Block_CoT",
+      "model_key": "Block",
+      "model_full_name": "Block  ",
+      "setting": "CoT",
+      "reference_plantuml": "@startuml\n\nclass DestroyBlock {\n}\n\nclass User {\n}\n\nclass Admin {\n}\n\n\nclass Block223 {\n}\n\nclass HallOfFameEntry {\n  score : Integer\n}\n\nclass Player {\n}\n\nclass Game {\n  published : Boolean\n}\n\nclass Level {\n  isRandom : Boolean\n}\n\nclass PlayedGame {\n  id : Integer\n  score : Integer\n  lives : Integer\n  currentLevel : Integer\n}\n\nclass PlayedBall {\n  ballDirectionX : Double\n  ballDirectionY : Double\n  currentBallX : Double\n  currentBallY : Double\n}\n\nclass PlayedPaddle {\n  currentPaddleLength : Double\n  currentPaddleX : Double\n  currentPaddleY : Double\n}\n\nclass PlayedBlockAssignment {\n  x : Integer\n  y : Integer\n}\n\n\nclass Block {\n  id : Integer\n  red : Integer\n  green : Integer\n  blue : Integer\n  points : Integer\n}\n\n// Kompositionen\nDestroyBlock *-- \"*\" User : users\nDestroyBlock *-- \"*\" Admin : admins\nDestroyBlock *-- \"*\" Player : players\nDestroyBlock *-- \"*\" Game : games\nDestroyBlock *-- \"*\" PlayedGame : playedGames\nDestroyBlock *-- \"*\" HallOfFameEntry : entries\n\nBlock223 *-- \"*\" PlayedGame : playedGames\nBlock223 *-- \"*\" HallOfFameEntry : entries\n\n' PlayedGame-Kompositionen\nPlayedGame *-- \"1\" PlayedBall\nPlayedGame *-- \"1\" PlayedPaddle\nPlayedGame *-- \"*\" PlayedBlockAssignment : blocks\nBlock \"1\" -- \"*\" PlayedBlockAssignment\n\nPlayedGame \"*\" -- \"1\" Player : player\nPlayedGame \"*\" -- \"1\" Game : game1\n\nHallOfFameEntry \"*\" -- \"1\" Player : player\n\nGame \"1\" --> \"0..1\" HallOfFameEntry : mostRecentEntry\nGame \"1\" -- \"*\" HallOfFameEntry : game\n\nUser \"1\" -- \"1\" Player : player\nUser \"1\" -- \"0..1\" Admin : admin\nAdmin \"1\" -- \"*\" Game : admin\n\n@enduml",
+      "generated_plantuml": "@startuml\n\nclass User {\n    username : String\n    password : String\n}\n\nclass Player {\n\n}\n\nclass Admin {\n\n}\n\nclass Game {\n    name : String\n    hallOfFame : HallOfFame\n}\n\nclass HallOfFame {\n\n}\n\nclass Block {\n    color : String\n    points : Integer\n}\n\nclass Level {\n    levelNumber : Integer\n    grid : Grid\n    isRandom : Boolean\n}\n\nclass Grid {\n    x : Integer\n    y : Integer\n}\n\nclass Speed {\n    minimumSpeed : Float\n    speedIncreaseFactor : Float\n}\n\nclass PaddleLength {\n    maxLength : Float\n    minLength : Float\n}\n\nclass GameState {\n    state : String  // \"PUBLISHED\", \"SAVED\", \"PAUSED\"\n}\n\nclass Life {\n    lives : Integer\n}\n\nclass Score {\n    score : Integer\n}\n\nclass HighScoreEntry {\n    username : String\n    score : Integer\n}\n\n// Inheritance\nUser <|-- Player\nUser <|-- Admin\n\n// Associations\nPlayer \"1\" --> \"*\" Game : plays\nAdmin \"1\" --> \"*\" Game : manages\n\n// Containments and compositions\nGame \"1\" *-- \"*\" Block : blocks\nGame \"1\" *-- \"*\" Level : levels\nGame \"1\" *-- \"1\" HallOfFame : hallOfFame\nLevel \"1\" *-- \"1\" Grid : grid\n\n// Has-a relationships\nGame \"1\" --> \"1\" Speed : speed\nGame \"1\" --> \"1\" PaddleLength : paddleLength\nGame \"1\" --> \"1\" GameState : gameState\n\nPlayer \"1\" --> \"1\" Life : life\nPlayer \"1\" --> \"1\" Score : score\n\nHallOfFame \"1\" *-- \"*\" HighScoreEntry : entries\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5923289837880585,
+        "attribute_score": 0.3288288288288287,
+        "association_score": 0.36363636363636365
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.75,
+          "recall": 0.6,
+          "f1": 0.66667
+        },
+        "Attribute": {
+          "precision": 0.52273,
+          "recall": 0.41667,
+          "f1": 0.46371
+        },
+        "Association": {
+          "precision": 0.39286,
+          "recall": 0.1875,
+          "f1": 0.25385
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.07434101621194145,
+        "attribute_vs_f1": -0.13488117117117132,
+        "association_vs_f1": 0.10978636363636363,
+        "class_vs_precision": -0.15767101621194146,
+        "class_vs_recall": -0.007671016211941439,
+        "attribute_vs_precision": -0.19390117117117134,
+        "attribute_vs_recall": -0.0878411711711713,
+        "association_vs_precision": -0.02922363636363634,
+        "association_vs_recall": 0.17613636363636365
+      },
+      "aggregated": {
+        "metric_average": 0.4282647254177503,
+        "human_f1_average": 0.46141000000000004,
+        "overall_delta": -0.03314527458224975
+      }
+    },
+    "TileO_0shot": {
+      "comparison_id": "TileO_0shot",
+      "model_key": "TileO",
+      "model_full_name": "Tile-O",
+      "setting": "0shot",
+      "reference_plantuml": "@startuml\n\n' Enumerationen\nenum Mode {\n  DESIGN\n  GAME\n}\n\nenum Color {\n  RED\n  BLUE\n  GREEN\n  YELLOW\n}\n\nclass Game {\n  currentConnectionPieces : Integer\n  mode : Mode\n  const Integer SpareConnectionPieces = 32\n  const Integer NumberOfActionCards = 32\n}\n\nclass Die {\n   \n}\n\nclass Tile0 {\n   \n}\n\nabstract class Tile {\n  x : Integer\n  y : Integer\n  hasBeenVisited : Boolean\n   \n}\n\nclass WinTile {\n   \n}\n\nclass ActionTile {\n  inactivityPeriod : Integer\n  turnsUntilActive : Integer\n   \n}\n\nclass NormalTile {\n   \n}\n\nclass Connection {\n   \n}\n\nclass Player {\n  number : Integer\n  turnsUntilActive : Integer\n  color : Color\n   \n}\n\nclass Deck {\n   \n}\n\nabstract class ActionCard {\n  instructions : String\n   \n}\n\nclass RollDieActionCard {\n   \n}\n\nclass ConnectTilesActionCard {\n   \n}\n\nclass RemoveConnectionActionCard {\n   \n}\n\nclass TeleportActionCard {\n   \n}\n\nclass LoseTurnActionCard {\n   \n}\n\n' Beziehungen\n\nGame \"1\" *-- \"1\" Die\nGame \"1\" *-- \"*\" Tile\nGame \"1\" *-- \"*\" Connection\nGame \"1\" *-- \"2..4\" Player : players\nGame \"1\" *-- \"1\" Deck : deck\nGame \"1\" --* \"*\" Tile0 : games\n\nGame \"1\" --* \"0..1\" WinTile\n\nGame --> \"0..1\" Player : currentPlayer\nPlayer --> \"0..1\" Tile : startingTile\nPlayer \"0..4\" --> \"0..1\" Tile : currentTile\n\nDeck \"1\" --> \"0..1\" ActionCard : currentCard\nTile \"2\" --> \"0..4\" Connection : connections\nDeck \"1\" *-- \"0..32\" ActionCard : cards\n\nTile <|-- WinTile\nTile <|-- ActionTile\nTile <|-- NormalTile\n\nActionCard <|-- RollDieActionCard\nActionCard <|-- ConnectTilesActionCard\nActionCard <|-- RemoveConnectionActionCard\nActionCard <|-- TeleportActionCard\nActionCard <|-- LoseTurnActionCard\n\n@enduml",
+      "generated_plantuml": "@startuml\n\nenum Color {\n  RED\n  BLUE\n  GREEN\n  YELLOW\n}\n\nenum ConnectionDirection {\n  TOP\n  BOTTOM\n  LEFT\n  RIGHT\n}\n\nenum ActionCardType {\n  ROLL_EXTRA_TURN\n  CONNECT_TILES\n  REMOVE_CONNECTION\n  MOVE_TO_ARBITRARY_TILE\n  LOSE_NEXT_TURN\n}\n\nclass Tile {\n  id : Integer\n  color : Color\n  isHidden : Boolean\n  isActionTile : Boolean\n  actionTileTurns : Integer\n}\n\nclass ConnectionPiece {\n  id : Integer\n  direction : ConnectionDirection\n}\n\nclass Player {\n  id : Integer\n  color : Color\n  currentPosition : Tile\n}\n\nclass GameBoard {\n  tiles : Tile[][]\n  connectionPieces : ConnectionPiece[]\n  players : Player[]\n  hiddenTile : Tile\n  currentPlayer : Player\n  currentPlayerIndex : Integer\n  currentTurn : Integer\n}\n\nclass GameDesigner {\n  gameBoard : GameBoard\n}\n\nclass ActionCard {\n  id : Integer\n  type : ActionCardType\n}\n\nclass Deck {\n  cards : ActionCard[]\n}\n\n'=====================\n' Relationships\n'=====================\n\nGameDesigner \"1\" *-- \"1\" GameBoard : design\nGameBoard \"1\" *-- \"1..*\" Tile : tiles\nGameBoard \"1\" *-- \"0..*\" ConnectionPiece : connectionPieces\nGameBoard \"1\" *-- \"2..4\" Player : players\n\nTile \"1\" --> \"0..1\" Tile : connect\n\nDeck \"1\" *-- \"32\" ActionCard : cards\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.4285714285714286,
+        "attribute_score": 0.2963875205254516,
+        "association_score": 0.23076923076923075
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.8,
+          "recall": 0.55556,
+          "f1": 0.65574
+        },
+        "Attribute": {
+          "precision": 0.41176,
+          "recall": 0.44737,
+          "f1": 0.42883
+        },
+        "Association": {
+          "precision": 0.5,
+          "recall": 0.14286,
+          "f1": 0.22222
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.2271685714285714,
+        "attribute_vs_f1": -0.1324424794745484,
+        "association_vs_f1": 0.008549230769230753,
+        "class_vs_precision": -0.37142857142857144,
+        "class_vs_recall": -0.12698857142857145,
+        "attribute_vs_precision": -0.11537247947454843,
+        "attribute_vs_recall": -0.1509824794745484,
+        "association_vs_precision": -0.2692307692307693,
+        "association_vs_recall": 0.08790923076923077
+      },
+      "aggregated": {
+        "metric_average": 0.3185760599553703,
+        "human_f1_average": 0.4355966666666667,
+        "overall_delta": -0.11702060671129638
+      }
+    },
+    "TileO_1shot_BTMS": {
+      "comparison_id": "TileO_1shot_BTMS",
+      "model_key": "TileO",
+      "model_full_name": "Tile-O",
+      "setting": "1shot_BTMS",
+      "reference_plantuml": "@startuml\n\n' Enumerationen\nenum Mode {\n  DESIGN\n  GAME\n}\n\nenum Color {\n  RED\n  BLUE\n  GREEN\n  YELLOW\n}\n\nclass Game {\n  currentConnectionPieces : Integer\n  mode : Mode\n  const Integer SpareConnectionPieces = 32\n  const Integer NumberOfActionCards = 32\n}\n\nclass Die {\n   \n}\n\nclass Tile0 {\n   \n}\n\nabstract class Tile {\n  x : Integer\n  y : Integer\n  hasBeenVisited : Boolean\n   \n}\n\nclass WinTile {\n   \n}\n\nclass ActionTile {\n  inactivityPeriod : Integer\n  turnsUntilActive : Integer\n   \n}\n\nclass NormalTile {\n   \n}\n\nclass Connection {\n   \n}\n\nclass Player {\n  number : Integer\n  turnsUntilActive : Integer\n  color : Color\n   \n}\n\nclass Deck {\n   \n}\n\nabstract class ActionCard {\n  instructions : String\n   \n}\n\nclass RollDieActionCard {\n   \n}\n\nclass ConnectTilesActionCard {\n   \n}\n\nclass RemoveConnectionActionCard {\n   \n}\n\nclass TeleportActionCard {\n   \n}\n\nclass LoseTurnActionCard {\n   \n}\n\n' Beziehungen\n\nGame \"1\" *-- \"1\" Die\nGame \"1\" *-- \"*\" Tile\nGame \"1\" *-- \"*\" Connection\nGame \"1\" *-- \"2..4\" Player : players\nGame \"1\" *-- \"1\" Deck : deck\nGame \"1\" --* \"*\" Tile0 : games\n\nGame \"1\" --* \"0..1\" WinTile\n\nGame --> \"0..1\" Player : currentPlayer\nPlayer --> \"0..1\" Tile : startingTile\nPlayer \"0..4\" --> \"0..1\" Tile : currentTile\n\nDeck \"1\" --> \"0..1\" ActionCard : currentCard\nTile \"2\" --> \"0..4\" Connection : connections\nDeck \"1\" *-- \"0..32\" ActionCard : cards\n\nTile <|-- WinTile\nTile <|-- ActionTile\nTile <|-- NormalTile\n\nActionCard <|-- RollDieActionCard\nActionCard <|-- ConnectTilesActionCard\nActionCard <|-- RemoveConnectionActionCard\nActionCard <|-- TeleportActionCard\nActionCard <|-- LoseTurnActionCard\n\n@enduml",
+      "generated_plantuml": "@startuml\n\nenum CardAction {\n    extraTurn\n    connectTiles\n    removeConnection\n    moveToArbitraryTile\n    loseNextTurn\n}\n\nclass TileO {\n}\n\nclass GameBoard {\n}\n\nclass Tile {\n    hidden : Boolean\n    action : Boolean\n    visited : Integer\n}\n\nclass ConnectionPiece {\n}\n\nclass DeckOfCards {\n}\n\nclass ActionCard {\n    action : CardAction\n}\n\nclass PlayingPiece {\n    color : String\n}\n\nclass Player {\n    id : Integer\n}\n\n'-------------------------------------------\n' Relationships\n'-------------------------------------------\n\nTileO \"1\" *-- \"1\" GameBoard\nTileO \"1\" *-- \"1\" DeckOfCards\nTileO \"1\" *-- \"*\" PlayingPiece\nTileO \"1\" *-- \"2..4\" Player\n\nGameBoard \"1\" *-- \"*\" Tile\nGameBoard \"1\" *-- \"*\" ConnectionPiece\n\nTile \"1\" --> \"*\" ConnectionPiece\n\nDeckOfCards \"1\" *-- \"32\" ActionCard\n\nPlayer \"1\" --> \"1\" PlayingPiece\nPlayer \"1\" --> \"0..1\" ActionCard\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.4311111111111111,
+        "attribute_score": 0.23739495798319316,
+        "association_score": 0.3333333333333333
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.88889,
+          "recall": 0.61111,
+          "f1": 0.72428
+        },
+        "Attribute": {
+          "precision": 0.81818,
+          "recall": 0.13158,
+          "f1": 0.2267
+        },
+        "Association": {
+          "precision": 0.35,
+          "recall": 0.16667,
+          "f1": 0.22581
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.2931688888888889,
+        "attribute_vs_f1": 0.010694957983193143,
+        "association_vs_f1": 0.1075233333333333,
+        "class_vs_precision": -0.45777888888888885,
+        "class_vs_recall": -0.17999888888888893,
+        "attribute_vs_precision": -0.5807850420168068,
+        "attribute_vs_recall": 0.10581495798319315,
+        "association_vs_precision": -0.016666666666666663,
+        "association_vs_recall": 0.1666633333333333
+      },
+      "aggregated": {
+        "metric_average": 0.3339464674758792,
+        "human_f1_average": 0.39226333333333335,
+        "overall_delta": -0.05831686585745416
+      }
+    },
+    "TileO_1shot_H2S": {
+      "comparison_id": "TileO_1shot_H2S",
+      "model_key": "TileO",
+      "model_full_name": "Tile-O",
+      "setting": "1shot_H2S",
+      "reference_plantuml": "@startuml\n\n' Enumerationen\nenum Mode {\n  DESIGN\n  GAME\n}\n\nenum Color {\n  RED\n  BLUE\n  GREEN\n  YELLOW\n}\n\nclass Game {\n  currentConnectionPieces : Integer\n  mode : Mode\n  const Integer SpareConnectionPieces = 32\n  const Integer NumberOfActionCards = 32\n}\n\nclass Die {\n   \n}\n\nclass Tile0 {\n   \n}\n\nabstract class Tile {\n  x : Integer\n  y : Integer\n  hasBeenVisited : Boolean\n   \n}\n\nclass WinTile {\n   \n}\n\nclass ActionTile {\n  inactivityPeriod : Integer\n  turnsUntilActive : Integer\n   \n}\n\nclass NormalTile {\n   \n}\n\nclass Connection {\n   \n}\n\nclass Player {\n  number : Integer\n  turnsUntilActive : Integer\n  color : Color\n   \n}\n\nclass Deck {\n   \n}\n\nabstract class ActionCard {\n  instructions : String\n   \n}\n\nclass RollDieActionCard {\n   \n}\n\nclass ConnectTilesActionCard {\n   \n}\n\nclass RemoveConnectionActionCard {\n   \n}\n\nclass TeleportActionCard {\n   \n}\n\nclass LoseTurnActionCard {\n   \n}\n\n' Beziehungen\n\nGame \"1\" *-- \"1\" Die\nGame \"1\" *-- \"*\" Tile\nGame \"1\" *-- \"*\" Connection\nGame \"1\" *-- \"2..4\" Player : players\nGame \"1\" *-- \"1\" Deck : deck\nGame \"1\" --* \"*\" Tile0 : games\n\nGame \"1\" --* \"0..1\" WinTile\n\nGame --> \"0..1\" Player : currentPlayer\nPlayer --> \"0..1\" Tile : startingTile\nPlayer \"0..4\" --> \"0..1\" Tile : currentTile\n\nDeck \"1\" --> \"0..1\" ActionCard : currentCard\nTile \"2\" --> \"0..4\" Connection : connections\nDeck \"1\" *-- \"0..32\" ActionCard : cards\n\nTile <|-- WinTile\nTile <|-- ActionTile\nTile <|-- NormalTile\n\nActionCard <|-- RollDieActionCard\nActionCard <|-- ConnectTilesActionCard\nActionCard <|-- RemoveConnectionActionCard\nActionCard <|-- TeleportActionCard\nActionCard <|-- LoseTurnActionCard\n\n@enduml",
+      "generated_plantuml": "@startuml\n\nenum ActionCardType {\n    ExtraTurn\n    ConnectTiles\n    RemoveConnection\n    MoveToArbitraryTile\n    LoseTurn\n}\n\nenum TileSide {\n    Right\n    Left\n    Top\n    Bottom\n}\n\nclass TileO {\n\n}\n\nclass GameDesigner {\n    name : String\n}\n\nclass Player {\n    name : String\n    color : PlayingPieceColor\n}\n\nclass GameBoard {\n    width : Integer\n    height : Integer\n}\n\nclass Tile {\n    x : Integer\n    y : Integer\n    isHidden : Boolean\n    isVisited : Boolean\n    isActionTile : Boolean\n}\n\nclass Connection {\n    side : TileSide\n    tile1 : Tile\n    tile2 : Tile\n}\n\nclass ActionCard {\n    type : ActionCardType\n}\n\nclass PlayingPiece {\n    color : PlayingPieceColor\n    currentTile : Tile\n}\n\nclass Die {\n    numberOfFaces : Integer\n}\n\n' Relationships\nTileO \"1\" *-- \"1\" GameDesigner\nTileO \"1\" *-- \"1\" GameBoard\nTileO \"1\" *-- \"*\" Player\nTileO \"1\" *-- \"*\" Connection\nTileO \"1\" *-- \"*\" ActionCard\nTileO \"1\" *-- \"*\" PlayingPiece\nTileO \"1\" *-- \"1\" Die\n\nGameBoard \"1\" *-- \"*\" Tile\n\nPlayer \"1\" --> \"1\" PlayingPiece\nConnection \"1\" --> \"2\" Tile\nTile \"1\" --> \"0..4\" Connection\nPlayingPiece \"1\" --> \"1\" Tile\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.48275862068965514,
+        "attribute_score": 0.2986111111111111,
+        "association_score": 0.40624999999999994
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.72727,
+          "recall": 0.61111,
+          "f1": 0.66415
+        },
+        "Attribute": {
+          "precision": 0.46154,
+          "recall": 0.21053,
+          "f1": 0.28916
+        },
+        "Association": {
+          "precision": 0.16667,
+          "recall": 0.09524,
+          "f1": 0.12121
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.18139137931034488,
+        "attribute_vs_f1": 0.009451111111111132,
+        "association_vs_f1": 0.28503999999999996,
+        "class_vs_precision": -0.24451137931034483,
+        "class_vs_recall": -0.1283513793103449,
+        "attribute_vs_precision": -0.1629288888888889,
+        "attribute_vs_recall": 0.08808111111111111,
+        "association_vs_precision": 0.23957999999999993,
+        "association_vs_recall": 0.31100999999999995
+      },
+      "aggregated": {
+        "metric_average": 0.39587324393358875,
+        "human_f1_average": 0.3581733333333333,
+        "overall_delta": 0.03769991060025546
+      }
+    },
+    "TileO_2shots": {
+      "comparison_id": "TileO_2shots",
+      "model_key": "TileO",
+      "model_full_name": "Tile-O",
+      "setting": "2shots",
+      "reference_plantuml": "@startuml\n\n' Enumerationen\nenum Mode {\n  DESIGN\n  GAME\n}\n\nenum Color {\n  RED\n  BLUE\n  GREEN\n  YELLOW\n}\n\nclass Game {\n  currentConnectionPieces : Integer\n  mode : Mode\n  const Integer SpareConnectionPieces = 32\n  const Integer NumberOfActionCards = 32\n}\n\nclass Die {\n   \n}\n\nclass Tile0 {\n   \n}\n\nabstract class Tile {\n  x : Integer\n  y : Integer\n  hasBeenVisited : Boolean\n   \n}\n\nclass WinTile {\n   \n}\n\nclass ActionTile {\n  inactivityPeriod : Integer\n  turnsUntilActive : Integer\n   \n}\n\nclass NormalTile {\n   \n}\n\nclass Connection {\n   \n}\n\nclass Player {\n  number : Integer\n  turnsUntilActive : Integer\n  color : Color\n   \n}\n\nclass Deck {\n   \n}\n\nabstract class ActionCard {\n  instructions : String\n   \n}\n\nclass RollDieActionCard {\n   \n}\n\nclass ConnectTilesActionCard {\n   \n}\n\nclass RemoveConnectionActionCard {\n   \n}\n\nclass TeleportActionCard {\n   \n}\n\nclass LoseTurnActionCard {\n   \n}\n\n' Beziehungen\n\nGame \"1\" *-- \"1\" Die\nGame \"1\" *-- \"*\" Tile\nGame \"1\" *-- \"*\" Connection\nGame \"1\" *-- \"2..4\" Player : players\nGame \"1\" *-- \"1\" Deck : deck\nGame \"1\" --* \"*\" Tile0 : games\n\nGame \"1\" --* \"0..1\" WinTile\n\nGame --> \"0..1\" Player : currentPlayer\nPlayer --> \"0..1\" Tile : startingTile\nPlayer \"0..4\" --> \"0..1\" Tile : currentTile\n\nDeck \"1\" --> \"0..1\" ActionCard : currentCard\nTile \"2\" --> \"0..4\" Connection : connections\nDeck \"1\" *-- \"0..32\" ActionCard : cards\n\nTile <|-- WinTile\nTile <|-- ActionTile\nTile <|-- NormalTile\n\nActionCard <|-- RollDieActionCard\nActionCard <|-- ConnectTilesActionCard\nActionCard <|-- RemoveConnectionActionCard\nActionCard <|-- TeleportActionCard\nActionCard <|-- LoseTurnActionCard\n\n@enduml",
+      "generated_plantuml": "@startuml\n\n' Enumerations\nenum CardAction {\n    ExtraTurn\n    ConnectTiles\n    RemoveConnection\n    MoveToArbitraryTile\n    LoseNextTurn\n}\n\nenum PieceColor {\n    Red\n    Blue\n    Green\n    Yellow\n}\n\n' Classes\nclass TileO {\n}\n\nclass GameBoard {\n}\n\nclass Designer {\n}\n\nclass Player {\n    playerNumber : Integer\n    color : PieceColor\n}\n\nclass Tile {\n    hidden : Boolean\n    visited : Boolean\n    action : Boolean\n    actionTurns : Integer\n}\n\nclass ConnectionPiece {\n}\n\nclass ActionCard {\n    action : CardAction\n}\n\nclass Die {\n}\n\n' Relationships\n\nTileO \"1\" *-- \"1\" GameBoard\nTileO \"1\" *-- \"*\" Designer\nTileO \"1\" *-- \"*\" Player\nTileO \"1\" *-- \"*\" Tile\nTileO \"1\" *-- \"*\" ConnectionPiece\nTileO \"1\" *-- \"*\" ActionCard\nTileO \"1\" *-- \"1\" Die\n\nGameBoard \"1\" --> \"*\" Tile\nGameBoard \"1\" --> \"*\" ConnectionPiece\nGameBoard \"1\" --> \"1\" Designer\n\nDesigner \"1\" --> \"*\" ActionCard : define\n\nTile \"1\" --> \"0..4\" ConnectionPiece\nTile \"1\" --> \"0..1\" Tile : Right\nTile \"1\" --> \"0..1\" Tile : Left\nTile \"1\" --> \"0..1\" Tile : Top\nTile \"1\" --> \"0..1\" Tile : Bottom\n\nPlayer \"1\" --> \"1\" PieceColor\n\nConnectionPiece \"1\" --> \"2\" Tile : connects\n\nActionCard \"1\" --> \"1\" CardAction\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.4403778040141676,
+        "attribute_score": 0.10912698412698404,
+        "association_score": 0.3055555555555556
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 1.0,
+          "recall": 0.66667,
+          "f1": 0.8
+        },
+        "Attribute": {
+          "precision": 0.9375,
+          "recall": 0.44737,
+          "f1": 0.6057
+        },
+        "Association": {
+          "precision": 0.11765,
+          "recall": 0.09524,
+          "f1": 0.10526
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.35962219598583245,
+        "attribute_vs_f1": -0.49657301587301594,
+        "association_vs_f1": 0.20029555555555556,
+        "class_vs_precision": -0.5596221959858324,
+        "class_vs_recall": -0.2262921959858324,
+        "attribute_vs_precision": -0.8283730158730159,
+        "attribute_vs_recall": -0.338243015873016,
+        "association_vs_precision": 0.18790555555555558,
+        "association_vs_recall": 0.2103155555555556
+      },
+      "aggregated": {
+        "metric_average": 0.2850201145655691,
+        "human_f1_average": 0.5036533333333333,
+        "overall_delta": -0.2186332187677642
+      }
+    },
+    "TileO_CoT": {
+      "comparison_id": "TileO_CoT",
+      "model_key": "TileO",
+      "model_full_name": "Tile-O",
+      "setting": "CoT",
+      "reference_plantuml": "@startuml\n\n' Enumerationen\nenum Mode {\n  DESIGN\n  GAME\n}\n\nenum Color {\n  RED\n  BLUE\n  GREEN\n  YELLOW\n}\n\nclass Game {\n  currentConnectionPieces : Integer\n  mode : Mode\n  const Integer SpareConnectionPieces = 32\n  const Integer NumberOfActionCards = 32\n}\n\nclass Die {\n   \n}\n\nclass Tile0 {\n   \n}\n\nabstract class Tile {\n  x : Integer\n  y : Integer\n  hasBeenVisited : Boolean\n   \n}\n\nclass WinTile {\n   \n}\n\nclass ActionTile {\n  inactivityPeriod : Integer\n  turnsUntilActive : Integer\n   \n}\n\nclass NormalTile {\n   \n}\n\nclass Connection {\n   \n}\n\nclass Player {\n  number : Integer\n  turnsUntilActive : Integer\n  color : Color\n   \n}\n\nclass Deck {\n   \n}\n\nabstract class ActionCard {\n  instructions : String\n   \n}\n\nclass RollDieActionCard {\n   \n}\n\nclass ConnectTilesActionCard {\n   \n}\n\nclass RemoveConnectionActionCard {\n   \n}\n\nclass TeleportActionCard {\n   \n}\n\nclass LoseTurnActionCard {\n   \n}\n\n' Beziehungen\n\nGame \"1\" *-- \"1\" Die\nGame \"1\" *-- \"*\" Tile\nGame \"1\" *-- \"*\" Connection\nGame \"1\" *-- \"2..4\" Player : players\nGame \"1\" *-- \"1\" Deck : deck\nGame \"1\" --* \"*\" Tile0 : games\n\nGame \"1\" --* \"0..1\" WinTile\n\nGame --> \"0..1\" Player : currentPlayer\nPlayer --> \"0..1\" Tile : startingTile\nPlayer \"0..4\" --> \"0..1\" Tile : currentTile\n\nDeck \"1\" --> \"0..1\" ActionCard : currentCard\nTile \"2\" --> \"0..4\" Connection : connections\nDeck \"1\" *-- \"0..32\" ActionCard : cards\n\nTile <|-- WinTile\nTile <|-- ActionTile\nTile <|-- NormalTile\n\nActionCard <|-- RollDieActionCard\nActionCard <|-- ConnectTilesActionCard\nActionCard <|-- RemoveConnectionActionCard\nActionCard <|-- TeleportActionCard\nActionCard <|-- LoseTurnActionCard\n\n@enduml",
+      "generated_plantuml": "@startuml\n\n' =====================\n' Classes\n' =====================\n\nclass GameDesigner {\n}\n\nclass BoardGame {\n}\n\nclass Player {\n    playerNumber : Integer\n    color : String\n}\n\nclass Tile {\n    type : String\n    visited : Boolean\n    hidden : Boolean\n}\n\nclass ConnectionPiece {\n}\n\nclass ActionCard {\n    actionType : String\n}\n\nclass Die {\n}\n\n\n' =====================\n' Relationships\n' =====================\n\n' GameDesigner creates multiple BoardGames\nGameDesigner \"1\" --> \"*\" BoardGame : create\n\n' BoardGame contains 2..4 Players\nBoardGame \"1\" *-- \"2..4\" Player : players\n\n' BoardGame contains multiple Tiles\nBoardGame \"1\" *-- \"*\" Tile : tiles\n\n' BoardGame contains multiple ConnectionPieces\nBoardGame \"1\" *-- \"*\" ConnectionPiece : connections\n\n' Tile associates with 0..4 ConnectionPieces\nTile \"1\" --> \"0..4\" ConnectionPiece : connections\n\n' BoardGame contains multiple ActionCards\nBoardGame \"1\" *-- \"*\" ActionCard : actionCards\n\n' BoardGame contains one Die\nBoardGame \"1\" *-- \"1\" Die : die\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.41000000000000003,
+        "attribute_score": 0.2026143790849673,
+        "association_score": 0.25925925925925924
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.85714,
+          "recall": 0.44444,
+          "f1": 0.58537
+        },
+        "Attribute": {
+          "precision": 0.83333,
+          "recall": 0.18421,
+          "f1": 0.30172
+        },
+        "Association": {
+          "precision": 0.64286,
+          "recall": 0.2619,
+          "f1": 0.37218
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.17536999999999991,
+        "attribute_vs_f1": -0.0991056209150327,
+        "association_vs_f1": -0.11292074074074077,
+        "class_vs_precision": -0.44714,
+        "class_vs_recall": -0.03443999999999997,
+        "attribute_vs_precision": -0.6307156209150327,
+        "attribute_vs_recall": 0.01840437908496728,
+        "association_vs_precision": -0.38360074074074074,
+        "association_vs_recall": -0.002640740740740777
+      },
+      "aggregated": {
+        "metric_average": 0.29062454611474214,
+        "human_f1_average": 0.4197566666666666,
+        "overall_delta": -0.12913212055192447
+      }
+    },
+    "HBMS_0shot": {
+      "comparison_id": "HBMS_0shot",
+      "model_key": "HBMS",
+      "model_full_name": "Hotel Booking Management System (HBMS)",
+      "setting": "0shot",
+      "reference_plantuml": "@startuml\n\nenum RoomType {\n  SINGLE\n  DOUBLE\n  TWIN\n}\n\nenum BookingStatus {\n  FINALIZED\n  CONFIRMED\n  CANCELLED_BY_HBMS\n  PRELIMINARY\n  CANCELLED_BY_TRAVELLER\n  CANCELLED_BY_HOTEL\n}\n\nclass Booking {\n    bookingId : EInt\n    cancellationDeadline : EDate\n    creditCardNumber : EString\n    bookingStatus : BookingStatus\n    paymentType : PaymentType = PREPAID\n    confirmationDate : EDate\n    paidAmount : EFloat = 0.0\n}\n\n\nenum PaymentType {\n  PREPAID\n  PAID_AT_HOTEL\n}\n\nclass HotelChain {\n}\nclass HotelBookingManager {\n}\nclass Traveller {\n  name : EString\n  reliabilityRating : EInt\n}\nclass BillingInformation {\n  companyName : EString\n  address : EString\n}\nclass TravelPreference {\n  preference : EString\n  value : EString\n}\nclass TravelSearch {\n}\nclass SearchInfo {\n}\nclass TripInfo {\n  numberOfRooms : EInt\n  roomType : RoomType\n  arrivalDate : EDate\n  departureDate : EDate\n  budgetPerNight : EFloat = 0\n}\n\nclass Offer {\n}\n\nclass SpecialOffer {\n}\n\nclass RegularOffer {\n}\n\nclass RoomAvailability {\n}\n\nclass Hotel {\n  city : EString\n  country : EString\n  hotelArea : EString\n}\n\n\nHotelBookingManager *-- \"0..*\" Traveller : travellers\nHotelChain \"0..*\" --* HotelBookingManager : providers\nHotel \"0..*\" --* HotelChain : hotels\nTraveller *-- \"1..1\" BillingInformation : billingInfo\nTraveller *-- \"0..*\" TravelPreference : travelPrefs\nTraveller *--> \"0..*\" TravelSearch : searches\nTravelSearch *-- \"0..*\" TravelPreference : extraPrefs\nTravelSearch *-- \"1..1\" SearchInfo : searchInfo\nTravelSearch \"0..* <-- \"0..*\" RegularOffer\nHotel *-- \"0..*\" Offer : offers\nHotel *-- \"0..*\" RoomAvailability : availability\nOffer <|-- SpecialOffer\nOffer <|-- RegularOffer\nRoomAvailability --|> Offer\nHotel \"1..1\" -- \"0..*\" Booking : hotel\nBooking \"0..*\" -- \"1..1\" Traveller : bookings/traveller\nBooking \"0..1\" -- Offer : selectedOffer\n\nBooking *-- \"1\" BookingInfo : bookinginfo\n\nSpecialOffer \"0..5\" -- BookingInfo : bestOffers/specialOffers\nSpecialOffer \"0..*\" -- \"1..1\" BookingInfo : challengedBooking\n\nBookingInfo --|> TripInfo\n\n@enduml",
+      "generated_plantuml": "@startuml\n\n' ======================\n' Enumerations\n' ======================\n\nenum TravelPreferences {\n    breakfastIncluded\n    freeWifi\n    frontDesk247\n}\n\nenum RoomType {\n    single\n    double\n    twin\n}\n\nenum BookingType {\n    preliminary\n    regular\n}\n\nenum PaymentType {\n    prePaid\n    payAtHotel\n}\n\n' ======================\n' Classes\n' ======================\n\nclass Traveller {\n    name : String\n    billingInfo : BillingInformation\n    travelPreferences : Set<TravelPreferences>\n    reliabilityRating : Float\n}\n\nclass BillingInformation {\n    companyName : String\n    companyAddress : String\n}\n\nclass SearchCriteria {\n    city : String\n    arrivalDate : Date\n    departureDate : Date\n    numberOfRooms : Int\n    roomType : RoomType\n    minRating : Int\n    maxCostPerNight : Float\n    travelPreferences : Set<TravelPreferences>\n}\n\nclass Hotel {\n    name : String\n    city : String\n    address : String\n    rating : Int\n    chain : String\n    availableRooms : Map<RoomType, Int>\n}\n\nclass Booking {\n    bookingId : String\n    bookingType : BookingType\n    hotel : Hotel\n    traveller : Traveller\n    roomType : RoomType\n    startDate : Date\n    endDate : Date\n    paymentType : PaymentType\n    cancellationDeadline : Date\n    bookingStatus : String\n    specialOffers : List<SpecialOffer>\n}\n\nclass SpecialOffer {\n    booking : Booking\n    offerId : String\n    offeredBy : Hotel\n    offerPrice : Float\n    offerDeadline : Date\n}\n\n' ======================\n' Relationships\n' ======================\n\nTraveller \"1\" --> \"1..*\" Booking : register\nTraveller \"1\" --> \"1\" SearchCriteria : search\nTraveller \"1\" --> \"0..*\" SpecialOffer : receive\n\nHotel \"1\" --> \"1..*\" RoomType : announce\nHotel \"1\" --> \"0..*\" SpecialOffer : provide\n\nBooking \"1\" --> \"0..*\" SpecialOffer : contain\nSpecialOffer \"1\" --> \"1\" Booking : relate\n\nBooking \"1..*\" --> \"1..*\" Hotel : associate\n\nBooking \"1\" --> \"1\" Hotel : confirm\nBooking \"1\" --> \"1\" Hotel : cancel\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5053191489361702,
+        "attribute_score": 0.3531261561228265,
+        "association_score": 0.17857142857142858
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.85,
+          "recall": 0.52778,
+          "f1": 0.65121
+        },
+        "Attribute": {
+          "precision": 0.44565,
+          "recall": 0.54688,
+          "f1": 0.4911
+        },
+        "Association": {
+          "precision": 0.25,
+          "recall": 0.13636,
+          "f1": 0.17647
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.1458908510638297,
+        "attribute_vs_f1": -0.13797384387717349,
+        "association_vs_f1": 0.0021014285714285874,
+        "class_vs_precision": -0.34468085106382973,
+        "class_vs_recall": -0.02246085106382978,
+        "attribute_vs_precision": -0.0925238438771735,
+        "attribute_vs_recall": -0.19375384387717354,
+        "association_vs_precision": -0.07142857142857142,
+        "association_vs_recall": 0.042211428571428566
+      },
+      "aggregated": {
+        "metric_average": 0.34567224454347506,
+        "human_f1_average": 0.4395933333333333,
+        "overall_delta": -0.09392108878985822
+      }
+    },
+    "HBMS_1shot_BTMS": {
+      "comparison_id": "HBMS_1shot_BTMS",
+      "model_key": "HBMS",
+      "model_full_name": "Hotel Booking Management System (HBMS)",
+      "setting": "1shot_BTMS",
+      "reference_plantuml": "@startuml\n\nenum RoomType {\n  SINGLE\n  DOUBLE\n  TWIN\n}\n\nenum BookingStatus {\n  FINALIZED\n  CONFIRMED\n  CANCELLED_BY_HBMS\n  PRELIMINARY\n  CANCELLED_BY_TRAVELLER\n  CANCELLED_BY_HOTEL\n}\n\nclass Booking {\n    bookingId : EInt\n    cancellationDeadline : EDate\n    creditCardNumber : EString\n    bookingStatus : BookingStatus\n    paymentType : PaymentType = PREPAID\n    confirmationDate : EDate\n    paidAmount : EFloat = 0.0\n}\n\n\nenum PaymentType {\n  PREPAID\n  PAID_AT_HOTEL\n}\n\nclass HotelChain {\n}\nclass HotelBookingManager {\n}\nclass Traveller {\n  name : EString\n  reliabilityRating : EInt\n}\nclass BillingInformation {\n  companyName : EString\n  address : EString\n}\nclass TravelPreference {\n  preference : EString\n  value : EString\n}\nclass TravelSearch {\n}\nclass SearchInfo {\n}\nclass TripInfo {\n  numberOfRooms : EInt\n  roomType : RoomType\n  arrivalDate : EDate\n  departureDate : EDate\n  budgetPerNight : EFloat = 0\n}\n\nclass Offer {\n}\n\nclass SpecialOffer {\n}\n\nclass RegularOffer {\n}\n\nclass RoomAvailability {\n}\n\nclass Hotel {\n  city : EString\n  country : EString\n  hotelArea : EString\n}\n\n\nHotelBookingManager *-- \"0..*\" Traveller : travellers\nHotelChain \"0..*\" --* HotelBookingManager : providers\nHotel \"0..*\" --* HotelChain : hotels\nTraveller *-- \"1..1\" BillingInformation : billingInfo\nTraveller *-- \"0..*\" TravelPreference : travelPrefs\nTraveller *--> \"0..*\" TravelSearch : searches\nTravelSearch *-- \"0..*\" TravelPreference : extraPrefs\nTravelSearch *-- \"1..1\" SearchInfo : searchInfo\nTravelSearch \"0..* <-- \"0..*\" RegularOffer\nHotel *-- \"0..*\" Offer : offers\nHotel *-- \"0..*\" RoomAvailability : availability\nOffer <|-- SpecialOffer\nOffer <|-- RegularOffer\nRoomAvailability --|> Offer\nHotel \"1..1\" -- \"0..*\" Booking : hotel\nBooking \"0..*\" -- \"1..1\" Traveller : bookings/traveller\nBooking \"0..1\" -- Offer : selectedOffer\n\nBooking *-- \"1\" BookingInfo : bookinginfo\n\nSpecialOffer \"0..5\" -- BookingInfo : bestOffers/specialOffers\nSpecialOffer \"0..*\" -- \"1..1\" BookingInfo : challengedBooking\n\nBookingInfo --|> TripInfo\n\n@enduml",
+      "generated_plantuml": "@startuml\n\nenum TravelPreference {\n    breakfast_included\n    free_wifi\n    front_desk_24_7\n    etc\n}\n\nenum RoomType {\n    single\n    double\n    twin\n}\n\nenum BookingStatus {\n    preliminary\n    regular\n    confirmed\n    cancelled\n}\n\nenum PaymentType {\n    pre_paid\n    paid_at_hotel\n}\n\nclass HBMS {\n}\n\nclass Traveller {\n    name : String\n    billingInfos : BillingInfo[]\n    travelPreferences : TravelPreference[]\n    reliabilityRating : String\n}\n\nclass BillingInfo {\n    companyName : String\n    address : String\n}\n\nclass SearchRequest {\n    city : String\n    arrivalDate : Date\n    departureDate : Date\n    numberOfRooms : Integer\n    roomType : RoomType\n    minHotelRating : Integer\n    maxCostPerNight : Float\n    travelPreferences : TravelPreference[]\n}\n\nclass Hotel {\n    name : String\n    city : String\n    address : String\n    rating : Integer\n    hotelChain : String\n}\n\nclass RoomAvailability {\n    startDate : Date\n    endDate : Date\n    roomType : RoomType\n    availableRooms : Integer\n}\n\nclass Booking {\n    id : Integer\n    status : BookingStatus\n    paymentType : PaymentType\n    cancellationDeadline : Date\n}\n\nclass SpecialOffer {\n    id : Integer\n    price : Float\n    cityArea : String\n    hotelRating : Integer\n    keyPreferences : TravelPreference[]\n    bookingIdentifier : String\n}\n\n' Relationships\n\nHBMS \"1\" *-- \"*\" Traveller\nHBMS \"1\" *-- \"*\" Hotel\nHBMS \"1\" *-- \"*\" Booking\nHBMS \"1\" *-- \"*\" SpecialOffer\n\nTraveller \"1\" *-- \"*\" BillingInfo\nTraveller \"1\" *-- \"*\" SearchRequest\nTraveller \"1\" *-- \"*\" Booking\n\nSearchRequest \"1\" --> \"1\" Traveller\n\nHotel \"1\" *-- \"*\" RoomAvailability\nHotel \"1\" *-- \"*\" Booking\nHotel \"1\" *-- \"*\" SpecialOffer\n\nRoomAvailability \"1\" --> \"1\" Hotel\n\nBooking \"1\" --> \"1\" Traveller\nBooking \"1\" --> \"1\" Hotel\n\nSpecialOffer \"1\" --> \"1\" Hotel\nSpecialOffer \"1\" --> \"1\" Booking\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.658974358974359,
+        "attribute_score": 0.37523408239700373,
+        "association_score": 0.4444444444444445
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.95833,
+          "recall": 0.66667,
+          "f1": 0.78632
+        },
+        "Attribute": {
+          "precision": 0.58889,
+          "recall": 0.70313,
+          "f1": 0.64096
+        },
+        "Association": {
+          "precision": 0.4375,
+          "recall": 0.27273,
+          "f1": 0.336
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.12734564102564105,
+        "attribute_vs_f1": -0.26572591760299624,
+        "association_vs_f1": 0.10844444444444445,
+        "class_vs_precision": -0.29935564102564105,
+        "class_vs_recall": -0.00769564102564102,
+        "attribute_vs_precision": -0.2136559176029963,
+        "attribute_vs_recall": -0.3278959176029963,
+        "association_vs_precision": 0.006944444444444475,
+        "association_vs_recall": 0.1717144444444445
+      },
+      "aggregated": {
+        "metric_average": 0.49288429527193567,
+        "human_f1_average": 0.5877600000000001,
+        "overall_delta": -0.09487570472806439
+      }
+    },
+    "HBMS_1shot_H2S": {
+      "comparison_id": "HBMS_1shot_H2S",
+      "model_key": "HBMS",
+      "model_full_name": "Hotel Booking Management System (HBMS)",
+      "setting": "1shot_H2S",
+      "reference_plantuml": "@startuml\n\nenum RoomType {\n  SINGLE\n  DOUBLE\n  TWIN\n}\n\nenum BookingStatus {\n  FINALIZED\n  CONFIRMED\n  CANCELLED_BY_HBMS\n  PRELIMINARY\n  CANCELLED_BY_TRAVELLER\n  CANCELLED_BY_HOTEL\n}\n\nclass Booking {\n    bookingId : EInt\n    cancellationDeadline : EDate\n    creditCardNumber : EString\n    bookingStatus : BookingStatus\n    paymentType : PaymentType = PREPAID\n    confirmationDate : EDate\n    paidAmount : EFloat = 0.0\n}\n\n\nenum PaymentType {\n  PREPAID\n  PAID_AT_HOTEL\n}\n\nclass HotelChain {\n}\nclass HotelBookingManager {\n}\nclass Traveller {\n  name : EString\n  reliabilityRating : EInt\n}\nclass BillingInformation {\n  companyName : EString\n  address : EString\n}\nclass TravelPreference {\n  preference : EString\n  value : EString\n}\nclass TravelSearch {\n}\nclass SearchInfo {\n}\nclass TripInfo {\n  numberOfRooms : EInt\n  roomType : RoomType\n  arrivalDate : EDate\n  departureDate : EDate\n  budgetPerNight : EFloat = 0\n}\n\nclass Offer {\n}\n\nclass SpecialOffer {\n}\n\nclass RegularOffer {\n}\n\nclass RoomAvailability {\n}\n\nclass Hotel {\n  city : EString\n  country : EString\n  hotelArea : EString\n}\n\n\nHotelBookingManager *-- \"0..*\" Traveller : travellers\nHotelChain \"0..*\" --* HotelBookingManager : providers\nHotel \"0..*\" --* HotelChain : hotels\nTraveller *-- \"1..1\" BillingInformation : billingInfo\nTraveller *-- \"0..*\" TravelPreference : travelPrefs\nTraveller *--> \"0..*\" TravelSearch : searches\nTravelSearch *-- \"0..*\" TravelPreference : extraPrefs\nTravelSearch *-- \"1..1\" SearchInfo : searchInfo\nTravelSearch \"0..* <-- \"0..*\" RegularOffer\nHotel *-- \"0..*\" Offer : offers\nHotel *-- \"0..*\" RoomAvailability : availability\nOffer <|-- SpecialOffer\nOffer <|-- RegularOffer\nRoomAvailability --|> Offer\nHotel \"1..1\" -- \"0..*\" Booking : hotel\nBooking \"0..*\" -- \"1..1\" Traveller : bookings/traveller\nBooking \"0..1\" -- Offer : selectedOffer\n\nBooking *-- \"1\" BookingInfo : bookinginfo\n\nSpecialOffer \"0..5\" -- BookingInfo : bestOffers/specialOffers\nSpecialOffer \"0..*\" -- \"1..1\" BookingInfo : challengedBooking\n\nBookingInfo --|> TripInfo\n\n@enduml",
+      "generated_plantuml": "@startuml\n\nenum RoomType {\n    Single\n    Double\n    Twin\n    ...\n}\n\nenum TravelPreference {\n    BreakfastIncluded\n    FreeWifi\n    FrontDesk24_7\n    ...\n}\n\nenum BookingStatus {\n    Preliminary\n    Finalized\n    Confirmed\n    Cancelled\n}\n\nenum PaymentStatus {\n    PrePaid\n    PaidAtHotel\n}\n\nenum HotelRating {\n    Stars\n}\n\nclass HBMS {\n}\n\nclass Traveler {\n    name : String\n    companyName : String\n    companyAddress : String\n    billingInformation : String\n    reliabilityRating : Float\n}\n\nclass Hotel {\n    name : String\n    address : String\n    city : String\n    rating : HotelRating\n    isChain : Boolean\n}\n\nclass Room {\n    roomNumber : Integer\n    roomType : RoomType\n}\n\nclass Booking {\n    uniqueBookingID : String\n    arrivalDate : DateTime\n    departureDate : DateTime\n    numberOfRooms : Integer\n    minRating : HotelRating\n    maxCost : Float\n    paymentStatus : PaymentStatus\n    bookingStatus : BookingStatus\n    cancellationDeadline : DateTime\n}\n\nclass SpecialOffer {\n    offerID : String\n    deadline : DateTime\n    specialPrice : Float\n}\n\nclass TravelPreferenceFilter {\n}\n\n' Relationships\nHBMS \"1\" *-- \"*\" Traveler\nHBMS \"1\" *-- \"*\" Hotel\nHBMS \"1\" *-- \"*\" Booking\nHBMS \"1\" *-- \"*\" SpecialOffer\n\nTraveler \"1\" *-- \"*\" Booking\nHotel \"1\" *-- \"*\" Room\nBooking \"1\" *-- \"*\" TravelPreferenceFilter\nBooking \"1\" *-- \"1\" Hotel\nHotel \"1\" *-- \"*\" SpecialOffer\n\nTravelPreferenceFilter \"1\" *-- \"*\" TravelPreference\nSpecialOffer \"1\" *-- \"1\" Traveler\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5333333333333333,
+        "attribute_score": 0.3423076923076923,
+        "association_score": 0.3548387096774194
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.79167,
+          "recall": 0.55556,
+          "f1": 0.65292
+        },
+        "Attribute": {
+          "precision": 0.54054,
+          "recall": 0.67188,
+          "f1": 0.59909
+        },
+        "Association": {
+          "precision": 0.36364,
+          "recall": 0.13636,
+          "f1": 0.19835
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.11958666666666662,
+        "attribute_vs_f1": -0.2567823076923077,
+        "association_vs_f1": 0.15648870967741937,
+        "class_vs_precision": -0.25833666666666666,
+        "class_vs_recall": -0.022226666666666728,
+        "attribute_vs_precision": -0.1982323076923077,
+        "attribute_vs_recall": -0.3295723076923077,
+        "association_vs_precision": -0.008801290322580646,
+        "association_vs_recall": 0.21847870967741936
+      },
+      "aggregated": {
+        "metric_average": 0.410159911772815,
+        "human_f1_average": 0.4834533333333333,
+        "overall_delta": -0.07329342156051827
+      }
+    },
+    "HBMS_2shots": {
+      "comparison_id": "HBMS_2shots",
+      "model_key": "HBMS",
+      "model_full_name": "Hotel Booking Management System (HBMS)",
+      "setting": "2shots",
+      "reference_plantuml": "@startuml\n\nenum RoomType {\n  SINGLE\n  DOUBLE\n  TWIN\n}\n\nenum BookingStatus {\n  FINALIZED\n  CONFIRMED\n  CANCELLED_BY_HBMS\n  PRELIMINARY\n  CANCELLED_BY_TRAVELLER\n  CANCELLED_BY_HOTEL\n}\n\nclass Booking {\n    bookingId : EInt\n    cancellationDeadline : EDate\n    creditCardNumber : EString\n    bookingStatus : BookingStatus\n    paymentType : PaymentType = PREPAID\n    confirmationDate : EDate\n    paidAmount : EFloat = 0.0\n}\n\n\nenum PaymentType {\n  PREPAID\n  PAID_AT_HOTEL\n}\n\nclass HotelChain {\n}\nclass HotelBookingManager {\n}\nclass Traveller {\n  name : EString\n  reliabilityRating : EInt\n}\nclass BillingInformation {\n  companyName : EString\n  address : EString\n}\nclass TravelPreference {\n  preference : EString\n  value : EString\n}\nclass TravelSearch {\n}\nclass SearchInfo {\n}\nclass TripInfo {\n  numberOfRooms : EInt\n  roomType : RoomType\n  arrivalDate : EDate\n  departureDate : EDate\n  budgetPerNight : EFloat = 0\n}\n\nclass Offer {\n}\n\nclass SpecialOffer {\n}\n\nclass RegularOffer {\n}\n\nclass RoomAvailability {\n}\n\nclass Hotel {\n  city : EString\n  country : EString\n  hotelArea : EString\n}\n\n\nHotelBookingManager *-- \"0..*\" Traveller : travellers\nHotelChain \"0..*\" --* HotelBookingManager : providers\nHotel \"0..*\" --* HotelChain : hotels\nTraveller *-- \"1..1\" BillingInformation : billingInfo\nTraveller *-- \"0..*\" TravelPreference : travelPrefs\nTraveller *--> \"0..*\" TravelSearch : searches\nTravelSearch *-- \"0..*\" TravelPreference : extraPrefs\nTravelSearch *-- \"1..1\" SearchInfo : searchInfo\nTravelSearch \"0..* <-- \"0..*\" RegularOffer\nHotel *-- \"0..*\" Offer : offers\nHotel *-- \"0..*\" RoomAvailability : availability\nOffer <|-- SpecialOffer\nOffer <|-- RegularOffer\nRoomAvailability --|> Offer\nHotel \"1..1\" -- \"0..*\" Booking : hotel\nBooking \"0..*\" -- \"1..1\" Traveller : bookings/traveller\nBooking \"0..1\" -- Offer : selectedOffer\n\nBooking *-- \"1\" BookingInfo : bookinginfo\n\nSpecialOffer \"0..5\" -- BookingInfo : bestOffers/specialOffers\nSpecialOffer \"0..*\" -- \"1..1\" BookingInfo : challengedBooking\n\nBookingInfo --|> TripInfo\n\n@enduml",
+      "generated_plantuml": "@startuml\n\n' ============================\n' Enumerations\n' ============================\nenum RoomType {\n    single\n    double\n    twin\n}\n\nenum TravelPreference {\n    breakfast_included\n    free_wifi\n    front_desk_24_7\n}\n\nenum BookingType {\n    preliminary\n    regular\n}\n\nenum PaymentType {\n    pre_paid\n    paid_at_hotel\n}\n\n' ============================\n' Classes\n' ============================\nclass HBMS {\n}\n\nclass Traveller {\n    name : String\n    billingInfo : String\n    companyName : String\n    companyAddress : String\n}\n\nclass Hotel {\n    name : String\n    address : String\n    city : String\n    hotelChain : String\n    starRating : Integer\n}\n\nclass Room {\n    roomType : RoomType\n    numberOfRooms : Integer\n    availability : Integer\n}\n\nclass Booking {\n    id : String\n    bookingType : BookingType\n    paymentType : PaymentType\n    arrivalDate : Date\n    departureDate : Date\n    maxCost : Float\n    hotelRating : Float\n    isConfirmed : Boolean\n    cancellationDeadline : Date\n}\n\nclass SpecialOffer {\n    id : String\n    price : Float\n    expiryDate : Date\n}\n\nclass ReliabilityRating {\n    rating : Float\n}\n\n' ============================\n' Relationships\n' ============================\n\n' HBMS composition relationships\nHBMS \"1\" *-- \"*\" Traveller\nHBMS \"1\" *-- \"*\" Hotel\nHBMS \"1\" *-- \"*\" Room\nHBMS \"1\" *-- \"*\" Booking\nHBMS \"1\" *-- \"*\" SpecialOffer\nHBMS \"1\" *-- \"*\" ReliabilityRating\n\n' Traveller associations\nTraveller \"1\" -- \"*\" Booking\nTraveller \"1\" -- \"*\" TravelPreference\nTraveller \"1\" -- \"*\" ReliabilityRating\n\n' Hotel associations\nHotel \"1\" -- \"*\" Room\nHotel \"1\" -- \"*\" SpecialOffer\nHotel \"1\" -- \"*\" Booking\n\n' Booking associations\nBooking \"1\" -- \"*\" Room\nBooking \"1\" -- \"*\" SpecialOffer\nBooking \"1\" -- \"*\" ReliabilityRating\n\n' SpecialOffer association\nSpecialOffer \"1\" -- \"*\" Room\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5892053973013494,
+        "attribute_score": 0.4157973174366616,
+        "association_score": 0.36111111111111116
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.95455,
+          "recall": 0.58333,
+          "f1": 0.72414
+        },
+        "Attribute": {
+          "precision": 0.6,
+          "recall": 0.625,
+          "f1": 0.61224
+        },
+        "Association": {
+          "precision": 0.375,
+          "recall": 0.20455,
+          "f1": 0.26471
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.13493460269865065,
+        "attribute_vs_f1": -0.1964426825633384,
+        "association_vs_f1": 0.09640111111111116,
+        "class_vs_precision": -0.36534460269865066,
+        "class_vs_recall": 0.005875397301349339,
+        "attribute_vs_precision": -0.18420268256333838,
+        "attribute_vs_recall": -0.2092026825633384,
+        "association_vs_precision": -0.01388888888888884,
+        "association_vs_recall": 0.15656111111111115
+      },
+      "aggregated": {
+        "metric_average": 0.4553712752830407,
+        "human_f1_average": 0.5336966666666667,
+        "overall_delta": -0.07832539138362599
+      }
+    },
+    "HBMS_CoT": {
+      "comparison_id": "HBMS_CoT",
+      "model_key": "HBMS",
+      "model_full_name": "Hotel Booking Management System (HBMS)",
+      "setting": "CoT",
+      "reference_plantuml": "@startuml\n\nenum RoomType {\n  SINGLE\n  DOUBLE\n  TWIN\n}\n\nenum BookingStatus {\n  FINALIZED\n  CONFIRMED\n  CANCELLED_BY_HBMS\n  PRELIMINARY\n  CANCELLED_BY_TRAVELLER\n  CANCELLED_BY_HOTEL\n}\n\nclass Booking {\n    bookingId : EInt\n    cancellationDeadline : EDate\n    creditCardNumber : EString\n    bookingStatus : BookingStatus\n    paymentType : PaymentType = PREPAID\n    confirmationDate : EDate\n    paidAmount : EFloat = 0.0\n}\n\n\nenum PaymentType {\n  PREPAID\n  PAID_AT_HOTEL\n}\n\nclass HotelChain {\n}\nclass HotelBookingManager {\n}\nclass Traveller {\n  name : EString\n  reliabilityRating : EInt\n}\nclass BillingInformation {\n  companyName : EString\n  address : EString\n}\nclass TravelPreference {\n  preference : EString\n  value : EString\n}\nclass TravelSearch {\n}\nclass SearchInfo {\n}\nclass TripInfo {\n  numberOfRooms : EInt\n  roomType : RoomType\n  arrivalDate : EDate\n  departureDate : EDate\n  budgetPerNight : EFloat = 0\n}\n\nclass Offer {\n}\n\nclass SpecialOffer {\n}\n\nclass RegularOffer {\n}\n\nclass RoomAvailability {\n}\n\nclass Hotel {\n  city : EString\n  country : EString\n  hotelArea : EString\n}\n\n\nHotelBookingManager *-- \"0..*\" Traveller : travellers\nHotelChain \"0..*\" --* HotelBookingManager : providers\nHotel \"0..*\" --* HotelChain : hotels\nTraveller *-- \"1..1\" BillingInformation : billingInfo\nTraveller *-- \"0..*\" TravelPreference : travelPrefs\nTraveller *--> \"0..*\" TravelSearch : searches\nTravelSearch *-- \"0..*\" TravelPreference : extraPrefs\nTravelSearch *-- \"1..1\" SearchInfo : searchInfo\nTravelSearch \"0..* <-- \"0..*\" RegularOffer\nHotel *-- \"0..*\" Offer : offers\nHotel *-- \"0..*\" RoomAvailability : availability\nOffer <|-- SpecialOffer\nOffer <|-- RegularOffer\nRoomAvailability --|> Offer\nHotel \"1..1\" -- \"0..*\" Booking : hotel\nBooking \"0..*\" -- \"1..1\" Traveller : bookings/traveller\nBooking \"0..1\" -- Offer : selectedOffer\n\nBooking *-- \"1\" BookingInfo : bookinginfo\n\nSpecialOffer \"0..5\" -- BookingInfo : bestOffers/specialOffers\nSpecialOffer \"0..*\" -- \"1..1\" BookingInfo : challengedBooking\n\nBookingInfo --|> TripInfo\n\n@enduml",
+      "generated_plantuml": "@startuml\n\nclass HBMS {\n\n}\n\nclass Traveller {\n  name : String\n  billingInfo : BillingInfo\n  travelPreferences : TravelPreference[]\n}\n\nclass BillingInfo {\n  companyName : String\n  companyAddress : String\n}\n\nclass TravelPreference {\n\n}\n\nclass SearchCriteria {\n  city : String\n  arrivalDate : Date\n  departureDate : Date\n  numberOfRooms : Integer\n  roomType : RoomType\n  minHotelRating : Integer\n  maxCostPerNight : Float\n  travelPreferences : TravelPreference[]\n}\n\nclass Hotel {\n  name : String\n  address : String\n  rating : Integer\n  chainName : String\n  city : City\n  roomTypes : RoomType[]\n}\n\nclass City {\n\n}\n\nenum RoomType {\n  Single\n  Double\n  Twin\n}\n\nclass Booking {\n  id : String\n  traveller : Traveller\n  hotel : Hotel\n  roomType : RoomType\n  arrivalDate : Date\n  departureDate : Date\n  price : Float\n  status : Status\n  paymentType : PaymentType\n  cancellationDeadline : Date\n}\n\nclass PreliminaryBooking {\n  competitorOffers : CompetitorOffer[]\n}\n\nclass CompetitorOffer {\n  id : String\n  competitorHotel : Hotel\n  specialPrice : Float\n  offerDetails : String\n}\n\nclass PaymentInfo {\n  creditCardNumber : String\n  creditCardExpiry : String\n  creditCardCVV : String\n}\n\nclass ReliabilityRating {\n  score : Integer\n}\n\n' ========================\n' Associations\n' ========================\n\nHBMS \"1\" *-- \"*\" Traveller\nTraveller \"1\" *-- \"1\" BillingInfo\nTraveller \"1\" *-- \"*\" TravelPreference\nTraveller \"1\" *-- \"*\" Booking\nHBMS \"1\" *-- \"*\" Hotel\nHotel \"*\" --> \"1\" City\nHotel \"1\" *-- \"*\" RoomType\nBooking \"1\" --> \"1\" Traveller\nBooking \"1\" --> \"1\" Hotel\nPreliminaryBooking --|> Booking\nPreliminaryBooking \"1\" *-- \"*\" CompetitorOffer\nCompetitorOffer \"1\" --> \"1\" Hotel\nTraveller \"1\" *-- \"1\" ReliabilityRating\n\n@enduml",
+      "metric_results": {
+        "class_score": 0.5509360991474026,
+        "attribute_score": 0.3349150849150849,
+        "association_score": 0.4242424242424243
+      },
+      "human_metrics": {
+        "Class": {
+          "precision": 0.80769,
+          "recall": 0.47222,
+          "f1": 0.59599
+        },
+        "Attribute": {
+          "precision": 0.52381,
+          "recall": 0.46875,
+          "f1": 0.49475
+        },
+        "Association": {
+          "precision": 0.46154,
+          "recall": 0.18182,
+          "f1": 0.26087
+        }
+      },
+      "delta": {
+        "class_vs_f1": -0.04505390085259742,
+        "attribute_vs_f1": -0.1598349150849151,
+        "association_vs_f1": 0.16337242424242432,
+        "class_vs_precision": -0.2567539008525974,
+        "class_vs_recall": 0.07871609914740263,
+        "attribute_vs_precision": -0.18889491508491507,
+        "attribute_vs_recall": -0.13383491508491507,
+        "association_vs_precision": -0.037297575757575696,
+        "association_vs_recall": 0.2424224242424243
+      },
+      "aggregated": {
+        "metric_average": 0.43669786943497063,
+        "human_f1_average": 0.45053666666666664,
+        "overall_delta": -0.01383879723169601
+      }
+    }
+  },
+  "summary_statistics": {
+    "mean_class_delta_f1": -0.17199188662922107,
+    "mean_attribute_delta_f1": -0.20837986156817193,
+    "mean_association_delta_f1": -0.0007404528610662123,
+    "std_class_delta_f1": 0.09367549719064598,
+    "std_attribute_delta_f1": 0.12276179403175633,
+    "std_association_delta_f1": 0.1565984832854245,
+    "min_class_delta_f1": -0.37687000000000004,
+    "max_class_delta_f1": -0.01538461538461533,
+    "min_attribute_delta_f1": -0.5097394117647059,
+    "max_attribute_delta_f1": 0.06394258064516123,
+    "min_association_delta_f1": -0.3748669565217392,
+    "max_association_delta_f1": 0.28503999999999996,
+    "correlation_class": 0.3635126978347578,
+    "correlation_class_pvalue": 0.02292285873604775,
+    "correlation_attribute": 0.6535104482646855,
+    "correlation_attribute_pvalue": 6.4649679468881525e-06,
+    "correlation_association": 0.04892742066972213,
+    "correlation_association_pvalue": 0.7673923339744032,
+    "overall_mean_delta": -0.1270374003528197,
+    "overall_std_delta": 0.155279414431072,
+    "overall_correlation": 0.6552447740613091,
+    "overall_correlation_pvalue": 1.0987339960038648e-15,
+    "n_comparisons": 39
+  },
+  "errors": []
+}

@@ -1,0 +1,600 @@
+{
+  "metadata": {
+    "metric": "Metrik-3",
+    "metric_name": "metrik-3",
+    "metric_version": "1.0.0",
+    "n_comparisons": 39,
+    "trace_capture_timestamp": "2026-06-12T04:29:56.839579",
+    "source_dataset": "/Users/vasiliy/Documents/GitHub/diss-metrik/Quantitative-Analysis/Dataset/combined-data.json",
+    "trace_format_version": "1.0",
+    "errors": {},
+    "worker_wall_time_seconds": 4.439725875854492
+  },
+  "comparisons": {
+    "Block_0shot": {
+      "comparison_id": "Block_0shot",
+      "model_key": "Block",
+      "setting": "0shot",
+      "aggregated_score": {
+        "class_score": 0.6140130587644401,
+        "attribute_score": 0.24461979913916784,
+        "association_score": 0.32142857142857145
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.6140130587644401,
+        "attribute_subscore": 0.24461979913916784,
+        "association_subscore": 0.32142857142857145
+      }
+    },
+    "Block_1shot_BTMS": {
+      "comparison_id": "Block_1shot_BTMS",
+      "model_key": "Block",
+      "setting": "1shot_BTMS",
+      "aggregated_score": {
+        "class_score": 0.625,
+        "attribute_score": 0.3502188868042526,
+        "association_score": 0.3666666666666667
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.625,
+        "attribute_subscore": 0.3502188868042526,
+        "association_subscore": 0.3666666666666667
+      }
+    },
+    "Block_1shot_H2S": {
+      "comparison_id": "Block_1shot_H2S",
+      "model_key": "Block",
+      "setting": "1shot_H2S",
+      "aggregated_score": {
+        "class_score": 0.5952380952380952,
+        "attribute_score": 0.31165413533834585,
+        "association_score": 0.34375
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5952380952380952,
+        "attribute_subscore": 0.31165413533834585,
+        "association_subscore": 0.34375
+      }
+    },
+    "Block_2shots": {
+      "comparison_id": "Block_2shots",
+      "model_key": "Block",
+      "setting": "2shots",
+      "aggregated_score": {
+        "class_score": 0.6612771182971756,
+        "attribute_score": 0.24656750572082375,
+        "association_score": 0.5506072874493927
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.6612771182971756,
+        "attribute_subscore": 0.24656750572082375,
+        "association_subscore": 0.5506072874493927
+      }
+    },
+    "Block_CoT": {
+      "comparison_id": "Block_CoT",
+      "model_key": "Block",
+      "setting": "CoT",
+      "aggregated_score": {
+        "class_score": 0.5923289837880585,
+        "attribute_score": 0.3288288288288287,
+        "association_score": 0.36363636363636365
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5923289837880585,
+        "attribute_subscore": 0.3288288288288287,
+        "association_subscore": 0.36363636363636365
+      }
+    },
+    "CelO_0shot": {
+      "comparison_id": "CelO_0shot",
+      "model_key": "CelO",
+      "setting": "0shot",
+      "aggregated_score": {
+        "class_score": 0.55,
+        "attribute_score": 0.47536945812807874,
+        "association_score": 0.26666666666666666
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.55,
+        "attribute_subscore": 0.47536945812807874,
+        "association_subscore": 0.26666666666666666
+      }
+    },
+    "CelO_1shot_BTMS": {
+      "comparison_id": "CelO_1shot_BTMS",
+      "model_key": "CelO",
+      "setting": "1shot_BTMS",
+      "aggregated_score": {
+        "class_score": 0.5887445887445888,
+        "attribute_score": 0.46178861788617886,
+        "association_score": 0.3
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5887445887445888,
+        "attribute_subscore": 0.46178861788617886,
+        "association_subscore": 0.3
+      }
+    },
+    "CelO_1shot_H2S": {
+      "comparison_id": "CelO_1shot_H2S",
+      "model_key": "CelO",
+      "setting": "1shot_H2S",
+      "aggregated_score": {
+        "class_score": 0.5727272727272728,
+        "attribute_score": 0.540650406504065,
+        "association_score": 0.3333333333333333
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5727272727272728,
+        "attribute_subscore": 0.540650406504065,
+        "association_subscore": 0.3333333333333333
+      }
+    },
+    "CelO_2shots": {
+      "comparison_id": "CelO_2shots",
+      "model_key": "CelO",
+      "setting": "2shots",
+      "aggregated_score": {
+        "class_score": 0.5572441742654509,
+        "attribute_score": 0.516884531590414,
+        "association_score": 0.2692307692307692
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5572441742654509,
+        "attribute_subscore": 0.516884531590414,
+        "association_subscore": 0.2692307692307692
+      }
+    },
+    "CelO_CoT": {
+      "comparison_id": "CelO_CoT",
+      "model_key": "CelO",
+      "setting": "CoT",
+      "aggregated_score": {
+        "class_score": 0.25,
+        "attribute_score": 0.7903225806451613,
+        "association_score": 0.0
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.25,
+        "attribute_subscore": 0.7903225806451613,
+        "association_subscore": 0.0
+      }
+    },
+    "HBMS_0shot": {
+      "comparison_id": "HBMS_0shot",
+      "model_key": "HBMS",
+      "setting": "0shot",
+      "aggregated_score": {
+        "class_score": 0.5053191489361702,
+        "attribute_score": 0.3531261561228265,
+        "association_score": 0.17857142857142858
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5053191489361702,
+        "attribute_subscore": 0.3531261561228265,
+        "association_subscore": 0.17857142857142858
+      }
+    },
+    "HBMS_1shot_BTMS": {
+      "comparison_id": "HBMS_1shot_BTMS",
+      "model_key": "HBMS",
+      "setting": "1shot_BTMS",
+      "aggregated_score": {
+        "class_score": 0.658974358974359,
+        "attribute_score": 0.37523408239700373,
+        "association_score": 0.4444444444444445
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.658974358974359,
+        "attribute_subscore": 0.37523408239700373,
+        "association_subscore": 0.4444444444444445
+      }
+    },
+    "HBMS_1shot_H2S": {
+      "comparison_id": "HBMS_1shot_H2S",
+      "model_key": "HBMS",
+      "setting": "1shot_H2S",
+      "aggregated_score": {
+        "class_score": 0.5333333333333333,
+        "attribute_score": 0.3423076923076923,
+        "association_score": 0.3548387096774194
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5333333333333333,
+        "attribute_subscore": 0.3423076923076923,
+        "association_subscore": 0.3548387096774194
+      }
+    },
+    "HBMS_2shots": {
+      "comparison_id": "HBMS_2shots",
+      "model_key": "HBMS",
+      "setting": "2shots",
+      "aggregated_score": {
+        "class_score": 0.5892053973013494,
+        "attribute_score": 0.4157973174366616,
+        "association_score": 0.36111111111111116
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5892053973013494,
+        "attribute_subscore": 0.4157973174366616,
+        "association_subscore": 0.36111111111111116
+      }
+    },
+    "HBMS_CoT": {
+      "comparison_id": "HBMS_CoT",
+      "model_key": "HBMS",
+      "setting": "CoT",
+      "aggregated_score": {
+        "class_score": 0.5509360991474026,
+        "attribute_score": 0.3349150849150849,
+        "association_score": 0.4242424242424243
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5509360991474026,
+        "attribute_subscore": 0.3349150849150849,
+        "association_subscore": 0.4242424242424243
+      }
+    },
+    "LabTracker_0shot": {
+      "comparison_id": "LabTracker_0shot",
+      "model_key": "LabTracker",
+      "setting": "0shot",
+      "aggregated_score": {
+        "class_score": 0.52,
+        "attribute_score": 0.5013586956521738,
+        "association_score": 0.2222222222222222
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.52,
+        "attribute_subscore": 0.5013586956521738,
+        "association_subscore": 0.2222222222222222
+      }
+    },
+    "LabTracker_1shot_BTMS": {
+      "comparison_id": "LabTracker_1shot_BTMS",
+      "model_key": "LabTracker",
+      "setting": "1shot_BTMS",
+      "aggregated_score": {
+        "class_score": 0.5022222222222222,
+        "attribute_score": 0.5265957446808509,
+        "association_score": 0.21739130434782608
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5022222222222222,
+        "attribute_subscore": 0.5265957446808509,
+        "association_subscore": 0.21739130434782608
+      }
+    },
+    "LabTracker_1shot_H2S": {
+      "comparison_id": "LabTracker_1shot_H2S",
+      "model_key": "LabTracker",
+      "setting": "1shot_H2S",
+      "aggregated_score": {
+        "class_score": 0.5022222222222222,
+        "attribute_score": 0.555015197568389,
+        "association_score": 0.21739130434782608
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5022222222222222,
+        "attribute_subscore": 0.555015197568389,
+        "association_subscore": 0.21739130434782608
+      }
+    },
+    "LabTracker_2shots": {
+      "comparison_id": "LabTracker_2shots",
+      "model_key": "LabTracker",
+      "setting": "2shots",
+      "aggregated_score": {
+        "class_score": 0.44,
+        "attribute_score": 0.45276595744680836,
+        "association_score": 0.17391304347826086
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.44,
+        "attribute_subscore": 0.45276595744680836,
+        "association_subscore": 0.17391304347826086
+      }
+    },
+    "LabTracker_CoT": {
+      "comparison_id": "LabTracker_CoT",
+      "model_key": "LabTracker",
+      "setting": "CoT",
+      "aggregated_score": {
+        "class_score": 0.703076923076923,
+        "attribute_score": 0.46993006993006986,
+        "association_score": 0.4285714285714286
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.703076923076923,
+        "attribute_subscore": 0.46993006993006986,
+        "association_subscore": 0.4285714285714286
+      }
+    },
+    "OTS_0shot": {
+      "comparison_id": "OTS_0shot",
+      "model_key": "OTS",
+      "setting": "0shot",
+      "aggregated_score": {
+        "class_score": 0.5041509433962265,
+        "attribute_score": 0.3898601398601399,
+        "association_score": 0.3870967741935484
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5041509433962265,
+        "attribute_subscore": 0.3898601398601399,
+        "association_subscore": 0.3870967741935484
+      }
+    },
+    "OTS_1shot_BTMS": {
+      "comparison_id": "OTS_1shot_BTMS",
+      "model_key": "OTS",
+      "setting": "1shot_BTMS",
+      "aggregated_score": {
+        "class_score": 0.6974560872198667,
+        "attribute_score": 0.42534722222222215,
+        "association_score": 0.3414634146341464
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.6974560872198667,
+        "attribute_subscore": 0.42534722222222215,
+        "association_subscore": 0.3414634146341464
+      }
+    },
+    "OTS_1shot_H2S": {
+      "comparison_id": "OTS_1shot_H2S",
+      "model_key": "OTS",
+      "setting": "1shot_H2S",
+      "aggregated_score": {
+        "class_score": 0.5224963715529753,
+        "attribute_score": 0.42999999999999994,
+        "association_score": 0.3666666666666667
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5224963715529753,
+        "attribute_subscore": 0.42999999999999994,
+        "association_subscore": 0.3666666666666667
+      }
+    },
+    "OTS_2shots": {
+      "comparison_id": "OTS_2shots",
+      "model_key": "OTS",
+      "setting": "2shots",
+      "aggregated_score": {
+        "class_score": 0.6135899679206764,
+        "attribute_score": 0.4275,
+        "association_score": 0.3939393939393939
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.6135899679206764,
+        "attribute_subscore": 0.4275,
+        "association_subscore": 0.3939393939393939
+      }
+    },
+    "OTS_CoT": {
+      "comparison_id": "OTS_CoT",
+      "model_key": "OTS",
+      "setting": "CoT",
+      "aggregated_score": {
+        "class_score": 0.7046153846153846,
+        "attribute_score": 0.40584415584415584,
+        "association_score": 0.36363636363636365
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.7046153846153846,
+        "attribute_subscore": 0.40584415584415584,
+        "association_subscore": 0.36363636363636365
+      }
+    },
+    "SHAS_1shot_BTMS": {
+      "comparison_id": "SHAS_1shot_BTMS",
+      "model_key": "SHAS",
+      "setting": "1shot_BTMS",
+      "aggregated_score": {
+        "class_score": 0.48940505297473513,
+        "attribute_score": 0.19761904761904756,
+        "association_score": 0.3333333333333333
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.48940505297473513,
+        "attribute_subscore": 0.19761904761904756,
+        "association_subscore": 0.3333333333333333
+      }
+    },
+    "SHAS_1shot_H2S": {
+      "comparison_id": "SHAS_1shot_H2S",
+      "model_key": "SHAS",
+      "setting": "1shot_H2S",
+      "aggregated_score": {
+        "class_score": 0.5202589807852965,
+        "attribute_score": 0.12968515742128933,
+        "association_score": 0.41463414634146345
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5202589807852965,
+        "attribute_subscore": 0.12968515742128933,
+        "association_subscore": 0.41463414634146345
+      }
+    },
+    "SHAS_2shots": {
+      "comparison_id": "SHAS_2shots",
+      "model_key": "SHAS",
+      "setting": "2shots",
+      "aggregated_score": {
+        "class_score": 0.5488322717622081,
+        "attribute_score": 0.3676470588235294,
+        "association_score": 0.4090909090909091
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5488322717622081,
+        "attribute_subscore": 0.3676470588235294,
+        "association_subscore": 0.4090909090909091
+      }
+    },
+    "SHAS_CoT": {
+      "comparison_id": "SHAS_CoT",
+      "model_key": "SHAS",
+      "setting": "CoT",
+      "aggregated_score": {
+        "class_score": 0.6223776223776224,
+        "attribute_score": 0.25952380952380943,
+        "association_score": 0.4523809523809524
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.6223776223776224,
+        "attribute_subscore": 0.25952380952380943,
+        "association_subscore": 0.4523809523809524
+      }
+    },
+    "TSS_0shot": {
+      "comparison_id": "TSS_0shot",
+      "model_key": "TSS",
+      "setting": "0shot",
+      "aggregated_score": {
+        "class_score": 0.5207277752187931,
+        "attribute_score": 0.3833333333333332,
+        "association_score": 0.1935483870967742
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5207277752187931,
+        "attribute_subscore": 0.3833333333333332,
+        "association_subscore": 0.1935483870967742
+      }
+    },
+    "TSS_1shot_BTMS": {
+      "comparison_id": "TSS_1shot_BTMS",
+      "model_key": "TSS",
+      "setting": "1shot_BTMS",
+      "aggregated_score": {
+        "class_score": 0.40740740740740744,
+        "attribute_score": 0.3650793650793651,
+        "association_score": 0.10344827586206896
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.40740740740740744,
+        "attribute_subscore": 0.3650793650793651,
+        "association_subscore": 0.10344827586206896
+      }
+    },
+    "TSS_1shot_H2S": {
+      "comparison_id": "TSS_1shot_H2S",
+      "model_key": "TSS",
+      "setting": "1shot_H2S",
+      "aggregated_score": {
+        "class_score": 0.5,
+        "attribute_score": 0.276470588235294,
+        "association_score": 0.19999999999999998
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.5,
+        "attribute_subscore": 0.276470588235294,
+        "association_subscore": 0.19999999999999998
+      }
+    },
+    "TSS_2shots": {
+      "comparison_id": "TSS_2shots",
+      "model_key": "TSS",
+      "setting": "2shots",
+      "aggregated_score": {
+        "class_score": 0.46379215035931454,
+        "attribute_score": 0.25339366515837103,
+        "association_score": 0.1818181818181818
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.46379215035931454,
+        "attribute_subscore": 0.25339366515837103,
+        "association_subscore": 0.1818181818181818
+      }
+    },
+    "TSS_CoT": {
+      "comparison_id": "TSS_CoT",
+      "model_key": "TSS",
+      "setting": "CoT",
+      "aggregated_score": {
+        "class_score": 0.4444444444444444,
+        "attribute_score": 0.15384615384615385,
+        "association_score": 0.08108108108108107
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.4444444444444444,
+        "attribute_subscore": 0.15384615384615385,
+        "association_subscore": 0.08108108108108107
+      }
+    },
+    "TileO_0shot": {
+      "comparison_id": "TileO_0shot",
+      "model_key": "TileO",
+      "setting": "0shot",
+      "aggregated_score": {
+        "class_score": 0.4285714285714286,
+        "attribute_score": 0.2963875205254516,
+        "association_score": 0.23076923076923075
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.4285714285714286,
+        "attribute_subscore": 0.2963875205254516,
+        "association_subscore": 0.23076923076923075
+      }
+    },
+    "TileO_1shot_BTMS": {
+      "comparison_id": "TileO_1shot_BTMS",
+      "model_key": "TileO",
+      "setting": "1shot_BTMS",
+      "aggregated_score": {
+        "class_score": 0.4311111111111111,
+        "attribute_score": 0.23739495798319316,
+        "association_score": 0.3333333333333333
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.4311111111111111,
+        "attribute_subscore": 0.23739495798319316,
+        "association_subscore": 0.3333333333333333
+      }
+    },
+    "TileO_1shot_H2S": {
+      "comparison_id": "TileO_1shot_H2S",
+      "model_key": "TileO",
+      "setting": "1shot_H2S",
+      "aggregated_score": {
+        "class_score": 0.48275862068965514,
+        "attribute_score": 0.2986111111111111,
+        "association_score": 0.40624999999999994
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.48275862068965514,
+        "attribute_subscore": 0.2986111111111111,
+        "association_subscore": 0.40624999999999994
+      }
+    },
+    "TileO_2shots": {
+      "comparison_id": "TileO_2shots",
+      "model_key": "TileO",
+      "setting": "2shots",
+      "aggregated_score": {
+        "class_score": 0.4403778040141676,
+        "attribute_score": 0.10912698412698404,
+        "association_score": 0.3055555555555556
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.4403778040141676,
+        "attribute_subscore": 0.10912698412698404,
+        "association_subscore": 0.3055555555555556
+      }
+    },
+    "TileO_CoT": {
+      "comparison_id": "TileO_CoT",
+      "model_key": "TileO",
+      "setting": "CoT",
+      "aggregated_score": {
+        "class_score": 0.41000000000000003,
+        "attribute_score": 0.2026143790849673,
+        "association_score": 0.25925925925925924
+      },
+      "per_element_subscore": {
+        "class_subscore": 0.41000000000000003,
+        "attribute_subscore": 0.2026143790849673,
+        "association_subscore": 0.25925925925925924
+      }
+    }
+  }
+}

@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "domain-model-metrics"
+version = "1.0.0"
+description = "Five domain-model similarity metrics for LLM-generated PlantUML class diagrams, benchmarked against human F1 — a FAIR4RS research-software release."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+authors = [
+    { name = "Vasiliy Seibert", email = "vasiliy.seibert@tu-clausthal.de" },
+]
+maintainers = [
+    { name = "Vasiliy Seibert", email = "vasiliy.seibert@tu-clausthal.de" },
+]
+keywords = [
+    "research-software",
+    "FAIR4RS",
+    "domain-modeling",
+    "class-diagrams",
+    "plantuml",
+    "large-language-models",
+    "no-free-lunch",
+    "graph-edit-distance",
+    "wordnet",
+    "metric-evaluation",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+]
+
+dependencies = [
+    "icontract>=2.7.0,<3.0",
+    "networkx>=3.0,<4.0",
+    "numpy>=2.0,<3.0",
+    "scipy>=1.10,<2.0",
+    "nltk>=3.8,<4.0",
+    "python-Levenshtein>=0.27,<1.0",
+    "pydantic>=2.0,<3.0",
+]
+
+[project.optional-dependencies]
+analysis = [
+    "matplotlib>=3.5,<4.0",
+    "pandas>=2.0,<4.0",
+    "tqdm>=4.65,<5.0",
+]
+notebooks = [
+    "ipywidgets>=8.0",
+    "notebook>=7.0",
+    "jupyterlab>=4.0",
+]
+dev = [
+    "pytest>=8.0,<9.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/VasiliySeibert/domainModel-Metrics-Comparison"
+Repository = "https://github.com/VasiliySeibert/domainModel-Metrics-Comparison"
+Issues = "https://github.com/VasiliySeibert/domainModel-Metrics-Comparison/issues"
+Changelog = "https://github.com/VasiliySeibert/domainModel-Metrics-Comparison/blob/main/CHANGELOG.md"
+Zenodo = "https://zenodo.org/"
+
+[project.scripts]
+domain-model-metrics-compare = "domain_model_metrics.compare:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"domain_model_metrics" = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
