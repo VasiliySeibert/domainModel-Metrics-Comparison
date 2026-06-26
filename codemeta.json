@@ -3,7 +3,9 @@
   "@type": "SoftwareSourceCode",
   "identifier": [
     "domain-model-metrics",
-    "https://github.com/VasiliySeibert/domainModel-Metrics-Comparison"
+    "https://github.com/VasiliySeibert/domainModel-Metrics-Comparison",
+    "https://doi.org/10.5281/zenodo.20942596",
+    "https://doi.org/10.5281/zenodo.20942597"
   ],
   "name": "domain-model-metrics",
   "description": "Domain models are a primary artefact in model-driven software engineering, where they capture the shared understanding between stakeholders and serve as the contractual basis for downstream software development. Automatic comparison of these semantic models has diverse application areas such as requirements engineering, education, automatic generation of domain models and model reuse and repository mining. The literature offers a variety of presented metrics, but for practitioners there is no defensible way to choose between them. The contribution of this paper is the implementation of five such metrics, their execution on a fixed set of 39 domain-model comparisons and the comparison of each metric's output against the human expert ratings produced for the same comparisons. Two research questions are addressed. RQ1 asks how close, on average, each metric is to the human expert rating across the 39 comparisons. RQ2 asks how consistent each metric's per-comparison distance from the human expert rating is. The findings reveal that no single metric achieves dominance across all criteria; rather, different metrics each yield competitive results on individual criteria — some closest on average, others best preserving the per-pair ordering — which suggests that an ensemble approach combining multiple metrics may serve as a viable substitute for human expert grading. The metric implementations are an artefact of this work and are published in accordance with the FAIR4RS recommendations.",
@@ -109,7 +111,7 @@
     }
   ],
   "readme": "https://github.com/VasiliySeibert/domainModel-Metrics-Comparison/blob/main/README.md",
-  "downloadUrl": "https://zenodo.org/",
+  "downloadUrl": "https://zenodo.org/records/20942597",
   "isPartOf": {
     "@type": "CreativeWork",
     "name": "domain-model-metrics project",

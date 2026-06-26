@@ -3,7 +3,7 @@
 [![CI](https://github.com/VasiliySeibert/domainModel-Metrics-Comparison/actions/workflows/ci.yml/badge.svg)](https://github.com/VasiliySeibert/domainModel-Metrics-Comparison/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Python: 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
-[![DOI](https://img.shields.io/badge/DOI-zenodo-lightgrey.svg)](https://zenodo.org/)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.20942597-blue.svg)](https://doi.org/10.5281/zenodo.20942597)
 
 A pip-installable research-software release of five PlantUML
 class-diagram similarity metrics, evaluated on a fixed 39-pair
@@ -518,11 +518,8 @@ Each release is archived on Zenodo via the GitHub-Zenodo integration.
 
 | Level | DOI |
 |-------|-----|
-| **Concept** (all versions) | _filled in after first GitHub Release_ |
-| v1.0.0 | _filled in after first GitHub Release_ |
-
-The Zenodo DOIs will be added after the GitHub-Zenodo integration
-mints the concept + v1.0.0 version DOIs for this repository.
+| **Concept** (all versions) | [10.5281/zenodo.20942596](https://doi.org/10.5281/zenodo.20942596) |
+| v1.0.0 | [10.5281/zenodo.20942597](https://doi.org/10.5281/zenodo.20942597) |
 
 Cite the **concept DOI** to identify the project across all versions;
 cite the specific **version DOI** to identify the exact snapshot you

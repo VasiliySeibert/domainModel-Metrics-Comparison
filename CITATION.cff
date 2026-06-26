@@ -48,5 +48,9 @@ identifiers:
   - type: url
     value: "https://github.com/VasiliySeibert/domainModel-Metrics-Comparison"
     description: "The GitHub repository URL (stable landing page)."
-  # Zenodo DOIs will be added after the GitHub-Zenodo integration mints
-  # the new concept + v1.0.0 version DOIs for this repository.
+  - type: doi
+    value: "10.5281/zenodo.20942596"
+    description: "Concept DOI for all versions of domain-model-metrics (Zenodo)."
+  - type: doi
+    value: "10.5281/zenodo.20942597"
+    description: "Version DOI for v1.0.0 (Zenodo)."
